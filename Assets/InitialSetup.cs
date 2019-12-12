@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using WorldMapStrategyKit;
 
 /// <summary>
@@ -21,6 +22,7 @@ namespace WorldMapStrategyKit
 			// 1) Get a reference to the WMSK API
 			map = WMSK.instance;
 
+			/*
 			int countryIndex = -1;
 			// Remove non-Italian countries
 			for (int i = 0; i < map.countries.Length; i++)
@@ -40,13 +42,15 @@ namespace WorldMapStrategyKit
 			// 5) Refresh map and frontiers
 			map.drawAllProvinces = true;
 			map.Redraw(true);
+			*/
 
 			// 6) Add province names
 			//map.DrawProvinceLabels(yunnanCountryIndex);
 
 			// 7) Fly to country and fit zoom
-			float zoomLevel = map.GetCountryRegionZoomExtents(countryIndex);
-			map.FlyToCountry(countryIndex, 2f, zoomLevel);
+			var italy = map.GetCountryIndex("Italy");
+			float zoomLevel = map.GetCountryRegionZoomExtents(italy);
+			map.FlyToCountry(italy, 2f, zoomLevel);
 
 		}
 
