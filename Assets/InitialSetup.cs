@@ -23,6 +23,7 @@ namespace WorldMapStrategyKit
 
 			int countryIndex = -1;
 			// Remove non-Italian countries
+			/*
 			for (int i = 0; i < map.countries.Length; i++)
 			{
 				if (map.countries[i].name != "Italy")
@@ -36,6 +37,7 @@ namespace WorldMapStrategyKit
 					countryIndex = i;
 				}
 			}
+			*/
 
 			// 5) Refresh map and frontiers
 			map.drawAllProvinces = true;
@@ -45,8 +47,9 @@ namespace WorldMapStrategyKit
 			//map.DrawProvinceLabels(yunnanCountryIndex);
 
 			// 7) Fly to country and fit zoom
-			float zoomLevel = map.GetCountryRegionZoomExtents(countryIndex);
-			map.FlyToCountry(countryIndex, 2f, zoomLevel);
+			var country = map.GetCountryIndex("Republic of Serbia");
+			float zoomLevel = map.GetCountryRegionZoomExtents(country);
+			map.FlyToCountry(country, 2f, zoomLevel);
 
 		}
 
