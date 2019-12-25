@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 using WorldMapStrategyKit;
 
 /// <summary>
@@ -14,6 +16,7 @@ namespace WorldMapStrategyKit
 	{
 
 		WMSK map;
+		GUIStyle labelStyle, labelStyleShadow, buttonStyle;
 
 		void Start()
 		{
@@ -21,9 +24,32 @@ namespace WorldMapStrategyKit
 			// 1) Get a reference to the WMSK API
 			map = WMSK.instance;
 
+			// UI Setup - non-important, only for this demo
+			labelStyle = new GUIStyle();
+			labelStyle.alignment = TextAnchor.MiddleCenter;
+			labelStyle.normal.textColor = Color.white;
+			labelStyleShadow = new GUIStyle(labelStyle);
+			labelStyleShadow.normal.textColor = Color.black;
+			buttonStyle = new GUIStyle(labelStyle);
+			buttonStyle.alignment = TextAnchor.MiddleLeft;
+			buttonStyle.normal.background = Texture2D.whiteTexture;
+			buttonStyle.normal.textColor = Color.white;
+
+			// setup GUI resizer - only for the demo
+			GUIResizer.Init(800, 500);
+
+			/* Register events: this is optionally but allows your scripts to be informed instantly as the mouse enters or exits a country, province or city */
+			map.OnCityEnter += (int cityIndex) => Debug.Log("Entered city " + map.cities[cityIndex].name);
+			map.OnCityExit += (int cityIndex) => Debug.Log("Exited city " + map.cities[cityIndex].name);
+			map.OnCityClick += (int cityIndex, int buttonIndex) => Debug.Log("Clicked city " + map.cities[cityIndex].name);
+			map.OnProvinceEnter += (int provinceIndex, int regionIndex) => Debug.Log("Entered province " + map.provinces[provinceIndex].name);
+			map.OnProvinceExit += (int provinceIndex, int regionIndex) => Debug.Log("Exited province " + map.provinces[provinceIndex].name);
+			map.OnProvinceClick += (int provinceIndex, int regionIndex, int buttonIndex) => Debug.Log("Clicked province " + map.provinces[provinceIndex].name);
+
+
+			/*
 			int countryIndex = -1;
 			// Remove non-Italian countries
-			/*
 			for (int i = 0; i < map.countries.Length; i++)
 			{
 				if (map.countries[i].name != "Italy")
@@ -52,8 +78,67 @@ namespace WorldMapStrategyKit
 			map.FlyToCountry(country, 2f, zoomLevel);
 
 		}
+		// Update is called once per frame
+		void OnGUI()
+		{
+
+			// Do autoresizing of GUI layer
+			GUIResizer.AutoResize();
+
+			// Check whether a country or city is selected, then show a label with the entity name and its neighbours (new in V4.1!)
+			if (map.countryHighlighted != null || map.cityHighlighted != null || map.provinceHighlighted != null)
+			{
+				string text;
+				if (map.cityHighlighted != null)
+				{
+					if (!map.cityHighlighted.name.Equals(map.cityHighlighted.province))
+					{ // show city name + province & country name
+						text = "City: " + map.cityHighlighted.name + " (" + map.cityHighlighted.province + ", " + map.countries[map.cityHighlighted.countryIndex].name + ")";
+					}
+					else
+					{   // show city name + country name (city is a capital with same name as province)
+						text = "City: " + map.cityHighlighted.name + " (" + map.countries[map.cityHighlighted.countryIndex].name + ")";
+					}
+				}
+				else if (map.provinceHighlighted != null)
+				{
+					text = map.provinceHighlighted.name + ", " + map.countryHighlighted.name;
+					List<Province> neighbours = map.ProvinceNeighboursOfCurrentRegion();
+					if (neighbours.Count > 0)
+						text += "\n" + EntityListToString<Province>(neighbours);
+				}
+				else
+				{
+					text = "";
+				}
+				float x, y;
+				x = Screen.width / 2.0f;
+				y = Screen.height - 40;
+
+				// shadow
+				GUI.Label(new Rect(x - 1, y - 1, 0, 10), text, labelStyleShadow);
+				GUI.Label(new Rect(x + 1, y + 2, 0, 10), text, labelStyleShadow);
+				GUI.Label(new Rect(x + 2, y + 3, 0, 10), text, labelStyleShadow);
+				GUI.Label(new Rect(x + 3, y + 4, 0, 10), text, labelStyleShadow);
+				// texst face
+				GUI.Label(new Rect(x, y, 0, 10), text, labelStyle);
+			}
+		}
 
 
+		// Utility functions called from OnGUI:
+		string EntityListToString<T>(List<T> entities)
+		{
+			StringBuilder sb = new StringBuilder("Neighbours: ");
+			for (int k = 0; k < entities.Count; k++)
+			{
+				if (k > 0)
+				{
+					sb.Append(", ");
+				}
+				sb.Append(((IAdminEntity)entities[k]).name);
+			}
+			return sb.ToString();
+		}
 	}
-
 }

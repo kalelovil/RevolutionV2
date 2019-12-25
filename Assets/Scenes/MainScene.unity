@@ -378,10 +378,53 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 86.60254}
   m_LocalScale: {x: 200, y: 100, z: 1}
   m_Children:
-  - {fileID: 2002767199}
+  - {fileID: 1526746491}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1526746490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1526746491}
+  - component: {fileID: 1526746492}
+  m_Layer: 0
+  m_Name: Mount Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1526746491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526746490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1443365430}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1526746492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526746490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1791826078
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,8 +457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4826812d57ee425dad93bf315e07090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCityScale: {x: 0.00097466767, y: 0.0019493353, z: 1}
-  lastKnownZoomLevel: 0.28125
+  currentCityScale: {x: 0.0019493353, y: 0.0038986707, z: 1}
+  lastKnownZoomLevel: 0.8888889
   isDirty: 0
   _customCamera: {fileID: 0}
   _prewarm: 0
@@ -423,17 +466,17 @@ MonoBehaviour:
   _geodataResourcesPath: WMSK/Geodata
   _heightMapTexture: {fileID: 0}
   _dontLoadGeodataAtStart: 0
-  _showCities: 0
+  _showCities: 1
   _citiesColor: {r: 1, g: 1, b: 1, a: 1}
   _citiesRegionCapitalColor: {r: 0, g: 1, b: 1, a: 1}
   _citiesCountryCapitalColor: {r: 1, g: 1, b: 0, a: 1}
-  _cityIconSize: 1
+  _cityIconSize: 2
   _citySpot: {fileID: 155644, guid: 6d781cf17b1d45a7a935010b1040e8df, type: 3}
   _citySpotCapitalRegion: {fileID: 155644, guid: 88e021ef043ec434fb7c60ae2ab4b966,
     type: 3}
   _citySpotCapitalCountry: {fileID: 155644, guid: 35e12dd60b53a4c8c836fa3936577971,
     type: 3}
-  _minPopulation: 3000
+  _minPopulation: 0
   _cityClassAlwaysShow: 4
   _enableCountryHighlight: 0
   _highlightAllCountryRegions: 0
@@ -475,7 +518,7 @@ MonoBehaviour:
   _countryLabelsOutlineWidth: 0.1
   _labelsElevation: 0.001
   _showWorld: 1
-  _earthStyle: 1
+  _earthStyle: 8
   _earthColor: {r: 0, g: 0, b: 0, a: 1}
   _earthBumpEnabled: 0
   _earthBumpAmount: 0.5
@@ -672,46 +715,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791826078}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2002767198
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2002767199}
-  - component: {fileID: 2002767200}
-  m_Layer: 0
-  m_Name: Mount Points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2002767199
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002767198}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1443365430}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2002767200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002767198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
