@@ -83,25 +83,11 @@ namespace WorldMapStrategyKit
 
 		}
 
-		[SerializeField]
-		Font _cityLabelsFont;
 		private void AddCityNames()
 		{
 			foreach (City city in map.cities)
 			{
-				Material fontMaterial = Instantiate(Resources.Load<Material>("WMSK/Materials/Font"));
-				GameObject go = new GameObject(city.name);
-				go.transform.SetParent(map.transform, false);
-				go.transform.localPosition = city.unity2DLocation; // <-- the location of the city in spherical coordinates
-				go.transform.localScale = Vector3.one * 0.001f;
-				go.transform.LookAt(map.transform.position, map.transform.up);
-				go.transform.localEulerAngles = new Vector3(go.transform.localEulerAngles.x, 0f, go.transform.localEulerAngles.z);
-				TextMesh tm = go.AddComponent<TextMesh>();
-				fontMaterial.mainTexture = tm.font.material.mainTexture;
-				go.GetComponent<Renderer>().sharedMaterial = fontMaterial;
-				tm.text = city.name;
-				tm.alignment = TextAlignment.Center;
-				tm.anchor = TextAnchor.MiddleCenter;
+				map.AddMarker2DText(city.name, city.unity2DLocation + (Vector2.down * 0.0005f), 0.001f);
 			}
 		}
 

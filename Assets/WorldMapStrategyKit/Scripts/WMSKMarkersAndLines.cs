@@ -314,14 +314,14 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Adds a custom text to the map on specified location and with custom scale.
 		/// </summary>
-		public TextMesh AddMarker2DText (string text, Vector3 planeLocation) {
+		public TextMesh AddMarker2DText (string text, Vector3 planeLocation, float scale = 0.01f) {
 			CheckMarkersLayer ();
 
 			GameObject textObj = new GameObject (text);
 			textObj.transform.SetParent (markersLayer.transform, false);
 			textObj.transform.localPosition = planeLocation + Misc.Vector3back * 0.01f;
 			textObj.transform.localRotation = Quaternion.Euler (0, 0, 0);
-			textObj.transform.localScale = new Vector3 (0.01f / mapWidth, 0.01f / mapHeight, 1f);
+			textObj.transform.localScale = new Vector3 (scale / mapWidth, scale / mapHeight, 1f);
 			textObj.layer = gameObject.layer;
 			if (renderViewportIsEnabled)
 				textObj.layer = gameObject.layer;
