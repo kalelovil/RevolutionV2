@@ -911,7 +911,10 @@ namespace WorldMapStrategyKit {
 				newCountryProvinces.Sort (ProvinceSizeComparer);
 				country.provinces = newCountryProvinces.ToArray ();
 			}
-			return provinceIndex;
+
+            RefreshProvinceGeometry(provinceIndex);
+
+            return provinceIndex;
 		}
 
 
@@ -1433,6 +1436,31 @@ namespace WorldMapStrategyKit {
 
 
 		/// <summary>
+		/// Gets a list of provinces regions that overlap with a given region
+		/// </summary>
+		public List<Region>GetProvinceRegionsOverlap (Region region) {
+			List<Region> rr = new List<Region> ();
+			int count = provinces.Length;
+			for (int k = 0; k < count; k++) {
+				Province province = _provinces [k];
+				if (!province.regionsRect2D.Overlaps (region.rect2D))
+					continue;
+				if (province.regions == null)
+					continue;
+				int rCount = province.regions.Count;
+				for (int r = 0; r < rCount; r++) {
+					Region otherRegion = province.regions [r];
+					if (otherRegion.points.Length > 0 && region.Intersects (otherRegion)) {
+						rr.Add (otherRegion);
+					}
+				}
+			}
+			return rr;
+		}
+
+
+
+		/// <summary>
 		/// Delete all provinces from specified continent. This operation does not include dependencies.
 		/// </summary>
 		public void ProvincesDeleteOfSameContinent (string continentName) {
@@ -1687,7 +1715,7 @@ namespace WorldMapStrategyKit {
 		/// Checks quality of province's polygon points. Useful before using polygon clipping operations.
 		/// </summary>
 		/// <returns><c>true</c>, if province was changed, <c>false</c> otherwise.</returns>
-		public bool ProvinceSanitize (int provinceIndex, int minimumPoints = 3) {
+		public bool ProvinceSanitize (int provinceIndex, int minimumPoints = 3, bool refresh = true) {
 			if (provinceIndex < 0 || provinceIndex >= provinces.Length)
 				return false;
 			
@@ -1701,13 +1729,19 @@ namespace WorldMapStrategyKit {
 					}
 					if (region.points.Length < minimumPoints) {
 						province.regions.Remove (region);
-						if (province.regions == null)
+						if (province.regions == null) {
 							return true;
+						}
+						k--;
+						changes = true;
 					}
 				}
 			}
 			if (changes) {
-				RefreshProvinceGeometry (provinceIndex);
+				province.mainRegionIndex = 0;
+				if (refresh) {
+					RefreshProvinceGeometry (provinceIndex);
+				}
 			}
 			return changes;
 		}
@@ -1758,7 +1792,7 @@ namespace WorldMapStrategyKit {
 			}
 			
 			// Fusion any adjacent regions that results from merge operation
-			ProvinceMergeAdjacentRegions (targetProvince);
+			MergeAdjacentRegions (targetProvince);
 			RegionSanitize (targetProvince.regions);
 			targetProvince.mainRegionIndex = 0; // will be updated on RefreshProvinceDefinition
 			
@@ -1831,7 +1865,7 @@ namespace WorldMapStrategyKit {
 			}
 
 			// Fusion any adjacent regions that results from merge operation
-			ProvinceMergeAdjacentRegions (province);
+			MergeAdjacentRegions (province);
 			RegionSanitize (province.regions);
 
 			// Finish operation with the country
@@ -2154,7 +2188,7 @@ namespace WorldMapStrategyKit {
 
 			// Merge adjacent regions
 			for (int k = 0; k < _countries.Length; k++) {
-				CountryMergeAdjacentRegions (_countries [k]);
+				MergeAdjacentRegions (_countries [k]);
 				CountrySanitize (k);
 				RefreshCountryGeometry (_countries [k]);
 			}

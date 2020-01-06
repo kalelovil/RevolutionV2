@@ -14,11 +14,7 @@ namespace WorldMapStrategyKit {
 
         public CustomWWW(string url) {
             _uwr = UnityWebRequest.Get(url);
-			#if UNITY_2018_3_OR_NEWER
             _uwr.SendWebRequest();
-#else
-            _uwr.Send();
-#endif
         }
 
         public byte[] bytes {
@@ -45,7 +41,7 @@ namespace WorldMapStrategyKit {
 				if (_uwr.isNetworkError)
                     return _uwr.error;
                 if (_uwr.responseCode >= 400) {
-                    return string.Format("Error {0} {1}", _uwr.responseCode);
+                    return string.Format("Error {0} {1}", _uwr.responseCode, _uwr.error);
                 }
                 return null;
             }
@@ -134,8 +130,8 @@ namespace WorldMapStrategyKit {
         }
 
         private UnityWebRequest _uwr;
-        private AssetBundle _assetBundle;
-        private Dictionary<string, string> _responseHeaders;
+        //private AssetBundle _assetBundle;
+        //private Dictionary<string, string> _responseHeaders;
     }
 
 

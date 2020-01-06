@@ -1,4 +1,4 @@
-***************************************************
+﻿***************************************************
 *             WORLD MAP STRATEGY KIT              *
 * Copyright (C) 2016-2019 Ramiro Oliva (Kronnect) *
 *                  README FILE                    *
@@ -11,7 +11,7 @@ How to use this asset
 Firstly, you should run the Demo Scenes provided to get an idea of the overall functionality.
 Later, you should read the documentation and experiment with the API/prefabs.
 
-
+a
 Demo Scenes
 -----------
 There're several demo scenes, located in "Demos" folder. Just go there from Unity, open them in order to get an idea of the asset possibilities.
@@ -40,7 +40,32 @@ Please read the documentation PDF and browse/play with the demo scene and sample
 Version history
 ---------------
 
-Current version
+Version 9.2
+   - MapPopulation demo scene: added button/example of provinces between two countries (France/Germany)
+   - Tile system: added "Restrict To Area" option with lat/lon defined limits
+   - Added FlyToTile method to navigate to a certain position defined by x, y and zoom level (tiled map format)
+   - [Fix] Fixed precision issue with AddLine when using tiny coordinates
+   - [Fix] Fixed "Show" geodata folder button bug in inspector
+   - [Fix] Fixed "Export Provinces Color Map" issue
+
+Version 9.1
+   - OnMarkerMouseEnter & OnMarkerMouseExit events added to MarkerClickHandler component (uses in 2D Markers like sprites). Check demo scene 501 Viewport Intro and click Add Marker (2D Sprite).
+   - Usability improvement when assigning terrain to WMSK
+   - Map Editor: added "Map Tools" section with options to scale/shift/crop world map and texture
+   - [Fix] Fixed custom/textured region borders not showing up in viewport mode
+
+Version 9.0
+   - Added "Hexify" option (countries and/or provinces) in Map Editor (available from the gear icon menu in the editor inspector)
+   - Improved performance of grid generation
+   - Bump map effect now uses diffuse wrap for better results
+   - Support for LWRP 5.16+
+   - Minimum Unity version required upped to 2017.4
+   - API: added map.calc.prettyCurrentLatLon method
+   - API: added SetGridDimensions
+   - [Fix] Fixed issue when calling WMSK from Awake events from other scripts
+   - [Fix] Fixed Map Editor error when a country has two provinces with same name
+
+Version 8.5 13-JUN-2019
    - New demo scene 407 under "UI Examples". Video: https://youtu.be/HNh-kRgoo_M
    - New "UI Panel" property under Window Settings: automatically adapts viewport to UI panel position and size
    - Added frontiersCoastlines, provinceCoastlines options. Show/hides frontier segments on coasts.

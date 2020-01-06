@@ -7,6 +7,7 @@ namespace WorldMapStrategyKit {
 	public static class Misc {
 		
 		public static Vector4 Vector4back = new Vector4(0f, 0f, -1f, 0f);
+        public static Vector4 Vector4one = new Vector4(1f, 1f, 1f, 1f);
 
 		public static Vector3 Vector3one = new Vector3(1f, 1f, 1f);
 		public static Vector3 Vector3zero = new Vector3(0f, 0f, 0f);

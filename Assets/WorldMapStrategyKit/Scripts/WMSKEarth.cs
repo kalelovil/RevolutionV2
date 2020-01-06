@@ -26,6 +26,24 @@ namespace WorldMapStrategyKit {
 		Custom = 99
 	}
 
+	public static class EarthStyleExtensions {
+		public static bool isScenicPlus (this EARTH_STYLE earthStyle) {
+			return earthStyle == EARTH_STYLE.NaturalScenicPlus || earthStyle == EARTH_STYLE.NaturalScenicPlusAlternate1 || earthStyle == EARTH_STYLE.NaturalScenicPlus16K;
+		}
+
+		public static int numTextures(this EARTH_STYLE earthStyle) {
+			if (earthStyle == EARTH_STYLE.NaturalHighRes16K || earthStyle == EARTH_STYLE.NaturalScenicPlus16K) {
+				return 4;
+			}
+			return 1;
+		}
+
+
+		public static bool supportsBumpMap (this EARTH_STYLE earthStyle) {
+			return earthStyle == EARTH_STYLE.Natural || earthStyle == EARTH_STYLE.NaturalHighRes || earthStyle == EARTH_STYLE.Alternate1 || earthStyle == EARTH_STYLE.Alternate2 || earthStyle == EARTH_STYLE.Alternate3 || earthStyle == EARTH_STYLE.NaturalScenic;
+		}
+	}
+
 
 	public partial class WMSK : MonoBehaviour {
 
@@ -162,7 +180,7 @@ namespace WorldMapStrategyKit {
 			_earthTexture;
 
 		/// <summary>
-		/// Texture for Earth background (for SolidTexture style)
+		/// Texture for Earth background
 		/// </summary>
 		public Texture2D earthTexture {
 			get {
@@ -181,11 +199,54 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-		/// <summary>
-		/// Gets the currently active Earth material.
-		/// </summary>
-		/// <value>The Earth material.</value>
-		public Material earthMaterial {
+
+        [SerializeField]
+        Vector2
+            _earthTextureScale = Misc.Vector2one;
+
+        /// <summary>
+        /// Earth texture scale
+        /// </summary>
+        public Vector2 earthTextureScale {
+            get {
+                return _earthTextureScale;
+            }
+            set {
+                if (value != _earthTextureScale) {
+                    _earthTextureScale = value;
+                    isDirty = true;
+                    RestyleEarth();
+                }
+            }
+        }
+
+
+
+        [SerializeField]
+        Vector2
+            _earthTextureOffset;
+
+        /// <summary>
+        /// Earth texture offset
+        /// </summary>
+        public Vector2 earthTextureOffset {
+            get {
+                return _earthTextureOffset;
+            }
+            set {
+                if (value != _earthTextureOffset) {
+                    _earthTextureOffset = value;
+                    isDirty = true;
+                    RestyleEarth();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the currently active Earth material.
+        /// </summary>
+        /// <value>The Earth material.</value>
+        public Material earthMaterial {
 			get { return earthMat; }
 		}
 

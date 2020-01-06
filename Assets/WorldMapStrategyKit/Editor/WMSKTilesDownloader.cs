@@ -52,7 +52,7 @@ namespace WorldMapStrategyKit {
 		int x, y, zoomLevel;
 		long numTiles, downloadedTilesCount, downloadedTilesSize;
 		float storageSize;
-		long estimationDownloads, estimationTotalSize, estimationCount;
+		long estimationDownloads, estimationTotalSize;
 		int bytesDownloaded;
 		int xmin, ymin, xmax, ymax;
 		TileInfo ti;

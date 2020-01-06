@@ -23,7 +23,7 @@ namespace WorldMapStrategyKit {
 				if (PrefabUtility.GetPrefabInstanceStatus(gameObject) != PrefabInstanceStatus.NotAPrefab) {
                 	PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
 				}
-                WMSK.instance.transform.position += Misc.Vector3right * 500f; // keep normal map out of camera
+				WMSK.instance.transform.position += new Vector3(500, 500, -500); // keep normal map out of camera
                 WMSK.instance.renderViewport = gameObject;
                 if (Camera.main != null) {
                     Camera.main.transform.position = Misc.Vector3zero;
@@ -45,7 +45,7 @@ namespace WorldMapStrategyKit {
 				if (PrefabUtility.GetPrefabType (gameObject) == PrefabType.PrefabInstance) {
 					PrefabUtility.DisconnectPrefabInstance (gameObject);
 				}
-                WMSK.instance.transform.position = Misc.Vector3right * 500f; // keep normal map out of camera
+				WMSK.instance.transform.position += new Vector3(500, 500, -500); // keep normal map out of camera
                 WMSK.instance.renderViewport = gameObject;
                 if (Camera.main != null) {
                     Camera.main.transform.position = Misc.Vector3zero;

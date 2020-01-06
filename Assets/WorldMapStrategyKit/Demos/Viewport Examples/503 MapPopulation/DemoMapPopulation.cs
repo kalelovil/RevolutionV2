@@ -158,7 +158,11 @@ namespace WorldMapStrategyKit {
 				FindFranceGermanyLine ();
 			}
 
-			if (GUI.Button (new Rect (GUIResizer.authoredScreenWidth - 190, 170, 180, 30), "  Add Sphere", buttonStyle)) {
+            if (GUI.Button(new Rect(GUIResizer.authoredScreenWidth - 190, 170, 180, 30), "  Find France-Germany Provinces", buttonStyle)) {
+                FindFranceGermanyProvinces();
+            }
+
+            if (GUI.Button (new Rect (GUIResizer.authoredScreenWidth - 190, 210, 180, 30), "  Add Sphere", buttonStyle)) {
 				AddSphere ();
 			}
 
@@ -492,25 +496,42 @@ namespace WorldMapStrategyKit {
 				map.FlyToLocation (points [0], 2, 0.2f);
 		}
 
-		/// <summary>
-		/// Locates common frontiers points between France and Germany and add custom sprites over that line
-		/// </summary>
-		void FindFranceGermanyLine () {
-			
-			int franceIndex = map.GetCountryIndex ("France");
-			int germanyIndex = map.GetCountryIndex ("Germany");
-			List<Vector2> points = map.GetCountryFrontierPoints (franceIndex, germanyIndex);
-			points.ForEach ((point) => AddRandomSpriteAtPosition (point));
-			if (points.Count > 0)
-				map.FlyToLocation (points [0], 2, 0.2f);
-		}
+        /// <summary>
+        /// Locates common frontiers points between France and Germany and add custom sprites over that line
+        /// </summary>
+        void FindFranceGermanyLine() {
+
+            int franceIndex = map.GetCountryIndex("France");
+            int germanyIndex = map.GetCountryIndex("Germany");
+            List<Vector2> points = map.GetCountryFrontierPoints(franceIndex, germanyIndex);
+            points.ForEach((point) => AddRandomSpriteAtPosition(point));
+            if (points.Count > 0)
+                map.FlyToLocation(points[0], 2, 0.2f);
+        }
+
+        void FindFranceGermanyProvinces() {
+
+            map.showProvinces = true;
+            int franceIndex = map.GetCountryIndex("France");
+            int germanyIndex = map.GetCountryIndex("Germany");
+            List<Vector2> points = map.GetCountryFrontierPoints(franceIndex, germanyIndex);
+            if (points.Count > 0)
+                map.FlyToLocation(points[0], 2, 0.2f);
+
+            for (int i = 0; i < points.Count; i++) {
+                int provIndex = map.GetProvinceIndex(points[i] + new Vector2(Random.value * 0.0001f - 0.00005f, Random.value * 0.0001f - 0.00005f));
+                if (provIndex >= 0 && (map.provinces[provIndex].countryIndex == franceIndex || map.provinces[provIndex].countryIndex == germanyIndex)) {
+                    map.ToggleProvinceSurface(provIndex, true, new Color(Random.value, Random.value, Random.value));
+                }
+            }
+        }
 
 
-		/// <summary>
-		/// This function adds a standard sphere primitive to the map. The difference here is that the pivot of the sphere is centered in the sphere. So we make use of pivotY property to specify it and
-		/// this way the positioning over the terrain will work. Otherwise, the sphere will be cut by the terrain (the center of the sphere will be on the ground - and we want the sphere on top of the terrain).
-		/// </summary>
-		void AddSphere () {
+        /// <summary>
+        /// This function adds a standard sphere primitive to the map. The difference here is that the pivot of the sphere is centered in the sphere. So we make use of pivotY property to specify it and
+        /// this way the positioning over the terrain will work. Otherwise, the sphere will be cut by the terrain (the center of the sphere will be on the ground - and we want the sphere on top of the terrain).
+        /// </summary>
+        void AddSphere () {
 
 			GameObject sphere = Instantiate (spherePrefab);
 			Vector2 position = map.GetCity ("Lhasa", "China").unity2DLocation;

@@ -49,20 +49,20 @@ namespace WorldMapStrategyKit {
 		const int TILE_MIN_SIZE = 256;
 		const float TILE_MAX_QUEUE_TIME = 10;
 		const string TILES_ROOT = "Tiles";
-		int[] tileIndices = new int[6] { 2, 3, 0, 2, 0, 1 };
-		Vector2[] tileUV = new Vector2[4] {
+		int[] tileIndices = { 2, 3, 0, 2, 0, 1 };
+		Vector2[] tileUV = {
 			Misc.Vector2up,
 			Misc.Vector2one,
 			Misc.Vector2right,
 			Misc.Vector2zero
 		};
-		Vector4[] placeHolderUV = new Vector4[] {
+		Vector4[] placeHolderUV = {
 			new Vector4 (0, 0.5f, 0.5f, 1f),
 			new Vector4 (0.5f, 0.5f, 1f, 1f),
 			new Vector4 (0, 0f, 0.5f, 0.5f),
 			new Vector4 (0.5f, 0, 1f, 0.5f)
 		};
-		Color[][] meshColors = new Color[][] {
+		Color[][] meshColors = {
 			new Color[] {
 				new Color (1, 0, 0, 0),
 				new Color (1, 0, 0, 0),
@@ -88,7 +88,7 @@ namespace WorldMapStrategyKit {
 				new Color (0, 0, 0, 1)
 			}
 		};
-		Vector2[] offsets = new Vector2[4] {
+		Vector2[] offsets = {
 			new Vector2 (0, 0),
 			new Vector2 (0.99999f, 0),
 			new Vector2 (0.99999f, 0.99999f),
@@ -113,7 +113,6 @@ namespace WorldMapStrategyKit {
 		int subserverSeq;
 		long _tileCurrentCacheUsage;
 		FileInfo[] cachedFiles;
-		int gcCount;
 		float currentTileSize;
 		Plane[] cameraPlanes, wrapCameraPlanes;
 		float lastDisposalTime;
@@ -284,19 +283,23 @@ namespace WorldMapStrategyKit {
 					loadQueue [k].visible = false;
 				}
 
-				#if !UNITY_WEBGL && !UNITY_IOS && !UNITY_WSA
-				GeometryUtilityNonAlloc.CalculateFrustumPlanes (cameraPlanes, currentCamera.projectionMatrix * currentCamera.worldToCameraMatrix);
-				if (_wrapHorizontally && _wrapCamera.enabled) {
-				GeometryUtilityNonAlloc.CalculateFrustumPlanes (wrapCameraPlanes, _wrapCamera.projectionMatrix * _wrapCamera.worldToCameraMatrix);
-				}
-				#else
-				cameraPlanes = GeometryUtility.CalculateFrustumPlanes (currentCamera);
-				if (_wrapHorizontally && _wrapCamera.enabled) {
-				cameraPlanes = GeometryUtility.CalculateFrustumPlanes (_wrapCamera);
-				}
-				#endif
+                //#if !UNITY_WEBGL && !UNITY_IOS && !UNITY_WSA // TODO: RML
+                //    GeometryUtilityNonAlloc.CalculateFrustumPlanes (cameraPlanes, currentCamera.projectionMatrix * currentCamera.worldToCameraMatrix);
+                //    if (_wrapHorizontally && _wrapCamera.enabled) {
+                //        GeometryUtilityNonAlloc.CalculateFrustumPlanes (wrapCameraPlanes, _wrapCamera.projectionMatrix * _wrapCamera.worldToCameraMatrix);
+                //    }
+                //#else
+                //    cameraPlanes = GeometryUtility.CalculateFrustumPlanes (currentCamera);
+                //    if (_wrapHorizontally && _wrapCamera.enabled) {
+                //        cameraPlanes = GeometryUtility.CalculateFrustumPlanes (_wrapCamera);
+                //    }
+                //#endif
+                GeometryUtility.CalculateFrustumPlanes(currentCamera.projectionMatrix * currentCamera.worldToCameraMatrix, cameraPlanes);
+                if (_wrapHorizontally && _wrapCamera.enabled) {
+                    GeometryUtility.CalculateFrustumPlanes(_wrapCamera.projectionMatrix * _wrapCamera.worldToCameraMatrix, wrapCameraPlanes);
+                }
 
-				for (int k = 0; k < zi.xMax; k++) {
+                for (int k = 0; k < zi.xMax; k++) {
 					for (int j = 0; j < zi.yMax; j++) {
 						CheckTiles (null, _currentZoomLevel, k, j, startingZoomLevel, 0);
 					}
@@ -468,14 +471,16 @@ namespace WorldMapStrategyKit {
 				}
 				cachedTiles [tileCode] = ti;
 			}
+
+            // Check if tile is within restricted area
+            if (_tileRestrictToArea) {
+                if (ti.latlons[0].x < _tileMinMaxLatLon.x || ti.latlons[2].x > _tileMinMaxLatLon.z || ti.latlons[0].y > _tileMinMaxLatLon.w || ti.latlons[2].y < _tileMinMaxLatLon.y) {
+                    return;
+                }
+            }
+
 			// Check if any tile corner is visible
 			// Phase I
-#if DEBUG_TILES
-			if (ti.gameObject != null && ti.gameObject.GetComponent<TileInfoEx> ().debug) {
-				Debug.Log ("this");
-			}
-#endif
-
 			Vector3 minWorldPos = Misc.Vector3max;
 			Vector3 maxWorldPos = Misc.Vector3min;
 			Vector3 tmp = Misc.Vector3zero;

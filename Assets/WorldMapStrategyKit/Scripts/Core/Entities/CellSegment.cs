@@ -5,14 +5,18 @@ using System.Collections.Generic;
 
 namespace WorldMapStrategyKit {
 
-	public class CellSegment {
+	public struct CellSegment {
+		
 		public Vector2 start, end;
-		public bool isRepeated;
-		// true if this segment is already used by another hex
 
-		public CellSegment(Vector2 start, Vector2 end) {
+		// true if this segment is already used by another hex
+		public bool isRepeated;
+
+
+		public CellSegment(Vector2 start, Vector2 end, bool isRepeated = false) {
 			this.start = start;
 			this.end = end;
+			this.isRepeated = isRepeated;
 		}
 
 		public override string ToString() {
@@ -21,8 +25,7 @@ namespace WorldMapStrategyKit {
 
 		public CellSegment swapped {
 			get { 
-				CellSegment n = new CellSegment(end, start); 
-				n.isRepeated = true;
+				CellSegment n = new CellSegment(end, start, true); 
 				return n;
 			} 
 		}

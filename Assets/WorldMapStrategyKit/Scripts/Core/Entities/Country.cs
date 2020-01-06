@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace WorldMapStrategyKit {
-	public partial class Country: AdminEntity, IExtendableAttribute {
+	public partial class Country: AdminEntity {
 
 		/// <summary>
 		/// Continent name.
@@ -61,20 +61,6 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-        public City[] cities { get { return GetCities(); } }
-		private City[] GetCities()
-		{
-			var cities = new List<City>();
-			foreach (City city in cities)
-			{
-				if (city.countryIndex == uniqueId)
-				{
-					cities.Add(city);
-				}
-			}
-			return cities.ToArray();
-		}
-
 		/// <summary>
 		/// True for a country acting as a provinces pool created by CreateCountryProvincesPool function.
 		/// The effect of this field is that all transfer operations will ignore its borders which results in a faster operation
@@ -115,7 +101,10 @@ namespace WorldMapStrategyKit {
 		public Country Clone() {
 			Country c = new Country(name, continent, uniqueId);
 			c.center = center;
-			c.regions = regions;
+            c.regions = new List<Region>(regions.Count);
+            for (int k=0;k<regions.Count;k++) {
+                c.regions.Add(regions[k].Clone());
+            }
 			c.customLabel = customLabel;
 			c.labelColor = labelColor;
 			c.labelColorOverride = labelColorOverride;
@@ -127,6 +116,7 @@ namespace WorldMapStrategyKit {
 			c.hidden = this.hidden;
 			c.attrib = new JSONObject();
 			c.attrib.Absorb(attrib);
+            c.regionsRect2D = regionsRect2D;
 			return c;
 		}
 

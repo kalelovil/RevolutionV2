@@ -160,11 +160,23 @@ namespace WorldMapStrategyKit {
 		}
 
 
+        /// <summary>
+        /// Gets the map position for the center of a given tile defined by x,y and zoom level
+        /// </summary>
+        /// <returns>The lat lon from tile.</returns>
+        /// <param name="x">The x coordinate.</param>
+        /// <param name="y">The y coordinate.</param>
+        /// <param name="zoomLevel">Zoom level.</param>
+        public static Vector2 GetLocalPositionFromTile(float x, float y, int zoomLevel) {
+            Vector2 latlon = GetLatLonFromTile(x, y, zoomLevel);
+            return GetLocalPositionFromLatLon(latlon);
+        }
 
-		/// <summary>
-		/// Convertes sphere to latitude/longitude coordinates
-		/// </summary>
-		public static  void GetLatLonFromSpherePoint (Vector3 p, out float lat, out float lon) {
+
+        /// <summary>
+        /// Convertes sphere to latitude/longitude coordinates
+        /// </summary>
+        public static  void GetLatLonFromSpherePoint (Vector3 p, out float lat, out float lon) {
 			float phi = Mathf.Asin (p.y * 2.0f);
 			float theta = Mathf.Atan2 (p.x, p.z);
 			lat = phi * Mathf.Rad2Deg;

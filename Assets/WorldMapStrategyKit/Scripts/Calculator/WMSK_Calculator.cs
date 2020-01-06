@@ -25,7 +25,7 @@ namespace WorldMapStrategyKit {
 		public float fromLonSeconds;
 		// From: decimal degrees
 		public float fromLatDec, fromLonDec;
-		// From: spherical coordinates
+		// From: plane coordinates
 		public float fromX, fromY;
 		// To: latitude (degree)
 		public float toLatDegree;
@@ -48,6 +48,24 @@ namespace WorldMapStrategyKit {
 		public WMSK map { get { return GetComponent<WMSK> (); } }
 
 		public Vector3 toPlaneLocation { get { return new Vector2 (toX, toY); } }
+
+		/// <summary>
+		/// Returns either "N" or "S" depending on the converted latitude
+		/// </summary>
+		public string toLatCardinal {
+			get {
+				return toLatDec >= 0 ? "N" : "S";
+			}
+		}
+
+		/// <summary>
+		/// Returns either "W" or "E" depending on the converted longitude
+		/// </summary>
+		public string toLonCardinal {
+			get {
+				return toLonDec >= 0 ? "E" : "W";
+			}
+		}
 
 		Vector3 lastCursorPos;
 		public string errorMsg;
@@ -109,6 +127,22 @@ namespace WorldMapStrategyKit {
 			isDirty = true;
 			return errorMsg.Length == 0;
 		}
+
+		/// <summary>
+		/// Returns a formatted lat/lon coordinates string based on the current cursor position
+		/// </summary>
+		/// <value>The pretty current lat lon.</value>
+		public string prettyCurrentLatLon {
+			get {
+				fromUnit = UNIT_TYPE.PlaneCoordinates;
+				Vector2 cursor = map.cursorLocation;
+				fromX = cursor.x;
+				fromY = cursor.y;
+				Convert ();
+				return string.Format ("{0}°{1}'{2:F2}\"{3} {4}°{5}'{6:F2}\"{7}", Mathf.Abs (toLatDegree), toLatMinute, toLatSeconds, toLatCardinal, Mathf.Abs (toLonDegree), toLonMinute, toLonSecond, toLonCardinal);
+			}
+		}
+
 
 		/// <summary>
 		/// Returns distance in meters from two lat/lon coordinates

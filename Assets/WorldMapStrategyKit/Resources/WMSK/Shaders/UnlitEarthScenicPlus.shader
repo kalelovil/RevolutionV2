@@ -27,6 +27,7 @@
 				sampler2D _MainTex;
 				sampler2D _EarthBlurred;
 				float4 _MainTex_TexelSize;
+                float4 _MainTex_ST;
 				
 				sampler2D _TerrestrialMap;
 				sampler2D _Water;
@@ -93,26 +94,30 @@
 					#else
 						o.pos.z += 0.0005;
 					#endif
-					o.uv = v.texcoord;
+					o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
 					return o;
 				}
 
 				fixed4 frag (v2f i) : SV_Target {
-					half4 terra = tex2D(_TerrestrialMap, i.uv);
+                    half4 terra = tex2D(_TerrestrialMap, i.uv);
 					half elevation = terra.r; 
 					fixed4 color;
-					if (elevation<_WaterLevel.x) {
-						color = getWater(i.uv, terra);
-//						if (elevation>_WaterLevel.x) {
-//							fixed4 earthBlurred = tex2D (_EarthBlurred, i.uv);
-//							color = lerp(color, earthBlurred, smoothstep(0f, 1f, elevation / _WaterLevel.x));
-//						}
-					} else {
-						fixed4 earth = tex2Dlod (_MainTex, float4(i.uv, 0, 0));
-						fixed4 earthBlurred = tex2Dlod (_EarthBlurred, float4(i.uv, 0, 0));
-						color = lerp(earthBlurred, earth, saturate((_Distance-0.02)*16.0));
-						color.a = 0;
-					}
+//					if (elevation<_WaterLevel.x) {
+//						color = getWater(i.uv, terra);
+//					} else {
+//						fixed4 earth = tex2Dlod (_MainTex, float4(i.uv, 0, 0));
+//						fixed4 earthBlurred = tex2Dlod (_EarthBlurred, float4(i.uv, 0, 0));
+//						color = lerp(earthBlurred, earth, saturate((_Distance-0.02)*16.0));
+//						color.a = 0;
+//					}
+
+					fixed4 water = getWater(i.uv, terra);
+					fixed4 earth = tex2D (_MainTex, i.uv);
+					fixed4 earthBlurred = tex2D (_EarthBlurred, i.uv);
+					earth = lerp(earthBlurred, earth, saturate((_Distance-0.02)*16.0));
+					earth.a = 0;
+
+					color = lerp(water, earth, smoothstep(0, _WaterLevel.x, elevation));
 
 					if (_CloudShadowStrength>0) {
 						fixed4 shadowColor = tex2Dlod (_CloudMap, float4(i.uv + _CloudMapOffset, 0, 0));

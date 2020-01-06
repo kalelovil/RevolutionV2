@@ -11,8 +11,9 @@ namespace WorldMapStrategyKit {
 		RESHAPE = 1,
 		CREATE = 2,
 		MAP_GENERATOR = 3,
-		REVERT = 4,
-		CONFIRM = 5
+        MAP_TOOLS = 4,
+		REVERT = 5,
+		CONFIRM = 6
 	}
 
 	public enum RESHAPE_REGION_TOOL {
@@ -90,7 +91,7 @@ namespace WorldMapStrategyKit {
 		public Region selectedRegion {
 			get {
 				if (editingMode == EDITING_MODE.PROVINCES && provinceIndex >= 0) {
-					if (provinceIndex >= 0 && provinceRegionIndex >= 0 && map.provinces != null && map.provinces [provinceIndex].regions != null) {
+					if (provinceIndex >= 0 && provinceRegionIndex >= 0 && map.provinces != null && map.provinces [provinceIndex].regions != null && provinceRegionIndex < map.provinces[provinceIndex].regions.Count) {
 						return map.provinces [provinceIndex].regions [provinceRegionIndex];
 					}
 					return null;
@@ -183,13 +184,7 @@ namespace WorldMapStrategyKit {
 		public int newShapeSegmentPointIndex;
 
 		const float POINT_SQR_PRECISION = 1e-10f;
-		float[] gaussian = {
-			0.153170f,
-			0.144893f,
-			0.122649f,
-			0.092902f,
-			0.062970f
-		};
+
 		WMSK _map;
 		
 		[SerializeField]
@@ -1207,167 +1202,7 @@ namespace WorldMapStrategyKit {
 
 		#endregion
 
-		#region Texture FX options
-
-
-		public delegate bool MotionVectorProgress (float percentage, string text);
-
-		public delegate void MotionVectorFinished (Texture2D texture, bool cancelled);
-
-		bool cancelled;
-
-		IEnumerator BlurPass (Color[] colors, int width, int height, int incx, int incy, MotionVectorProgress progress, string progressText) {
-
-			for (int y = 0; y < height; y++) {
-				if (y % 100 == 0) {
-					if (progress != null) {
-						if (progress ((float)y / height, progressText)) {
-							cancelled = true;
-							break;
-						}
-					}
-					yield return null;
-				}
-				for (int x = 0; x < width; x++) {
-					int pixelPos = y * width + x;
-					float denom = gaussian [0];
-					float[] sum = new float[] {
-						colors [pixelPos].g * denom,
-						colors [pixelPos].b * denom,
-						colors [pixelPos].a * denom
-					};
-					for (int k = 1; k < 5; k++) {
-						int y0 = y + incy * k;
-						if (y0 >= 0 && y0 < height) {
-							int x0 = x + incx * k;
-							if (x0 >= 0 && x0 < width) {
-								int pixelPos0 = y0 * width + x0;
-								float g = gaussian [k];
-								denom += g;
-								Color color = colors [pixelPos0];
-								sum [0] += color.g * g;
-								sum [1] += color.b * g;
-								sum [2] += color.a * g;
-							}
-						}
-					}
-					colors [pixelPos].g = sum [0] / denom;
-					colors [pixelPos].b = sum [1] / denom;
-					colors [pixelPos].a = sum [2] / denom;
-				}
-			}
-		}
-
-
-		/// <summary>
-		/// Updates provided texture to reflect water animation vectors
-		/// Red channel: elevation
-		/// Green channel: water flow motion vector (x)
-		/// Blue channel: water flow motion vector (y)
-		/// Alpha channel: foam intensity
-		/// </summary>
-		public void GenerateWaterMotionVectors (Texture2D tex, MotionVectorProgress progress, MotionVectorFinished finish) {
-			StartCoroutine (mGenerateWaterMotionVectors (tex, progress, finish));
-		}
-
-		IEnumerator mGenerateWaterMotionVectors (Texture2D tex, MotionVectorProgress progress, MotionVectorFinished finish) {
-			Color[] colors = tex.GetPixels ();
-			int colorBufferSize = colors.Length;
-
-			int width = tex.width;
-			int height = tex.height;
-
-			// Per pixel, calculate foam intensity and motion vector
-			// For motion vector, we calculate a weighted average of vectors surrounding the pixel for a custom sized kernel size
-			// For foam intensity, we take the weighted average
-			int hks = 2; // Half of kernel size
-
-			Vector2[,] kernelWeight = new Vector2[hks * 2, hks * 2];
-			for (int y = -hks; y < hks; y++) {
-				for (int x = -hks; x < hks; x++) {
-					Vector2 v = new Vector2 (x, y);
-					v.Normalize ();
-					kernelWeight [y + hks, x + hks] = -v;
-				}
-			}
-					
-			cancelled = false;
-			for (int j = 0; j < height; j++) {
-				if (j % 100 == 0) {
-					if (progress != null) {
-						if (progress ((float)j / height, "Pass 1/4")) {
-							cancelled = true;
-							break;
-						}
-					}
-					yield return null;
-				}
-				for (int k = 0; k < width; k++) {
-					int currentPixel = j * width + k;
-					float sumElev = 0;
-					// Compute weighter vectors
-					Vector2 avgVector = Misc.Vector2zero;
-					for (int y = -hks; y < hks; y++) {
-						int pixelPos = currentPixel + y * width - hks;
-						if (pixelPos >= 0 && pixelPos < colorBufferSize) {
-							for (int x = 0; x < hks * 2 && pixelPos < colorBufferSize; x++, pixelPos++) {
-								if (pixelPos != currentPixel) {
-									float elev = colors [pixelPos].r;
-									avgVector += kernelWeight [y + hks, x] * elev;
-									sumElev += elev;
-								}
-							}
-						}
-					}
-					if (sumElev > 0)
-						avgVector /= sumElev;
-					colors [currentPixel].g = avgVector.x;
-					colors [currentPixel].b = avgVector.y;
-					colors [currentPixel].a = sumElev / (hks * hks * 4);
-				}
-			}
-
-			// apply blur
-			if (progress != null)
-				progress (1, ""); // hide progress bar
-			if (!cancelled) {
-				yield return StartCoroutine (BlurPass (colors, width, height, 1, 0, progress, "Pass 2/4"));
-				if (progress != null)
-					progress (1, ""); // hide progress bar
-			}
-			if (!cancelled) {
-				yield return StartCoroutine (BlurPass (colors, width, height, 0, 1, progress, "Pass 3/4"));
-				if (progress != null)
-					progress (1, ""); // hide progress bar
-			}
-
-			// clamp colors
-			if (!cancelled) {
-				for (int j = 0; j < colorBufferSize; j++) {
-					if (j % 100000 == 0) {
-						if (progress != null) {
-							if (progress ((float)j / colorBufferSize, "Pass 4/4")) {
-								cancelled = true;
-								break;
-							}
-						}
-						yield return null;
-					}
-					colors [j].g = (colors [j].g * 0.5f) + 0.5f;
-					colors [j].b = (colors [j].b * 0.5f) + 0.5f;
-				}
-				if (progress != null)
-					progress (1, ""); // hide progress bar
-			}
-
-			if (!cancelled) {
-				tex.SetPixels (colors);
-			}
-			if (finish != null)
-				finish (tex, cancelled);
-		}
-
-		#endregion
+	
 
 		#region Region operations
 

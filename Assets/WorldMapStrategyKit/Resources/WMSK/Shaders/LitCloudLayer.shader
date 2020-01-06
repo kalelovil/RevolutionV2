@@ -3,7 +3,7 @@
                 _MainTex ("Emission (RGB)", 2D) = "white" {}
                 _Specular ("Specular", Color) = (0, 0, 0, 0)
                 _Smoothness ("Smoothness", Range(0,1)) = 0.0
-         		[HideInInspector] _EmissionColor("Brightness", Float) = 1
+         		[HideInInspector] _Brightness("Brightness", Float) = 1
         }
    SubShader {
                 Tags { "Queue"="Transparent+2" "RenderType"="Transparent" }
@@ -23,7 +23,7 @@
                 };
                 half _Smoothness;
                 fixed4 _Specular;
-                half _EmissionColor;
+                half _Brightness;
 
 				void vert (inout appdata_full v, out Input data) {
           			UNITY_INITIALIZE_OUTPUT(Input,data);
@@ -34,8 +34,8 @@
                     o.Albedo = fixed3(0,0,0);
                     o.Smoothness = _Smoothness;
                     o.Specular = _Specular;
-                    o.Emission = c.rgb * _EmissionColor;
-                    o.Alpha = c.a * _EmissionColor;
+                    o.Emission = c.rgb * _Brightness;
+                    o.Alpha = c.a * _Brightness;
                 }
                 ENDCG
         }

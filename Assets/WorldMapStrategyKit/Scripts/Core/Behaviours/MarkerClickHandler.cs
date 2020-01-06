@@ -6,47 +6,65 @@ using System.Collections.Generic;
 
 namespace WorldMapStrategyKit {
 
-	public delegate void OnMarkerEvent (int buttonIndex);
+	public delegate void OnMarkerPointerClickEvent (int buttonIndex);
+    public delegate void OnMarkerEvent();
 
-	public class MarkerClickHandler : MonoBehaviour {
+    public class MarkerClickHandler : MonoBehaviour {
 
-		public OnMarkerEvent OnMarkerMouseDown;
-		public OnMarkerEvent OnMarkerMouseUp;
-		public WMSK map;
+		public OnMarkerPointerClickEvent OnMarkerMouseDown;
+		public OnMarkerPointerClickEvent OnMarkerMouseUp;
+        public OnMarkerEvent OnMarkerMouseEnter;
+        public OnMarkerEvent OnMarkerMouseExit;
+        public WMSK map;
+        bool wasInside;
 
 		void Start () {
-			// Get a reference to the World Map API:
-			if (map == null)
-				map = WMSK.instance;
+            // Get a reference to the World Map API:
+            if (map == null) {
+                map = WMSK.instance;
+            }
+            wasInside = SpriteRectContainsPointer();
 		}
 
 
 		void LateUpdate () {
-			if ((OnMarkerMouseDown == null && OnMarkerMouseUp == null) || map == null)
-				return;
-
 			bool leftButtonPressed = Input.GetMouseButtonDown (0);
 			bool rightButtonPressed = Input.GetMouseButtonDown (1);
 			bool leftButtonReleased = Input.GetMouseButtonUp (0);
 			bool rightButtonReleased = Input.GetMouseButtonUp (1);
-
-			if (leftButtonPressed || rightButtonPressed || leftButtonReleased || rightButtonReleased) {
-				// Check if cursor location is inside marker rect
-				Vector2 cursorLocation = map.cursorLocation;
-				Rect rect = new Rect (transform.localPosition - transform.localScale * 0.5f, transform.localScale);
-
-				if (rect.Contains (cursorLocation)) {
-					if (OnMarkerMouseDown != null && leftButtonPressed)
+            bool checkEnterExit = OnMarkerMouseEnter != null || OnMarkerMouseExit != null;
+			if (checkEnterExit || leftButtonPressed || rightButtonPressed || leftButtonReleased || rightButtonReleased) {
+                // Check if cursor location is inside marker rect
+                bool inside = SpriteRectContainsPointer();
+				if (inside) {
+                    if (leftButtonPressed && OnMarkerMouseDown != null)
 						OnMarkerMouseDown (0);
-					if (OnMarkerMouseDown != null && rightButtonPressed)
+					if (rightButtonPressed && OnMarkerMouseDown != null)
 						OnMarkerMouseDown (1);
-					if (OnMarkerMouseUp != null && leftButtonReleased)
+					if (leftButtonReleased && OnMarkerMouseUp != null)
 						OnMarkerMouseUp (0);
-					if (OnMarkerMouseUp != null && rightButtonReleased)
+					if (rightButtonReleased && OnMarkerMouseUp != null)
 						OnMarkerMouseUp (1);
-				}
-			}
-		}
+                    if (!wasInside && OnMarkerMouseEnter != null) {
+                        OnMarkerMouseEnter();
+                    }
+				} else {
+                    if (wasInside && OnMarkerMouseExit != null) {
+                        OnMarkerMouseExit();
+                    }
+                }
+                wasInside = inside;
+            }
+        }
+
+        bool SpriteRectContainsPointer() {
+            // Check if cursor location is inside marker rect
+            if (map == null)
+                return false;
+            Vector2 cursorLocation = map.cursorLocation;
+            Rect rect = new Rect(transform.localPosition - transform.localScale * 0.5f, transform.localScale);
+            return rect.Contains(cursorLocation);
+        }
 	}
 
 }

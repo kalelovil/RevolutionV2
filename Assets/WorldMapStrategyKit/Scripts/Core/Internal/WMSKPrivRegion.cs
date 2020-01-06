@@ -518,9 +518,7 @@ namespace WorldMapStrategyKit {
 					lr.SetPosition (k, region.points [k]);
 				}
 				lr.SetPosition (pCount, region.points [0]);
-				#if UNITY_5_6_OR_NEWER
 				lr.loop = true;
-				#endif
 				if (customBorder && region.customBorderTexture != outlineMatTextured.mainTexture) {
 					Material mat = Instantiate<Material> (outlineMatTextured);
 					if (disposalManager!=null) disposalManager.MarkForDisposal (mat); //mat.hideFlags = HideFlags.DontSave;

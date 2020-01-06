@@ -3,9 +3,8 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1888,16 +1887,26 @@ MonoBehaviour:
     fontRenderMode: 0
     fontKerning: 0
   fontWeights:
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
-  - {regularTypeface: {fileID: 0}, italicTypeface: {fileID: 0}}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
   normalStyle: 0
   normalSpacingOffset: 0
   boldStyle: 0.75
@@ -1908,9 +1917,8 @@ MonoBehaviour:
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Lato SDF Material
   m_Shader: {fileID: 4800000, guid: dca26082f9cb439469295791d9f76fe5, type: 3}
   m_ShaderKeywords: 
@@ -2007,9 +2015,8 @@ Material:
 --- !u!28 &28632614852510462
 Texture2D:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Lato SDF Atlas
   m_ImageContentsHash:
     serializedVersion: 2
@@ -2023,8 +2030,6 @@ Texture2D:
   m_TextureFormat: 1
   m_MipCount: 1
   m_IsReadable: 0
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
   m_AlphaIsTransparency: 0
   m_ImageCount: 1
   m_TextureDimension: 2

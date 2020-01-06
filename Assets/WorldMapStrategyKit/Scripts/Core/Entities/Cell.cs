@@ -68,6 +68,11 @@ namespace WorldMapStrategyKit {
 
 		public bool isWrapped;
 
+		/// <summary>
+		/// Internal use.
+		/// </summary>
+		public bool flag;
+
 
 		public Cell (int row, int column, Vector2 center) {
 			this.row = row;
@@ -90,6 +95,62 @@ namespace WorldMapStrategyKit {
 					inside = !inside; 
 			} 
 			return inside; 
+		}
+
+		public bool Contains(Region region) {
+			if (region == null || region.points == null)
+				return false;
+			for (int k = 0; k < region.points.Length; k++) {
+				if (!Contains (region.points [k])) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Intersection test between two rects
+		/// </summary>
+		/// <param name="otherRect">Other rect.</param>
+		public bool Intersects(Rect otherRect) {
+
+			if (otherRect.xMin > rect2D.xMax)
+				return false;
+			if (otherRect.xMax < rect2D.xMin)
+				return false;
+			if (otherRect.yMin > rect2D.yMax)
+				return false;
+			if (otherRect.yMax < rect2D.yMin)
+				return false;
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Returns true if one rect crosses other rect but does not contain it (edge crossing)
+		/// </summary>
+		public bool IntersectsEdgesOnly(Rect otherRect) {
+
+			if (otherRect.xMin > rect2D.xMax)
+				return false;
+			if (otherRect.xMax < rect2D.xMin)
+				return false;
+			if (otherRect.yMin > rect2D.yMax)
+				return false;
+			if (otherRect.yMax < rect2D.yMin)
+				return false;
+
+			if (otherRect.xMin < rect2D.xMin)
+				return true;
+			if (otherRect.xMax > rect2D.xMax)
+				return true;
+			if (otherRect.yMin < rect2D.yMin)
+				return true;
+			if (otherRect.yMax > rect2D.yMax)
+				return true;
+			
+			return false;
 		}
 
 	}

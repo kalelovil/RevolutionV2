@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WorldMapStrategyKit {
 
-	public abstract class AdminEntity: IAdminEntity {
+	public abstract class AdminEntity: IAdminEntity, IExtendableAttribute {
 
 		/// <summary>
 		/// Entity name (country/province or province).
@@ -151,11 +151,46 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-
 		/// <summary>
-		/// Sets whether the country/province name will be shown or not.
+		/// Returns true if any of the entity's regions contains the point
 		/// </summary>
-		public bool labelVisible = true;
+		/// <param name="point">Point.</param>
+		public bool Contains(Vector2 point) {
+			if (!regionsRect2D.Contains (point))
+				return false;
+			
+			int regionsCount = regions.Count;
+			for (int k = 0; k < regionsCount; k++) {
+				if (regions [k].Contains (point)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+
+        /// <summary>
+        /// Returns true if any of the entity's regions contains the region
+        /// </summary>
+        /// <param name="point">Point.</param>
+        public bool Contains(Region region) {
+            if (!regionsRect2D.Overlaps(region.rect2D))
+                return false;
+
+            int regionsCount = regions.Count;
+            for (int k = 0; k < regionsCount; k++) {
+                if (regions[k].Contains(region)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        /// <summary>
+        /// Sets whether the country/province name will be shown or not.
+        /// </summary>
+        public bool labelVisible = true;
 
 		/// <summary>
 		/// If set to a value > 0 degrees then label will be rotated according to this value (and not automatically calculated).

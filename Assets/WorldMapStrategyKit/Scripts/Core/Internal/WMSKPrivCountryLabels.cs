@@ -28,12 +28,15 @@ namespace WorldMapStrategyKit {
 		Font labelsFont;
 		UnityEngine.Object labelsFontTMPro;
 		Material labelsShadowMaterial;
-		AnimationCurve labelsCurve;
+
+#if USE_TEXTMESH_PRO
+        AnimationCurve labelsCurve;
+#endif
 		List<MeshRect> meshRects;
 
 		int antarctica, greenland, brazil, india, usa, canada, china, russia;
 
-		#region Country Labels
+#region Country Labels
 
 		void ResetDefaultCountryLabelOffset () {
 			antarctica = -1;
@@ -216,9 +219,9 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-		#region TextMesh Pro support
+#region TextMesh Pro support
 
-		#if USE_TEXTMESH_PRO
+#if USE_TEXTMESH_PRO
 		
 
 		void DrawTextMeshProLabels() {
@@ -452,8 +455,8 @@ namespace WorldMapStrategyKit {
 			labelsCurve.postWrapMode = WrapMode.Clamp;
 		}
 
-		#endif
-		#endregion
+#endif
+#endregion
 
 		string BreakOneLineString (string s) {
 			if (s.Length <= 15)
@@ -690,7 +693,7 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		#if USE_TEXTMESH_PRO
+#if USE_TEXTMESH_PRO
 		void FadeCountryLabels() {
 
 			// Automatically fades in/out country labels based on their screen size
@@ -847,14 +850,14 @@ namespace WorldMapStrategyKit {
 				}
 			}
 		}
-		#endif
+#endif
 
 		void DestroyMapLabels () {
 			DestroyCountryLabels ();
 			DestroyProvinceLabels ();
 		}
 
-		#endregion
+#endregion
 
 
 	}

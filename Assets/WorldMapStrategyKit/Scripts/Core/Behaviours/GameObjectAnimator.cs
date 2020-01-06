@@ -602,7 +602,6 @@ namespace WorldMapStrategyKit {
 		// moment when the follow is issued (usually equals to startingTime but it could be set afterwards)
 		float followStartZoomLevel;
 		Vector3 followStart2DLocation;
-		Quaternion targetDirection;
 		Vector3 destinationDirection;
 		WMSK map;
 		List<Vector2> route;

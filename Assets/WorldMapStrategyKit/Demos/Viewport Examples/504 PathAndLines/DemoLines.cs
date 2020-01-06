@@ -235,6 +235,7 @@ namespace WorldMapStrategyKit {
 				pathLine.endCapMaterial = endCapMaterial;
 				pathLine.endCapScale = new Vector3 (1f, 1f, 2.5f);
 				pathLine.endCapOffset = 4f;
+                pathLine.endCapFlipDirection = true;
 			}
 
 			UpdateCircle(destination);

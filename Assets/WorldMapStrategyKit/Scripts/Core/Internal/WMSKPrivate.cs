@@ -13,25 +13,14 @@ using System.Text;
 using System.Globalization;
 using WorldMapStrategyKit.PolygonClipping;
 
-namespace WorldMapStrategyKit {
+namespace WorldMapStrategyKit
+{
 
-	public static class EarthStyleExtensions {
-
-		public static bool isScenicPlus (this EARTH_STYLE earthStyle) {
-			return earthStyle == EARTH_STYLE.NaturalScenicPlus || earthStyle == EARTH_STYLE.NaturalScenicPlusAlternate1 || earthStyle == EARTH_STYLE.NaturalScenicPlus16K;
-		}
-
-
-		public static bool supportsBumpMap (this EARTH_STYLE earthStyle) {
-			return earthStyle == EARTH_STYLE.Natural || earthStyle == EARTH_STYLE.NaturalHighRes || earthStyle == EARTH_STYLE.Alternate1 || earthStyle == EARTH_STYLE.Alternate2 || earthStyle == EARTH_STYLE.Alternate3 || earthStyle == EARTH_STYLE.NaturalScenic;
-		}
-
-
-	}
 
 	[Serializable]
 	[ExecuteInEditMode]
-	public partial class WMSK : MonoBehaviour {
+	public partial class WMSK : MonoBehaviour
+	{
 
 		public const float MAP_PRECISION = 5000000f;
 		public const string SURFACE_LAYER = "Surfaces";
@@ -39,8 +28,8 @@ namespace WorldMapStrategyKit {
 		const float TAP_THRESHOLD = 0.25f;
 		const string OVERLAY_BASE = "OverlayLayer";
 		const string SKW_BUMPMAP_ENABLED = "WMSK_BUMPMAP_ENABLED";
-		char[] SPLIT_SEP_SEMICOLON = new char[] { ';' };
-		char[] SPLIT_SEP_ASTERISK = new char[] { '*' };
+		char[] SPLIT_SEP_SEMICOLON = { ';' };
+		char[] SPLIT_SEP_ASTERISK = { '*' };
 
 
 		public static float mapWidth { get { return WMSK.instanceExists ? WMSK.instance.transform.localScale.x : 200.0f; } }
@@ -77,6 +66,7 @@ namespace WorldMapStrategyKit {
 		Dictionary<double,Region> frontiersCacheHit;
 		List<Vector3> frontiersPoints;
 		DisposalManager disposalManager;
+		int lastRegionIndex;
 
 		// FlyTo functionality
 		Quaternion flyToStartQuaternion, flyToEndQuaternion;
@@ -163,92 +153,26 @@ namespace WorldMapStrategyKit {
 
 		#region Game loop events
 
-		void OnEnable () {
+		void OnEnable ()
+		{
 
 			if (_countries == null) {
 				Init ();
 			}
-
-			// Check material
-			Renderer renderer = GetComponent<MeshRenderer> () ?? gameObject.AddComponent<MeshRenderer> ();
-			if (renderer.sharedMaterial == null) {
-				RestyleEarth ();
-			}
-
-			if (hudMatCountry != null && hudMatCountry.color != _fillColor) {
-				hudMatCountry.color = _fillColor;
-			}
-			UpdateFrontiersMaterial ();
-			if (hudMatProvince != null && hudMatProvince.color != _provincesFillColor) {
-				hudMatProvince.color = _provincesFillColor;
-			}
-			if (provincesMat != null && provincesMat.color != _provincesColor) {
-				provincesMat.color = _provincesColor;
-			}
-			if (citiesNormalMat.color != _citiesColor) {
-				citiesNormalMat.color = _citiesColor;
-			}
-			if (citiesRegionCapitalMat.color != _citiesRegionCapitalColor) {
-				citiesRegionCapitalMat.color = _citiesRegionCapitalColor;
-			}
-			if (citiesCountryCapitalMat.color != _citiesCountryCapitalColor) {
-				citiesCountryCapitalMat.color = _citiesCountryCapitalColor;
-			}
-			if (outlineMat.color != _outlineColor) {
-				outlineMat.color = _outlineColor;
-			}
-			if (cursorMatH.color != _cursorColor) {
-				cursorMatH.color = _cursorColor;
-			}
-			if (cursorMatV.color != _cursorColor) {
-				cursorMatV.color = _cursorColor;
-			}
-			if (imaginaryLinesMat.color != _imaginaryLinesColor) {
-				imaginaryLinesMat.color = _imaginaryLinesColor;
-			}
-			if (hudMatCell != null && hudMatCell.color != _cellHighlightColor) {
-				hudMatCell.color = _cellHighlightColor;
-			}
-			if (gridMat != null && gridMat.color != _gridColor) {
-				gridMat.color = _gridColor;
-			}
-			if (_enableCellHighlight) {
-				showLatitudeLines = showLongitudeLines = false;
-			}
-
-			// Unity 5.3.1 prevents raycasting in the scene view if rigidbody is present - we have to delete it in editor time but re-enable it here during play mode
-			if (Application.isPlaying) {
-
-				if (GetComponent<Rigidbody> () == null) {
-					Rigidbody rb = gameObject.AddComponent<Rigidbody> ();
-					rb.useGravity = false;
-					rb.isKinematic = true;
-				}
-
-				Redraw ();
-
-				if (_prewarm) {
-					CountriesPrewarmBigSurfaces ();
-					PathFindingPrewarm ();
-				}
-			}
-
-			maxFrustumDistance = float.MaxValue;
-			if (_fitWindowWidth || _fitWindowHeight)
-				CenterMap ();
 		}
 
-		void OnDisable () {
+		void OnDisable ()
+		{
 			if (isMiniMap)
 				return;
-			if (_wrapCamera != null)
-				_wrapCamera.enabled = false;
+            ToggleWrapCamera(false);
 			if (_currentCamera != null && _currentCamera.name.Equals (MAPPER_CAM))
 				_currentCamera.enabled = false;
 			ToggleUIPanel (true);
 		}
 
-		void OnDestroy () {
+		void OnDestroy ()
+		{
 			if (_surfacesLayer != null) {
 				GameObject.DestroyImmediate (_surfacesLayer);
 			}
@@ -258,11 +182,13 @@ namespace WorldMapStrategyKit {
 			disposalManager.DisposeAll ();
 		}
 
-		void Reset () {
+		void Reset ()
+		{
 			Redraw ();
 		}
 
-		void Update () {
+		void Update ()
+		{
 
 			if (currentCamera == null || !Application.isPlaying) {
 				// For some reason, when saving the scene, the renderview port loses the attached rendertexture.
@@ -502,7 +428,8 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		void LateUpdate () {
+		void LateUpdate ()
+		{
 			updateDoneThisFrame = false;
 
 			if (_renderViewportIsTerrain) {
@@ -527,7 +454,8 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-		void CheckRectConstraints () {
+		void CheckRectConstraints ()
+		{
 
 			if (isMiniMap)
 				return;
@@ -614,7 +542,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Check controls (keys, mouse, ...) and react
 		/// </summary>
-		void PerformUserInteraction () {
+		void PerformUserInteraction ()
+		{
 
 			bool buttonLeftPressed = Input.GetMouseButton (0) || (Input.touchSupported && Input.touchCount == 1 && Input.touches [0].phase != TouchPhase.Ended);
 			if (Input.GetMouseButtonDown (0) || Input.GetMouseButtonDown (1))
@@ -906,7 +835,7 @@ namespace WorldMapStrategyKit {
 				}
 			}
 
-			if (!buttonLeftPressed) {
+			if (!buttonLeftPressed && hasDragged) {
 				if (Input.GetMouseButtonUp (0) || (Input.touchSupported && Input.touchCount == 1 && Input.touches [0].phase == TouchPhase.Ended)) {
 					dragDampingStart = Time.time;
 				}
@@ -965,11 +894,13 @@ namespace WorldMapStrategyKit {
 
 		}
 
-		public void OnMouseEnter () {
+		public void OnMouseEnter ()
+		{
 			mouseIsOver = true;
 		}
 
-		public void OnMouseExit () {
+		public void OnMouseExit ()
+		{
 			// Make sure it's outside of map
 			Vector3 mousePos = Input.mousePosition;
 			if (mousePos.x >= 0 && mousePos.x < Screen.width && mousePos.y >= 0 && mousePos.y < Screen.height) {
@@ -991,12 +922,14 @@ namespace WorldMapStrategyKit {
 			HideCountryRegionHighlight ();
 		}
 
-		public void DoOnMouseClick () {
+		public void DoOnMouseClick ()
+		{
 			mouseIsOver = true;
 			Update ();
 		}
 
-		public void DoOnMouseRelease () {
+		public void DoOnMouseRelease ()
+		{
 			Update ();
 			mouseIsOver = false;
 			HideCountryRegionHighlight ();
@@ -1006,7 +939,8 @@ namespace WorldMapStrategyKit {
 
 		#region System initialization
 
-		public void Init () {
+		public void Init ()
+		{
 
 			#if UNITY_EDITOR
 			#if UNITY_2018_3_OR_NEWER
@@ -1106,12 +1040,12 @@ namespace WorldMapStrategyKit {
 			imaginaryLinesMat = Instantiate (Resources.Load <Material> ("WMSK/Materials/ImaginaryLines"));
 			if (disposalManager != null)
 				disposalManager.MarkForDisposal (imaginaryLinesMat); //.hideFlags = HideFlags.DontSave;
-			markerMat = Instantiate (Resources.Load <Material> ("WMSK/Materials/Marker"));
-			if (disposalManager != null)
-				disposalManager.MarkForDisposal (markerMat); //.hideFlags = HideFlags.DontSave;
 			markerLineMat = Instantiate (Resources.Load <Material> ("WMSK/Materials/MarkerLine"));
 			if (disposalManager != null)
 				disposalManager.MarkForDisposal (markerLineMat); //.hideFlags = HideFlags.DontSave;
+			markerMat = Instantiate (markerLineMat);  //Resources.Load<Material>("WMSK/Materials/Marker")); // Marker shader is not compatible with LWRP so we use markerLineMat which serves the same purpose. Kept old shader for a while for compatibility reasons.
+			if (disposalManager != null)
+				disposalManager.MarkForDisposal (markerMat);
 			mountPointSpot = Resources.Load <GameObject> ("WMSK/Prefabs/MountPointSpot");
 			mountPointsMat = Instantiate (Resources.Load <Material> ("WMSK/Materials/Mount Points"));
 			if (disposalManager != null)
@@ -1125,6 +1059,7 @@ namespace WorldMapStrategyKit {
 				disposalManager.MarkForDisposal (hudMatCell); //.hideFlags = HideFlags.DontSave;
 			hudMatCell.renderQueue++;
 			extrudedMat = Instantiate (Resources.Load<Material> ("WMSK/Materials/ExtrudedRegion"));
+			SRP.Configure (extrudedMat);
 
 			coloredMatCache = new Dictionary<Color, Material> ();
 			markerMatCache = new Dictionary<Color, Material> ();
@@ -1143,15 +1078,92 @@ namespace WorldMapStrategyKit {
 
 
 			// Redraw frontiers and cities -- destroy layers if they already exists
-			if (!Application.isPlaying)
+			if (!Application.isPlaying) {
+				Redraw ();
+			}
+
+			PostInit ();
+
+		}
+
+		void PostInit ()
+		{
+			// Additional setup executed only during initialization
+
+			// Check material
+			Renderer renderer = GetComponent<MeshRenderer> () ?? gameObject.AddComponent<MeshRenderer> ();
+			if (renderer.sharedMaterial == null) {
+				RestyleEarth ();
+			}
+
+			if (hudMatCountry != null && hudMatCountry.color != _fillColor) {
+				hudMatCountry.color = _fillColor;
+			}
+			UpdateFrontiersMaterial ();
+			if (hudMatProvince != null && hudMatProvince.color != _provincesFillColor) {
+				hudMatProvince.color = _provincesFillColor;
+			}
+			if (provincesMat != null && provincesMat.color != _provincesColor) {
+				provincesMat.color = _provincesColor;
+			}
+			if (citiesNormalMat.color != _citiesColor) {
+				citiesNormalMat.color = _citiesColor;
+			}
+			if (citiesRegionCapitalMat.color != _citiesRegionCapitalColor) {
+				citiesRegionCapitalMat.color = _citiesRegionCapitalColor;
+			}
+			if (citiesCountryCapitalMat.color != _citiesCountryCapitalColor) {
+				citiesCountryCapitalMat.color = _citiesCountryCapitalColor;
+			}
+			if (outlineMat.color != _outlineColor) {
+				outlineMat.color = _outlineColor;
+			}
+			if (cursorMatH.color != _cursorColor) {
+				cursorMatH.color = _cursorColor;
+			}
+			if (cursorMatV.color != _cursorColor) {
+				cursorMatV.color = _cursorColor;
+			}
+			if (imaginaryLinesMat.color != _imaginaryLinesColor) {
+				imaginaryLinesMat.color = _imaginaryLinesColor;
+			}
+			if (hudMatCell != null && hudMatCell.color != _cellHighlightColor) {
+				hudMatCell.color = _cellHighlightColor;
+			}
+			if (gridMat != null && gridMat.color != _gridColor) {
+				gridMat.color = _gridColor;
+			}
+			if (_enableCellHighlight) {
+				showLatitudeLines = showLongitudeLines = false;
+			}
+
+			// Unity 5.3.1 prevents raycasting in the scene view if rigidbody is present - we have to delete it in editor time but re-enable it here during play mode
+			if (Application.isPlaying) {
+
+				if (GetComponent<Rigidbody> () == null) {
+					Rigidbody rb = gameObject.AddComponent<Rigidbody> ();
+					rb.useGravity = false;
+					rb.isKinematic = true;
+				}
+
 				Redraw ();
 
+				if (_prewarm) {
+					CountriesPrewarmBigSurfaces ();
+					PathFindingPrewarm ();
+				}
+			}
+
+			maxFrustumDistance = float.MaxValue;
+			if (_fitWindowWidth || _fitWindowHeight)
+				CenterMap ();
 		}
 
 		/// <summary>
 		/// Reloads the data of frontiers and cities from datafiles and redraws the map.
 		/// </summary>
-		public void ReloadData () {
+		public void ReloadData ()
+		{
 			// Destroy surfaces layer
 			DestroySurfaces ();
 			// read precomputed data
@@ -1164,7 +1176,8 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		void DestroySurfaces () {
+		void DestroySurfaces ()
+		{
 			HideCountryRegionHighlights (true);
 			HideProvinceRegionHighlight ();
 			if (frontiersCacheHit != null)
@@ -1187,7 +1200,8 @@ namespace WorldMapStrategyKit {
 		/// Immediately destroys any gameobject and its children including dynamically created meshes
 		/// </summary>
 		/// <param name="go">Go.</param>
-		void DestroyRecursive (GameObject go) {
+		void DestroyRecursive (GameObject go)
+		{
 			if (go == null)
 				return;
 			MeshFilter[] mm = go.GetComponentsInChildren<MeshFilter> (true);
@@ -1222,7 +1236,8 @@ namespace WorldMapStrategyKit {
 		/// <param name="entityId">Entity identifier.</param>
 		/// <param name="categoryName">Category name.</param>
 		/// <param name="obj">Object.</param>
-		void ParentObjectToRegion (string entityId, string categoryName, GameObject obj) {
+		void ParentObjectToRegion (string entityId, string categoryName, GameObject obj)
+		{
 			Transform entityRoot = surfacesLayer.transform.Find (entityId);
 			if (entityRoot == null) {
 				GameObject aux = new GameObject (entityId);
@@ -1264,7 +1279,8 @@ namespace WorldMapStrategyKit {
 		/// <param name="entityId">Entity identifier.</param>
 		/// <param name="categoryName">Category name.</param>
 		/// <param name="objectName">Object name.</param>
-		void HideRegionObject (string entityId, string categoryName, string objectName) {
+		void HideRegionObject (string entityId, string categoryName, string objectName)
+		{
 			Transform t = surfacesLayer.transform.Find (entityId);
 			if (t == null)
 				return;
@@ -1283,7 +1299,8 @@ namespace WorldMapStrategyKit {
 		/// Used internally and by other components to redraw the layers in specific moments. You shouldn't call this method directly.
 		/// </summary>
 		/// <param name="forceReconstructFrontiers">If set to <c>true</c> frontiers will be recomputed.</param>
-		public void Redraw (bool forceReconstructFrontiers) {
+		public void Redraw (bool forceReconstructFrontiers)
+		{
 			if (forceReconstructFrontiers)
 				needOptimizeFrontiers = true;
 			Redraw ();
@@ -1292,7 +1309,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Redraws all map layers.
 		/// </summary>
-		public void Redraw () {
+		public void Redraw ()
+		{
 			if (!gameObject.activeInHierarchy)
 				return;
 
@@ -1331,7 +1349,8 @@ namespace WorldMapStrategyKit {
 
 		}
 
-		void InitSurfacesCache () {
+		void InitSurfacesCache ()
+		{
 			if (surfaces != null) {
 				List<GameObject> cached = new List<GameObject> (surfaces.Values);
 				for (int k = 0; k < cached.Count; k++) {
@@ -1344,7 +1363,8 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-		void CreateSurfacesLayer () {
+		void CreateSurfacesLayer ()
+		{
 			Transform t = transform.Find (SURFACE_LAYER);
 			if (t != null) {
 				DestroyImmediate (t.gameObject);
@@ -1358,7 +1378,8 @@ namespace WorldMapStrategyKit {
 			_surfacesLayer.layer = gameObject.layer;
 		}
 
-		void RestyleEarth () {
+		void RestyleEarth ()
+		{
 			if (gameObject == null)
 				return;
 
@@ -1405,8 +1426,9 @@ namespace WorldMapStrategyKit {
 			MeshRenderer renderer = GetComponent<MeshRenderer> ();
 			if (earthMat == null || renderer.sharedMaterial == null || !renderer.sharedMaterial.name.Equals (materialName)) {
 				earthMat = Instantiate (Resources.Load<Material> ("WMSK/Materials/" + materialName));
-				if (disposalManager != null)
+				if (disposalManager != null) {
 					disposalManager.MarkForDisposal (earthMat);
+				}
 				earthMat.name = materialName;
 				renderer.material = earthMat;
 				if (earthBlurred != null && RenderTexture.active != earthBlurred) {
@@ -1426,13 +1448,18 @@ namespace WorldMapStrategyKit {
 				if (earthBlurred == null && _earthStyle != EARTH_STYLE.NaturalScenicPlus16K) {
 					EarthPrepareBlurredTexture ();
 				}
+				if (_waterMask != null) {
+					earthMat.SetTexture ("_TerrestrialMap", _waterMask);
+				}
 				UpdateScenicPlusDistance ();
 			}
-			if (_earthTexture != null) {
+			if (_earthTexture != null && earthMat.HasProperty("_MainTex")) {
 				earthMat.mainTexture = _earthTexture;
 			}
+            earthMat.mainTextureOffset = -_earthTextureOffset;
+            earthMat.mainTextureScale = new Vector2(1f / _earthTextureScale.x, 1f / _earthTextureScale.y); ;
 
-			if (_earthBumpMapTexture != null && _earthStyle.supportsBumpMap ()) {
+            if (_earthBumpMapTexture != null && _earthStyle.supportsBumpMap ()) {
 				earthMat.SetTexture ("_NormalMap", _earthBumpMapTexture);
 			}
 
@@ -1452,7 +1479,7 @@ namespace WorldMapStrategyKit {
 					earthMat.DisableKeyword (SKW_BUMPMAP_ENABLED);
 				}
 			}
-			if (_pathFindingVisualizeMatrixCost && earthMat != null) {
+			if (_pathFindingVisualizeMatrixCost && earthMat != null && pathFindingCustomMatrixCostTexture != null) {
 				earthMat.mainTexture = pathFindingCustomMatrixCostTexture;
 			}
 
@@ -1474,7 +1501,8 @@ namespace WorldMapStrategyKit {
 
 		}
 
-		void FindDirectionalLight () {
+		void FindDirectionalLight ()
+		{
 			Light[] lights = FindObjectsOfType<Light> ();
 			if (lights == null)
 				return;
@@ -1487,7 +1515,8 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		void EarthPrepareBlurredTexture () {
+		void EarthPrepareBlurredTexture ()
+		{
 
 			Texture2D earthTex = (Texture2D)earthMat.GetTexture ("_MainTex");
 			if (earthTex == null)
@@ -1497,7 +1526,12 @@ namespace WorldMapStrategyKit {
 				earthBlurred = new RenderTexture (earthTex.width / 8, earthTex.height / 8, 0);
 				earthBlurred.hideFlags = HideFlags.DontSave;
 			}
-			Graphics.Blit (earthTex, earthBlurred);
+			Material blurMat = new Material (Shader.Find ("WMSK/Blur5Tap"));
+			if (blurMat != null) {
+				Graphics.Blit (earthTex, earthBlurred, blurMat);
+			} else {
+				Graphics.Blit (earthTex, earthBlurred);
+			}
 			earthMat.SetTexture ("_EarthBlurred", earthBlurred);
 		}
 
@@ -1508,7 +1542,8 @@ namespace WorldMapStrategyKit {
 
 		#region Highlighting
 
-		bool GetLocalHitFromMousePos (out Vector3 localPoint) {
+		bool GetLocalHitFromMousePos (out Vector3 localPoint)
+		{
 			Vector3 mousePos = Input.mousePosition;
 			if (mousePos.x < 0 || mousePos.x >= Screen.width || mousePos.y < 0 || mousePos.y >= Screen.height) {
 				localPoint = Misc.Vector3zero;
@@ -1524,7 +1559,8 @@ namespace WorldMapStrategyKit {
 		/// <param name="screenPos">Screen position.</param>
 		/// <param name="localPoint">Local point.</param>
 		/// <param name="nonWrap">If true is passed, then a local hit is returned either on the real map plane or in a assumed wrapped plane next to it (effectively returning an x coordinate from -1.5..1.5</param>
-		public bool GetLocalHitFromScreenPos (Vector3 screenPos, out Vector3 localPoint, bool nonWrap) {
+		public bool GetLocalHitFromScreenPos (Vector3 screenPos, out Vector3 localPoint, bool nonWrap)
+		{
 			Ray ray = cameraMain.ScreenPointToRay (screenPos);
 			int hitCount = Physics.RaycastNonAlloc (ray.origin, ray.direction, tempHits, 2000, layerMask);
 			if (hitCount > 0) {
@@ -1578,7 +1614,8 @@ namespace WorldMapStrategyKit {
 			return false;
 		}
 
-		void CheckMousePos () {
+		void CheckMousePos ()
+		{
 
 			if (!lastMouseMapHitPosGood) {
 				HideCountryRegionHighlight ();
@@ -1717,7 +1754,8 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		void CheckMousePosCity (Vector3 localPoint) {
+		void CheckMousePosCity (Vector3 localPoint)
+		{
 			int ci = GetCityNearPoint (localPoint, _countryHighlightedIndex);
 			if (ci >= 0) {
 				if (ci != _cityHighlightedIndex) {
@@ -1733,7 +1771,8 @@ namespace WorldMapStrategyKit {
 
 		#region Internal API
 
-		float ApplyDragThreshold (float value) {
+		float ApplyDragThreshold (float value)
+		{
 			if (_mouseDragThreshold > 0) {
 				if (value < 0) {
 					value += _mouseDragThreshold;
@@ -1754,7 +1793,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Returns the overlay base layer (parent gameObject), useful to overlay stuff on the map (like labels). It will be created if it doesn't exist.
 		/// </summary>
-		public GameObject GetOverlayLayer (bool createIfNotExists) {
+		public GameObject GetOverlayLayer (bool createIfNotExists)
+		{
 			if (overlayLayer != null) {
 				return overlayLayer;
 			} else if (createIfNotExists) {
@@ -1765,16 +1805,19 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		void SetDestination (Vector2 point, float duration) {
+		void SetDestination (Vector2 point, float duration)
+		{
 			SetDestination (point, duration, GetZoomLevel ());
 		}
 
-		void SetDestination (Vector2 point, float duration, float zoomLevel) {
+		void SetDestination (Vector2 point, float duration, float zoomLevel)
+		{
 			float distance = GetZoomLevelDistance (zoomLevel);
 			SetDestinationAndDistance (point, duration, distance);
 		}
 
-		void SetDestinationAndDistance (Vector2 point, float duration, float distance) {
+		void SetDestinationAndDistance (Vector2 point, float duration, float distance)
+		{
 
 			// if map is in world-wrapping mode, offset the point to the appropriate side of the map
 			if (_wrapHorizontally) {
@@ -1822,7 +1865,8 @@ namespace WorldMapStrategyKit {
 		/// Returns the distance from camera to map according to fit to window width/height parameters
 		/// </summary>
 		/// <returns>The frustum distance.</returns>
-		float GetFrustumDistance () {
+		float GetFrustumDistance ()
+		{
 			Camera cam = currentCamera;
 			if (cam == null)
 				return 1;
@@ -1854,7 +1898,7 @@ namespace WorldMapStrategyKit {
 					maxFrustumDistance = distance;
 				} else {
 					Plane plane = new Plane (-transform.forward, transform.position);
-					distance = plane.GetDistanceToPoint (cam.transform.position); // Vector3.Distance (transform.position, cam.transform.position);
+					distance = plane.GetDistanceToPoint (cam.transform.position);
 					maxFrustumDistance = float.MaxValue;
 				}
 			}
@@ -1864,7 +1908,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Returns optimum distance between camera and a region of width/height
 		/// </summary>
-		float GetFrustumZoomLevel (float width, float height) {
+		float GetFrustumZoomLevel (float width, float height)
+		{
 			if (currentCamera == null)
 				return 1;
 			float fv = _currentCamera.fieldOfView;
@@ -1886,7 +1931,8 @@ namespace WorldMapStrategyKit {
 		/// Gets the distance according to the zoomLevel. The zoom level is a value between 0 and 1 which maps to 0-max zoom distance parameter.
 		/// </summary>
 		/// <returns>The zoom level distance.</returns>
-		float GetZoomLevelDistance (float zoomLevel) {
+		float GetZoomLevelDistance (float zoomLevel)
+		{
 			Camera cam = currentCamera;
 			if (cam == null)
 				return 0;
@@ -1910,7 +1956,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Returns the current distance to map from the camera
 		/// </summary>
-		float GetMapDistance () {
+		public float GetMapDistance ()
+		{
 			Camera cam = currentCamera;
 			if (cam == null)
 				return 0;
@@ -1922,7 +1969,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Used internally to translate the camera during FlyTo operations. Use FlyTo method.
 		/// </summary>
-		void MoveCameraToDestination () {
+		void MoveCameraToDestination ()
+		{
 			float delta;
 			Quaternion rotation;
 			Vector3 destination;
@@ -1945,7 +1993,17 @@ namespace WorldMapStrategyKit {
 		}
 
 		// Updates flyTo params due to a change in viewport mode
-		void RepositionCamera () {
+		void RepositionCamera ()
+		{
+            if (_renderViewportIsTerrain) {
+                Vector3 terrainCenter = terrain.GetPosition();
+                terrainCenter.x += terrain.terrainData.size.x * 0.5f;
+                terrainCenter.y += 250f;
+                terrainCenter.z += terrain.terrainData.size.z * 0.5f;
+                cameraMain.transform.position = terrainCenter;
+                cameraMain.transform.forward = Vector3.down;
+            } 
+
 			// When changing viewport mode, the asset changes cameras, so we take the current location and zoom level and updates the new frustrum distance and other things calling CenterMap()
 			// then we move the new camera to that location and zoom level and optionally update flyTo params.
 			CenterMap ();
@@ -1965,12 +2023,14 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		Material GetColoredTexturedMaterial (Color color, Texture2D texture) {
+		Material GetColoredTexturedMaterial (Color color, Texture2D texture)
+		{
 			return GetColoredTexturedMaterial (color, texture, true);
 		}
 
 
-		Material GetColoredTexturedMaterial (Color color, Texture2D texture, bool autoChooseTransparentMaterial, int renderQueueIncrement = 0) {
+		Material GetColoredTexturedMaterial (Color color, Texture2D texture, bool autoChooseTransparentMaterial, int renderQueueIncrement = 0)
+		{
 			Material customMat;
 			if (texture == null) {
 				if (coloredMatCache.TryGetValue (color, out customMat)) {
@@ -1998,7 +2058,8 @@ namespace WorldMapStrategyKit {
 			return customMat;
 		}
 
-		Material GetColoredMarkerMaterial (Color color) {
+		Material GetColoredMarkerMaterial (Color color)
+		{
 			Material customMat;
 			if (markerMatCache.TryGetValue (color, out customMat)) {
 				return customMat;
@@ -2013,7 +2074,8 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		void ApplyMaterialToSurface (GameObject obj, Material sharedMaterial) {
+		void ApplyMaterialToSurface (GameObject obj, Material sharedMaterial)
+		{
 			if (obj != null) {
 				Renderer[] rr = obj.GetComponentsInChildren<Renderer> (true);	// surfaces can be saved under parent when Include All Regions is enabled
 				for (int k = 0; k < rr.Length; k++) {
@@ -2022,7 +2084,8 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-		void GetPointFromPackedString (ref string s, out float x, out float y) {
+		void GetPointFromPackedString (ref string s, out float x, out float y)
+		{
 //			int j = -1;
 //			for (int k = 0; k < s.Length; k++) {
 //				if (s [k] == ',') {
@@ -2068,7 +2131,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Internal usage.
 		/// </summary>
-		public int GetUniqueId (List<IExtendableAttribute> list) {
+		public int GetUniqueId (List<IExtendableAttribute> list)
+		{
 			for (int k = 0; k < 1000; k++) {
 				int rnd = UnityEngine.Random.Range (0, int.MaxValue);
 				int listCount = list.Count;
@@ -2089,7 +2153,8 @@ namespace WorldMapStrategyKit {
 		/// Internal usage. Checks quality of polygon points. Useful before using polygon clipping operations.
 		/// Return true if there're changes.
 		/// </summary>
-		public bool RegionSanitize (Region region) {
+		public bool RegionSanitize (Region region)
+		{
 			bool changes = false;
 			Vector2[] points = region.points;
 			// removes points which are too near from others
@@ -2121,7 +2186,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Checks for the sanitized flag in regions list and invoke RegionSanitize on pending regions
 		/// </summary>
-		void RegionSanitize (List<Region> regions) {
+		void RegionSanitize (List<Region> regions)
+		{
 			regions.ForEach ((Region region) => {
 				if (!region.sanitized)
 					RegionSanitize (region);
@@ -2132,7 +2198,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Makes a region collapse with the neigbhours frontiers - needed when merging two adjacent regions
 		/// </summary>
-		void RegionMagnet (Region region, Region neighbourRegion) {
+		void RegionMagnet (Region region, Region neighbourRegion)
+		{
 
 			const float tolerance = 1e-6f;
 			int pointCount = region.points.Length;
@@ -2188,7 +2255,8 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Removes special characters from string.
 		/// </summary>
-		string DataEscape (string s) {
+		string DataEscape (string s)
+		{
 			s = s.Replace ("$", "");
 			s = s.Replace ("|", "");
 			return s;
@@ -2198,7 +2266,8 @@ namespace WorldMapStrategyKit {
 
 		#region World Gizmos
 
-		void CheckCursorVisibility () {
+		void CheckCursorVisibility ()
+		{
 			if (_showCursor) {
 				if (cursorLayerHLine != null) {
 					bool visible = cursorLayerHLine.activeSelf;
@@ -2240,7 +2309,8 @@ namespace WorldMapStrategyKit {
 		}
 
 
-		void DrawCursor () {
+		void DrawCursor ()
+		{
 
 			if (!_showCursor)
 				return;
@@ -2319,12 +2389,14 @@ namespace WorldMapStrategyKit {
 
 		}
 
-		void DrawImaginaryLines () {
+		void DrawImaginaryLines ()
+		{
 			DrawLatitudeLines ();
 			DrawLongitudeLines ();
 		}
 
-		void DrawLatitudeLines () {
+		void DrawLatitudeLines ()
+		{
 			if (!_showLatitudeLines)
 				return;
 
@@ -2379,7 +2451,8 @@ namespace WorldMapStrategyKit {
 			
 		}
 
-		void DrawLongitudeLines () {
+		void DrawLongitudeLines ()
+		{
 			if (!_showLongitudeLines)
 				return;
 
@@ -2439,7 +2512,8 @@ namespace WorldMapStrategyKit {
 
 		#region Overlay
 
-		public GameObject CreateOverlay () {
+		public GameObject CreateOverlay ()
+		{
 
 			// 2D labels layer
 			Transform t = transform.Find (OVERLAY_BASE);
@@ -2458,7 +2532,8 @@ namespace WorldMapStrategyKit {
 			return overlayLayer;
 		}
 
-		void UpdateScenicPlusDistance () {
+		void UpdateScenicPlusDistance ()
+		{
 			if (earthMat == null)
 				return;
 			float zoomLevel = GetZoomLevel ();
@@ -2469,7 +2544,8 @@ namespace WorldMapStrategyKit {
 
 		#region Markers support
 
-		void CheckMarkersLayer () {
+		void CheckMarkersLayer ()
+		{
 			if (markersLayer == null) { // try to capture an existing marker layer
 				Transform t = transform.Find ("Markers");
 				if (t != null)
@@ -2487,7 +2563,8 @@ namespace WorldMapStrategyKit {
 
 		#region Global Events handling
 
-		internal void BubbleEvent<T> (Action<T> a, T o) {
+		internal void BubbleEvent<T> (Action<T> a, T o)
+		{
 			if (a != null)
 				a (o);
 		}

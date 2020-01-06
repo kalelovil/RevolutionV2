@@ -15,7 +15,7 @@ namespace WorldMapStrategyKit {
 
 	public partial class WMSK : MonoBehaviour {
 
-		delegate void TestNeighbourSegment(Region region, int i, int j);
+		delegate void TestNeighbourSegment (Region region, int i, int j);
 
 
 		const string COUNTRY_OUTLINE_GAMEOBJECT_NAME = "countryOutline";
@@ -59,7 +59,7 @@ namespace WorldMapStrategyKit {
 		GameObject frontiersLayer;
 
 		// maintains a reference to the country outline to hide it when zooming too much
-		GameObject lastCountryOutlineRef; 
+		GameObject lastCountryOutlineRef;
 
 		// caché and gameObject lifetime control
 		Vector3[][] frontiers;
@@ -160,7 +160,7 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Used internally by the Map Editor. It will recalculate de boundaries and optimize frontiers based on new data of countries array
 		/// </summary>
-		public void RefreshCountryGeometry (Country country) {
+		public void RefreshCountryGeometry (IAdminEntity  country) {
 			float maxVol = 0;
 			if (country.regions == null)
 				return;
@@ -297,7 +297,7 @@ namespace WorldMapStrategyKit {
 				int crCount = country.regions.Count;
 				for (int r = 0; r < crCount; r++) {
 					Region region = country.regions [r];
-					if (region.points == null)
+					if (region.points == null || region.points.Length == 0)
 						continue;
 					if (filterRegions == null || filterRegions.Contains (region)) {
 						int numPoints = region.points.Length - 1;
@@ -545,7 +545,7 @@ namespace WorldMapStrategyKit {
 					return null;
 			}
 
-			if (_enableCountryHighlight && _countries[countryIndex].allowHighlight) {
+			if (_enableCountryHighlight && _countries [countryIndex].allowHighlight) {
 
 				countryRegionHighlightedObj = HighlightCountryRegionSingle (countryIndex, regionIndex, refreshGeometry, drawOutline);
 				if (_highlightAllCountryRegions) {
@@ -825,29 +825,6 @@ namespace WorldMapStrategyKit {
 			return true;
 		}
 
-		void CountryMergeAdjacentRegions (Country targetCountry) {
-			// Searches for adjacency - merges in first region
-			int regionCount = targetCountry.regions.Count;
-			for (int k = 0; k < regionCount; k++) {
-				Region region1 = targetCountry.regions [k];
-				for (int j = k + 1; j < regionCount; j++) {
-					Region region2 = targetCountry.regions [j];
-					if (!region1.Intersects (region2))
-						continue;
-					RegionMagnet (region1, region2);
-					Clipper clipper = new Clipper ();
-					clipper.AddPath (region1, PolyType.ptSubject);
-					clipper.AddPath (region2, PolyType.ptClip);
-					clipper.Execute (ClipType.ctUnion, region1);
-
-					targetCountry.regions.RemoveAt (j);
-					region1.sanitized = false;
-					j--;
-					regionCount--;
-					targetCountry.mainRegionIndex = 0;	// will need to refresh country definition later in the process
-				}
-			}
-		}
 
 		#endregion
 

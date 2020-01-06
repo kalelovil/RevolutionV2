@@ -305,7 +305,8 @@ namespace WorldMapStrategyKit {
 				region.customBorderTintColor = tintColor;
 			}
 			GameObject boldFrontiers = DrawRegionOutlineMesh (name, region, true, animationSpeed);
-			boldFrontiers.transform.SetParent (transform, false);
+            boldFrontiers.layer = gameObject.layer;
+            boldFrontiers.transform.SetParent (transform, false);
 			return boldFrontiers;
 		}
 

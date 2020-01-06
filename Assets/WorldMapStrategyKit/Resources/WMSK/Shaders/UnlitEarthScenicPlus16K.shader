@@ -123,7 +123,7 @@
 						}
 						color.a = 0;
 					}
-					
+
 					if (_CloudShadowStrength>0) {
 						fixed4 shadowColor = tex2Dlod (_CloudMap, float4(i.uv + _CloudMapOffset, 0, 0));
 						fixed4 shadows = shadowColor * shadowColor.a * _CloudShadowStrength;

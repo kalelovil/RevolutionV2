@@ -70,7 +70,7 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Used internally by the Map Editor. It will recalculate de boundaries and optimize frontiers based on new data of provinces array
 		/// </summary>
-		public void RefreshProvinceGeometry (Province province) {
+		public void RefreshProvinceGeometry (IAdminEntity province) {
 			lastProvinceLookupCount = -1;
 			float maxVol = 0;
 			if (province.regions == null) {
@@ -151,7 +151,8 @@ namespace WorldMapStrategyKit {
 		/// Unpacks province geodata information. Used by Map Editor.
 		/// </summary>
 		/// <param name="province">Province.</param>
-		public void ReadProvincePackedString (Province province) {
+		public void ReadProvincePackedString (IAdminEntity entity) {
+			Province province = (Province)entity;
 			if (province == null || province.packedRegions == null)
 				return;
 			string[] regions = province.packedRegions.Split (SPLIT_SEP_ASTERISK, StringSplitOptions.RemoveEmptyEntries);
@@ -709,13 +710,9 @@ namespace WorldMapStrategyKit {
 		#region Province operations
 
 		int ProvinceSizeComparer (Province p1, Province p2) {
-			if (p1 == null || p2 == null || p1.regions == null || p2.regions == null || p1.mainRegionIndex < 0 || p2.mainRegionIndex < 0)
+			if (p1 == null || p2 == null || p1.mainRegionIndex < 0 || p2.mainRegionIndex < 0 || p1.regions == null || p2.regions == null)
 				return 0;
-			if (p1.mainRegionIndex < 0)
-				return -1;
 			Region r1 = p1.regions [p1.mainRegionIndex];
-			if (p2.mainRegionIndex < 0)
-				return -1;
 			Region r2 = p2.regions [p2.mainRegionIndex];
 			if (r1.rect2DArea < r2.rect2DArea) {
 				return -1;
@@ -724,48 +721,16 @@ namespace WorldMapStrategyKit {
 			} else {
 				return 0;
 			}
-//			return r1.rect2DArea.CompareTo (r2.rect2DArea);
 		}
 
-		void ProvinceMergeAdjacentRegions (Province targetProvince) {
-			// Searches for adjacency - merges in first region
-			int regionCount = targetProvince.regions.Count;
-			for (int k = 0; k < regionCount; k++) {
-				Region region1 = targetProvince.regions [k];
-				for (int j = k + 1; j < regionCount; j++) {
-					Region region2 = targetProvince.regions [j];
-					if (!region1.Intersects (region2))
-						continue;
-					RegionMagnet (region1, region2);
-					Clipper clipper = new Clipper ();
-					clipper.AddPath (region1, PolyType.ptSubject);
-					clipper.AddPath (region2, PolyType.ptClip);
-					clipper.Execute (ClipType.ctUnion);
-
-					// Add new neighbours
-					int rnCount = region2.neighbours.Count;
-					for (int n = 0; n < rnCount; n++) {
-						Region neighbour = region2.neighbours [n];
-						if (neighbour != null && neighbour != region1 && !region1.neighbours.Contains (neighbour)) {
-							region1.neighbours.Add (neighbour);
-						}
-					}
-					// Remove merged region
-					targetProvince.regions.RemoveAt (j);
-					region1.sanitized = false;
-					j--;
-					regionCount--;
-				}
-			}
-		}
 
 		/// <summary>
 		/// Removes a province
 		/// </summary>
 		/// <param name="provinceIndex">Province index.</param>
-		public void ProvinceDelete (int provinceIndex) {
+		public bool ProvinceDelete (int provinceIndex) {
 			if (provinceIndex < 0 || provinceIndex >= provinces.Length)
-				return;
+				return false;
 			
 			// Clears references from mount points
 			if (mountPoints != null) {
@@ -795,7 +760,8 @@ namespace WorldMapStrategyKit {
 				Country country = _countries [countryIndex];
 				if (country.provinces != null) {
 					for (int k = 0; k < country.provinces.Length; k++) {
-						if (!country.provinces [k].name.Equals (provinceName))
+						Province prov = country.provinces [k];
+						if (prov.regions.Count > 0 && !prov.name.Equals (provinceName))
 							newProvinces.Add (country.provinces [k]);
 					}
 					newProvinces.Sort (ProvinceSizeComparer);
@@ -811,6 +777,8 @@ namespace WorldMapStrategyKit {
 				}
 			}
 			provinces = newProvinces.ToArray ();
+
+			return true;
 		}
 
 		#endregion

@@ -658,12 +658,7 @@ namespace WorldMapStrategyKit {
 			mesh.uv = uv;
 			mesh.RecalculateNormals ();
 			mesh.RecalculateBounds ();
-			#if !UNITY_5_5_OR_NEWER
-			mesh.Optimize ();
-			#endif
-			
-			//			TangentSolver (mesh);
-			
+
 			MeshFilter meshFilter = hexa.GetComponent<MeshFilter> ();
 			meshFilter.mesh = mesh;
 			hexa.GetComponent<Renderer> ().sharedMaterial = material;

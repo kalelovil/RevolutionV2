@@ -513,8 +513,9 @@ namespace WorldMapStrategyKit {
 			GameObject newLine = new GameObject ("MarkerLine");
 			newLine.layer = gameObject.layer;
 			bool usesRenderViewport = renderViewportIsEnabled && arcElevation > 0;
-			if (!usesRenderViewport)
-				newLine.transform.SetParent (markersLayer.transform, false);
+            if (!usesRenderViewport) {
+                newLine.transform.SetParent(markersLayer.transform, false);
+            }
 			LineMarkerAnimator lma = newLine.AddComponent<LineMarkerAnimator> ();
 			lma.map = this;
 			lma.path = points;

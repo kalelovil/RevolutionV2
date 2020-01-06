@@ -17,6 +17,7 @@
 
           half4 _Color;
           sampler2D _MainTex;
+          float4 _MainTex_ST;
           sampler2D _NormalMap;
           half _BumpAmount;
           half3 _SunLightDirection;
@@ -41,7 +42,7 @@
 					#else
 						o.pos.z += 0.0005;
 					#endif
-					o.uv = uv;
+					o.uv = TRANSFORM_TEX(uv, _MainTex);
 					// normal stuff
 					#if WMSK_BUMPMAP_ENABLED
 					half3 wNormal = UnityObjectToWorldNormal(normal);
@@ -68,9 +69,9 @@
                 	worldNormal.x = dot(i.tspace0, tnormal);
                 	worldNormal.y = dot(i.tspace1, tnormal);
                 	worldNormal.z = dot(i.tspace2, tnormal);
-                	half3 normal = normalize(lerp(i.wNormal, worldNormal, _BumpAmount));
-                	half  LdotS = saturate(dot(_SunLightDirection, normal));
-                	color *= LdotS;
+                	half  LdotS = saturate(dot(_SunLightDirection, normalize(worldNormal)));
+                	half wrappedDiffuse = LdotS * 0.5 + 0.5;
+                	color = lerp(color, color * wrappedDiffuse, _BumpAmount);
                 	#endif
                 	return color;
 

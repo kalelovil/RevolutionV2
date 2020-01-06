@@ -12,6 +12,7 @@ SubShader {
     Color [_Color]
    	Blend SrcAlpha OneMinusSrcAlpha
    	Offset -1, -1
+    ZWrite Off
     Pass {
  	
     }

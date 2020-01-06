@@ -21,7 +21,6 @@ namespace WorldMapStrategyKit {
 		public bool countryChanges;
 		// if there's any pending change to be saved
 		public bool countryAttribChanges;
-		// if there's any pending change to be saved
 
 		[SerializeField]
 		bool _GUICountryHidden;
@@ -295,9 +294,6 @@ namespace WorldMapStrategyKit {
 				map.RefreshCountryDefinition(countryIndex, null);
 			}
 			ClearSelection();
-//			RedrawFrontiers();
-//			map.DrawMapLabels();
-
 			map.Redraw();
 			countryChanges = true;
 		}

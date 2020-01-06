@@ -13,7 +13,7 @@ namespace WorldMapStrategyKit {
 
 		Material oldMaterial;
 		float startTime, lapTime;
-		bool whichColor, oldActiveState;
+		bool whichColor;
 		WMSK map;
 
 		void Start () {

@@ -69,12 +69,12 @@ namespace WorldMapStrategyKit {
 
 			// Get water mask info
 			Texture2D waterMap = null;
-			if (_waterMask == null) {
+			if (waterMask == null) {
 				if (_earthStyle.isScenicPlus ()) {
 					waterMap = (Texture2D)earthMat.GetTexture ("_TerrestrialMap");
 				}
 			} else {
-				waterMap = _waterMask;
+				waterMap = waterMask;
 			}
 			if (waterMap == null) {
 				Debug.LogError ("Water mask texture could not be loaded");

@@ -66,7 +66,6 @@ namespace WorldMapStrategyKit {
 		int y, tw, th;
 		Color32[] colors;
 		Color32[] colorsAux;
-		bool finished;
 		public List<Color32> goodColors;
 		Dictionary<Color32, int> goodColorsDict;
 		int colorIndex;
@@ -74,8 +73,6 @@ namespace WorldMapStrategyKit {
 		Color32 backgroundColor;
 		int filter, totalPasses;
 		public string status;
-		List<Vector2> tmpPoints;
-		Vector2[] positions;
 		public List<IAdminEntity> entities;
 		int actualReplaceableColors, totalReplaceableColors;
 		ThreadSlot[] threads;

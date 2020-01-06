@@ -11,7 +11,7 @@ using WorldMapStrategyKit.PathFinding;
 
 namespace WorldMapStrategyKit {
 	public delegate int OnPathFindingCrossPosition (Vector2 position);
-	public delegate int OnPathFindingCrossAdminEntity (int countryIndex);
+	public delegate int OnPathFindingCrossAdminEntity (int entityIndex);
 	public delegate int OnPathFindingCrossCell (int cellIndex);
 
 	public partial class WMSK : MonoBehaviour {
@@ -157,7 +157,7 @@ namespace WorldMapStrategyKit {
 		public Texture2D waterMask {
 			get {
 				if (_waterMask == null) {
-					_waterMask = Resources.Load<Texture2D> ("WMSK/Textures/EarthScenicPlusMap8k");
+					return Resources.Load<Texture2D> ("WMSK/Textures/EarthScenicPlusMap8k");
 				}
 				return _waterMask; 
 			}
@@ -167,6 +167,7 @@ namespace WorldMapStrategyKit {
 					if (earthWaterMask != null) {
 						earthWaterMask = null;
 					}
+					RestyleEarth ();
 					isDirty = true; 
 				}
 			}

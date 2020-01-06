@@ -17,7 +17,10 @@ namespace WorldMapStrategyKit {
 		float zoomLevel = 1.0f;
 		bool avoidGUI;
 
+
 		void Start () {
+
+
 			// Get a reference to the World Map API:
 			map = WMSK.instance;
 
@@ -61,7 +64,7 @@ namespace WorldMapStrategyKit {
 			map.OnDragEnd += () => {
 				Debug.Log ("Drag ends.");
 			};
-		}
+        }
 
 		void OnGUI () {
 

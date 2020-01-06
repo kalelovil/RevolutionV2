@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace WorldMapStrategyKit {
-	public partial class Province: AdminEntity, IExtendableAttribute {
+	public partial class Province: AdminEntity {
 			
 		int[] _neighbours;
 
@@ -66,12 +66,17 @@ namespace WorldMapStrategyKit {
 		public Province Clone () {
 			Province p = new Province (name, countryIndex, uniqueId);
 			p.countryIndex = countryIndex;
-			p.regions = regions;
-			p.center = center;
+            if (regions != null) {
+                p.regions = new List<Region>(regions.Count);
+                for (int k = 0; k < regions.Count; k++) {
+                    p.regions.Add(regions[k].Clone());
+                }
+            }
+            p.center = center;
 			p.mainRegionIndex = mainRegionIndex;
 			p.attrib = new JSONObject ();
 			p.attrib.Absorb (attrib);
-
+            p.regionsRect2D = regionsRect2D;
 			return p;
 		}
 

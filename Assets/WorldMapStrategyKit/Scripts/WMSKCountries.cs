@@ -190,7 +190,7 @@ namespace WorldMapStrategyKit {
 
 		[SerializeField]
 		bool
-		_frontiersCoastlines = true;
+			_frontiersCoastlines = true;
 
 		/// <summary>
 		/// Include coasts in frontier lines
@@ -1083,6 +1083,7 @@ namespace WorldMapStrategyKit {
 				int crCount = country.regions.Count;
 				for (int cr = 0; cr < crCount; cr++) {
 					if (country.regions [cr].Contains (localPosition)) {
+						lastRegionIndex = cr;
 						return c;
 					}
 				}
@@ -1207,6 +1208,8 @@ namespace WorldMapStrategyKit {
 				Country country = (Country)countryRegion.entity;
 				for (int c = 0; c < _countries.Length; c++) {
 					Country c2 = _countries [c];
+					if (!country.regionsRect2D.Contains (c2.center) && !c2.regionsRect2D.Contains (country.center))
+						continue;
 					if (c2 == country)
 						continue;
 					if (countryNeighbours.Contains (c2))
@@ -1444,7 +1447,7 @@ namespace WorldMapStrategyKit {
 		/// </summary>
 		/// <param name="name">Name must be unique!</param>
 		/// <param name="continent">Continent.</param>
-		public int CountryCreate(string name, string continent) {
+		public int CountryCreate (string name, string continent) {
 			Country newCountry = new Country (name, continent, GetUniqueId (new List<IExtendableAttribute> (countries)));
 			return CountryAdd (newCountry);
 		}
@@ -1773,7 +1776,7 @@ namespace WorldMapStrategyKit {
 				}
 			}
 			// If it exists, activate and check proper material, if not create surface
-			bool isHighlighted = countryHighlightedIndex == countryIndex && (countryRegionHighlightedIndex == regionIndex || _highlightAllCountryRegions) && _enableCountryHighlight && _countries[countryIndex].allowHighlight == true;
+			bool isHighlighted = countryHighlightedIndex == countryIndex && (countryRegionHighlightedIndex == regionIndex || _highlightAllCountryRegions) && _enableCountryHighlight && _countries [countryIndex].allowHighlight == true;
 			if (surf != null) {
 				if (!surf.activeSelf)
 					surf.SetActive (true);
@@ -1986,7 +1989,9 @@ namespace WorldMapStrategyKit {
 			List<Country> rr = new List<Country> ();
 			for (int k = 0; k < _countries.Length; k++) {
 				Country country = _countries [k];
-				if (country.regions == null || rr.Contains (country))
+				if (!country.regionsRect2D.Overlaps (region.rect2D))
+					continue;
+				if (country.regions == null)
 					continue;
 				int rCount = country.regions.Count;
 				for (int r = 0; r < rCount; r++) {
@@ -1999,6 +2004,30 @@ namespace WorldMapStrategyKit {
 			}
 			return rr;
 		}
+
+
+		/// <summary>
+		/// Gets a list of country regions that overlap with a given region
+		/// </summary>
+		public List<Region>GetCountryRegionsOverlap (Region region) {
+			List<Region> rr = new List<Region> ();
+			for (int k = 0; k < _countries.Length; k++) {
+				Country country = _countries [k];
+				if (!country.regionsRect2D.Overlaps (region.rect2D))
+					continue;
+				if (country.regions == null)
+					continue;
+				int rCount = country.regions.Count;
+				for (int r = 0; r < rCount; r++) {
+					Region otherRegion = country.regions [r];
+					if (otherRegion.points.Length > 0 && region.Intersects (otherRegion)) {
+						rr.Add (otherRegion);
+					}
+				}
+			}
+			return rr;
+		}
+
 
 
 
@@ -2160,7 +2189,7 @@ namespace WorldMapStrategyKit {
 		/// Checks quality of country's polygon points. Useful before using polygon clipping operations.
 		/// </summary>
 		/// <returns><c>true</c>, if country was sanitized (there was any change), <c>false</c> if country data has not changed.</returns>
-		public bool CountrySanitize (int countryIndex, int minimumPoints = 3) {
+		public bool CountrySanitize (int countryIndex, int minimumPoints = 3, bool refresh = true) {
 			if (countryIndex < 0 || countryIndex >= _countries.Length)
 				return false;
 
@@ -2173,11 +2202,14 @@ namespace WorldMapStrategyKit {
 				}
 				if (region.points.Length < minimumPoints) {
 					country.regions.Remove (region);
-					if (country.regions == null)
+					if (country.regions == null) {
 						return true;
+					}
+					k--;
+					changes = true;
 				}
 			}
-			if (changes) {
+			if (changes && refresh) {
 				RefreshCountryDefinition (countryIndex, null);
 			}
 			return changes;
@@ -2284,7 +2316,7 @@ namespace WorldMapStrategyKit {
 			}
 
 			// Fusion any adjacent regions that results from merge operation
-			CountryMergeAdjacentRegions (targetCountry);
+			MergeAdjacentRegions (targetCountry);
 			RegionSanitize (targetCountry.regions);
 
 			// Finish operation
@@ -2344,15 +2376,14 @@ namespace WorldMapStrategyKit {
 			if (!sourceCountry.isPool && sourceCountry.regions != null && sourceCountry.mainRegionIndex >= 0 && sourceCountry.mainRegionIndex < sourceCountry.regions.Count) {
 				Region sourceRegion = sourceCountry.regions [sourceCountry.mainRegionIndex];
 
-				// Extract from source country - only if province is in the frontier or is crossing the country
-				for (int k = 0; k < sourceCountry.regions.Count; k++) {
-					sourceCountry.regions [k].sanitized = true;
-				}
-
-				Clipper clipper = new Clipper ();
-				clipper.AddPaths (sourceCountry.regions, PolyType.ptSubject);
-				clipper.AddPath (provinceRegion, PolyType.ptClip);
-				clipper.Execute (ClipType.ctDifference, sourceCountry);
+                // Extract from source country - only if province is in the frontier or is crossing the country
+                bool enclave = sourceCountry.Contains(provinceRegion);
+                if (!enclave) {
+                    Clipper clipper = new Clipper();
+                    clipper.AddPaths(sourceCountry.regions, PolyType.ptSubject);
+                    clipper.AddPath(provinceRegion, PolyType.ptClip);
+                    clipper.Execute(ClipType.ctDifference, sourceCountry);
+                }
 
 				// Remove invalid regions from source country
 				for (int k = 0; k < sourceCountry.regions.Count; k++) {
@@ -2385,14 +2416,18 @@ namespace WorldMapStrategyKit {
 			}
 			
 			// Fusion any adjacent regions that results from merge operation
-			CountryMergeAdjacentRegions (targetCountry);
+			MergeAdjacentRegions (targetCountry);
 
 			if (!sourceCountry.isPool) {
 				// Finds the source country region that could overlap with target country, then substract
 				// This handles province extraction but also extraction of two or more provinces than get merged with CountryMergeAdjacentRegions - the result of this merge, needs to be substracted from source country
 				Clipper clipper = new Clipper ();
 				clipper.AddPaths (sourceCountry.regions, PolyType.ptSubject);
-				clipper.AddPaths (targetCountry.regions, PolyType.ptClip);
+                for (int k=0;k<targetCountry.regions.Count;k++) {
+                    if (!sourceCountry.Contains(targetCountry.regions[k])) {
+                        clipper.AddPath(targetCountry.regions[k], PolyType.ptClip);
+                    }
+                }
 				clipper.Execute (ClipType.ctDifference, sourceCountry);
 
 				// Remove invalid regions from source country
@@ -2534,11 +2569,11 @@ namespace WorldMapStrategyKit {
 			}
 
 			// Fusion any adjacent regions that results from merge operation
-			CountryMergeAdjacentRegions (country);
+			MergeAdjacentRegions (country);
 			RegionSanitize (country.regions);
 
 			// Finish operation with the country
-			RefreshCountryGeometry (country);
+			RefreshCountryGeometry (countries [countryIndex]);
 
 			// Substract cell region from any other country
 			List<Country> otherCountries = GetCountriesOverlap (sourceRegion);
@@ -2562,8 +2597,9 @@ namespace WorldMapStrategyKit {
 
 			OptimizeFrontiers ();
 
-			if (redraw)
+			if (redraw) {
 				Redraw ();
+			}
 			return true;
 		}
 
@@ -2595,8 +2631,9 @@ namespace WorldMapStrategyKit {
 
 			OptimizeFrontiers ();
 
-			if (redraw)
+			if (redraw) {
 				Redraw ();
+			}
 			return true;
 		}
 
@@ -2723,12 +2760,9 @@ namespace WorldMapStrategyKit {
 						sb.Append ("*");
 					Region region = country.regions [r];
 					for (int p = 0; p < region.points.Length; p++) {
-						if (p > 0)
+						if (p > 0) {
 							sb.Append (";");
-						//						Vector2 point = region.points [p] * WMSK.MAP_PRECISION;
-						//						sb.Append (point.x.ToString ());
-						//						sb.Append(",");
-						//						sb.Append (point.y.ToString ());
+						}
 						int x = (int)(region.points [p].x * WMSK.MAP_PRECISION);
 						int y = (int)(region.points [p].y * WMSK.MAP_PRECISION);
 						sb.Append (x.ToString (Misc.InvariantCulture));

@@ -179,14 +179,14 @@ namespace WorldMapStrategyKit {
 				if (value != _wrapHorizontally) {
 					_wrapHorizontally = value;
 					isDirty = true;
-					if (_wrapHorizontally) {
-						_fitWindowWidth = false;
-					} else if (_wrapCamera != null) {
-						_wrapCamera.enabled = false;
-					}
-					UpdateViewport ();
-					if (_showGrid)
+					_fitWindowWidth = !_wrapHorizontally;
+					SetupViewport ();
+					if (_showGrid) {
 						GenerateGrid ();	// need to refresh grid mesh
+					}
+					if (!_wrapHorizontally) {
+						CenterMap ();
+					}
 				}
 			}
 		}
@@ -729,21 +729,30 @@ namespace WorldMapStrategyKit {
 			SetDestination (destination, duration, zoomLevel);
 		}
 
-		/// <summary>
-		/// Starts navigation to target lat/lon.
-		/// </summary>
-		/// <param name="latitude">Latitude.</param>
-		/// <param name="longitude">Longitude.</param>
-		public void FlyToLatLon(float latitude, float longitude, float duration, float zoomLevel) {
+
+        /// <summary>
+        /// Starts navigation to target lat/lon.
+        /// </summary>
+        /// <param name="latlon">Latitude (x) and Longitude (y).</param>
+        public void FlyToLatLon(Vector2 latlon, float duration, float zoomLevel) {
+            FlyToLatLon(latlon.x, latlon.y, duration, zoomLevel);
+        }
+
+        /// <summary>
+        /// Starts navigation to target lat/lon.
+        /// </summary>
+        /// <param name="latitude">Latitude.</param>
+        /// <param name="longitude">Longitude.</param>
+        public void FlyToLatLon(float latitude, float longitude, float duration, float zoomLevel) {
 			Vector2 location = Conversion.GetLocalPositionFromLatLon (latitude, longitude);
 			FlyToLocation (location, duration, zoomLevel);
 		}
 
-		/// <summary>
-		/// Initiates a rectangle selection operation.
-		/// </summary>
-		/// <returns>The rectangle selection.</returns>
-		public GameObject RectangleSelectionInitiate (OnRectangleSelection rectangleSelectionCallback, Color rectangleFillColor, Color rectangleColor, float lineWidth = 0.02f) {
+        /// <summary>
+        /// Initiates a rectangle selection operation.
+        /// </summary>
+        /// <returns>The rectangle selection.</returns>
+        public GameObject RectangleSelectionInitiate (OnRectangleSelection rectangleSelectionCallback, Color rectangleFillColor, Color rectangleColor, float lineWidth = 0.02f) {
 			RectangleSelectionCancel ();
 			GameObject rectangle = GameObject.CreatePrimitive (PrimitiveType.Quad);
 			if (rectangleSelectionMat == null) {

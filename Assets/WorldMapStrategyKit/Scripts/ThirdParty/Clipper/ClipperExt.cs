@@ -8,6 +8,13 @@ namespace WorldMapStrategyKit.ClipperLib {
 		const float MULTIPLIER = 5000000;
 
 		Region subject;
+        List<Region> subjects;
+		List<List<IntPoint>> solution;
+
+		public override void Clear () {
+			subject = null;
+			base.Clear ();
+		}
 
 		public void AddPaths (List<Region> regions, PolyType polyType) {
 			int regionCount = regions.Count;
@@ -31,6 +38,10 @@ namespace WorldMapStrategyKit.ClipperLib {
 
 			if (polyType == PolyType.ptSubject) {
 				subject = region;
+                if (subjects == null) {
+                    subjects = new List<Region>();
+                }
+                subjects.Add(region);
 			}
 		}
 
@@ -53,27 +64,48 @@ namespace WorldMapStrategyKit.ClipperLib {
 		}
 
 		public void Execute (ClipType clipType, IAdminEntity entity) {
-			List<List<IntPoint>> solution = new List<List<IntPoint>> ();
+			if (solution == null) {
+				solution = new List<List<IntPoint>> ();
+			}
 			Execute (clipType, solution);
 			int contourCount = solution.Count;
-			entity.regions.Clear ();
+            // Remove subject from entity
+            if (subjects != null) {
+                for (int k = 0; k < subjects.Count; k++) {
+                    Region sub = subjects[k];
+                    if (entity.regions.Contains(sub)) {
+                        entity.regions.Remove(sub);
+                    }
+                }
+            }
+			// Add resulting regions
 			for (int c = 0; c < contourCount; c++) {
-				List<IntPoint> points = solution [c];
-				int count = points.Count;
-				Vector2[] newPoints = new Vector2[count];
-				for (int k = 0; k < count; k++) {
-					newPoints [k].x = (float)points [k].X / MULTIPLIER;
-					newPoints [k].y = (float)points [k].Y / MULTIPLIER;
-				}
-				Region region = new Region (entity, entity.regions.Count);
-				region.UpdatePointsAndRect (newPoints);
-				region.sanitized = true;
-				entity.regions.Add (region);
+                // In the case of difference operations, the resulting polytongs could be artifacts if the frontiers do not match perfectly. In that case, we ignore small isolated triangles.
+                if (clipType == ClipType.ctUnion || solution[c].Count >= 5) {
+                    Vector2[] newPoints = BuildPointArray(solution[c]);
+                    Region region = new Region(entity, entity.regions.Count);
+                    region.UpdatePointsAndRect(newPoints);
+                    region.sanitized = true;
+                    entity.regions.Add(region);
+                }
 			}
+			entity.mainRegionIndex = 0;
+		}
+
+		Vector2[] BuildPointArray (List<IntPoint> points) {
+			int count = points.Count;
+			Vector2[] newPoints = new Vector2[count];
+			for (int k = 0; k < count; k++) {
+				newPoints [k].x = (float)points [k].X / MULTIPLIER;
+				newPoints [k].y = (float)points [k].Y / MULTIPLIER;
+			}
+			return newPoints;
 		}
 
 		public void Execute (ClipType clipType, Region output) {
-			List<List<IntPoint>> solution = new List<List<IntPoint>> ();
+			if (solution == null) {
+				solution = new List<List<IntPoint>> ();
+			}
 			Execute (clipType, solution);
 			int contourCount = solution.Count;
 			if (contourCount == 0) {
@@ -89,18 +121,13 @@ namespace WorldMapStrategyKit.ClipperLib {
 						best = k;
 					}
 				}
-				List<IntPoint> points = solution [best];
-				Vector2[] newPoints = new Vector2[pointCount];
-				for (int k = 0; k < pointCount; k++) {
-					newPoints [k].x = (float)points [k].X / MULTIPLIER;
-					newPoints [k].y = (float)points [k].Y / MULTIPLIER;
-				}
+				Vector2[] newPoints = BuildPointArray (solution [best]);
 				output.UpdatePointsAndRect (newPoints);
 			}
 		}
 
 		public void Execute (ClipType clipType) {
-			if (clipType == ClipType.ctUnion && subject == null || clipType != ClipType.ctUnion) {
+			if (subject == null) {
 				Debug.LogError ("Clipper.Execute called without defined subject");
 				return;
 			}

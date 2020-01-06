@@ -11,7 +11,7 @@ SubShader {
         "RenderType"="Opaque"
     }
     	
-    Lighting On
+    //Lighting On // commented out to support LWRP using this same shader
     Blend SrcAlpha OneMinusSrcAlpha
     Material {
         Emission [_Color]

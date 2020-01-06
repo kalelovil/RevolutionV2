@@ -135,6 +135,19 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
+
+		/// <summary>
+		/// Sets both grid rows and columns
+		/// </summary>
+		public void SetGridDimensions(int rows, int columns) { 
+			if (rows != _gridRows || columns != _gridColumns) {
+				_gridRows = rows;
+				_gridColumns = columns;
+				isDirty = true;
+				GenerateGrid();
+			}
+		}
+
 		/// <summary>
 		/// Complete array of cells.
 		/// </summary>
@@ -488,20 +501,6 @@ namespace WorldMapStrategyKit {
 		/// Restores all cells colors to their original materials. Useful when coloring cells temporarily using SetCellTemporaryColor.
 		/// </summary>
 		public void RestoreCellMaterials() {
-//			for (int k = 0; k < cells.Length; k++) {
-//				if (k == _cellHighlightedIndex || cells[k] == null)
-//					continue;
-//				Renderer renderer;
-//				bool exists = gridSurfaces.TryGetValue(k, out renderer);
-//				if (exists && renderer != null && renderer.enabled) {
-//					Material customMaterial = cells[k].customMaterial;
-//					if (customMaterial == null) {
-//						renderer.enabled = false;
-//					} else if (renderer.sharedMaterial != customMaterial) {
-//						renderer.sharedMaterial = customMaterial;
-//					}
-//				}
-//			}
 
 			foreach (KeyValuePair<int,Renderer>kvp in gridSurfaces) {
 				int k = kvp.Key;
@@ -703,18 +702,43 @@ namespace WorldMapStrategyKit {
 		public List<int>GetCellsInCountry(int countryIndex) {
 			List<int> allCells = new List<int>();
 			Country country = _countries[countryIndex];
-			for (int k = 0; k < country.regions.Count; k++) {
-				List<int> candidateCells = GetCellsWithinRect(country.regions[k].rect2D);
-				for (int c = 0; c < candidateCells.Count; c++) {
-					int cellCountry = GetCellCountryIndex(candidateCells[c]);
+			int regionsCount = country.regions.Count;
+			// Clear cells flag
+			for (int k = 0; k < cells.Length; k++) {
+				if (cells [k] != null) {
+					cells [k].flag = false;
+				}
+			}
+			for (int k = 0; k < regionsCount; k++) {
+				Region region = country.regions [k];
+				List<int> candidateCells = GetCellsWithinRect(region.rect2D);
+				int candidateCellsCount = candidateCells.Count;
+				for (int c = 0; c < candidateCellsCount; c++) {
+					int cellIndex = candidateCells[c];
+					Cell cell = cells [cellIndex];
+					if (cell.flag) // used?
+						continue;
+					
+					// Check if cell is fully outside the region
+					int inside = 0;
+					for (int p = 0; p < cell.points.Length; p++) {
+						if (region.Contains (cell.points [p])) {
+							inside++;
+							break;
+						}
+					}
+					if (inside == 0)
+						continue;
+
+					int cellCountry = GetCellCountryIndex (cellIndex);
 					if (cellCountry == countryIndex) {
-						allCells.Add(candidateCells[c]);
+						allCells.Add(cellIndex);
+						cell.flag = true;
 					}
 				}
 			}
 			return allCells;
 		}
-
 
 		/// <summary>
 		/// Returns a list of cells whose center belongs to a country region.
@@ -735,11 +759,20 @@ namespace WorldMapStrategyKit {
 		}
 
 		int[] countryCountTmp;
+
 		/// <summary>
 		/// Returns the country index to which the cell belongs.
 		/// </summary>
-		/// <returns>The cell country index.</returns>
 		public int GetCellCountryIndex(int cellIndex) {
+			int dummy;
+			return GetCellCountryIndex (cellIndex, out dummy);
+		}
+
+		/// <summary>
+		/// Returns the country index to which the cell belongs. It also returns the region index.
+		/// </summary>
+		public int GetCellCountryIndex(int cellIndex, out int regionIndex) {
+			regionIndex = -1;
 			Cell cell = cells[cellIndex];
 			if (cell == null)
 				return -1;
@@ -751,22 +784,52 @@ namespace WorldMapStrategyKit {
 			}
 			int countryMax = -1, countryMaxCount = 0;
 			int pointCount = cell.points.Length;
+			// seems complicated but needs to check countries from smallest to biggers to account for enclaves
 			for (int k = -1; k < pointCount; k++) {
 				int countryIndex;
 				if (k == -1) {
 					countryIndex = GetCountryIndex(cell.center);
 				} else {
-					countryIndex = GetCountryIndex(cell.points[k]);
+					Vector2 mp;
+					mp.x = cell.points [k].x * 0.9f + cell.center.x * 0.1f;
+					mp.y = cell.points [k].y * 0.9f + cell.center.y * 0.1f;
+					countryIndex = GetCountryIndex(mp);
 				}
 				if (countryIndex == -1)
 					continue;
 
 				countryCountTmp [countryIndex]++;
 				if (countryCountTmp[countryIndex] > countryMaxCount) {
-					countryMaxCount = countryCountTmp[countryIndex];
 					countryMax = countryIndex;
+					countryMaxCount = countryCountTmp[countryIndex];
+					regionIndex = lastRegionIndex;
+					if (countryMaxCount >= 4)
+						break;
 				}
 			}
+
+			if (countryMax < 0) {
+				// check if there's a small country inside the cell
+				int countryCount = _countriesOrderedBySize.Count;
+				for (int oc = 0; oc < countryCount; oc++) {
+					int c = _countriesOrderedBySize [oc];
+					Country country = _countries [c];
+					if (country.hidden && Application.isPlaying)
+						continue;
+					if (!cell.Intersects(country.regionsRect2D))
+						continue;
+					int crCount = country.regions.Count;
+					for (int cr = 0; cr < crCount; cr++) {
+						if (cell.Contains(country.regions [cr].center)) {
+							countryMax = c;
+							regionIndex = cr;
+							oc = countryCount;
+							break;
+						}
+					}
+				}
+			}
+
 			return countryMax;
 		}
 

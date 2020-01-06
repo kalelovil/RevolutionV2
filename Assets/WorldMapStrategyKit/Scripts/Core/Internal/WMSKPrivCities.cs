@@ -16,7 +16,6 @@ namespace WorldMapStrategyKit
 	public partial class WMSK : MonoBehaviour
 	{
 
-		//								const float CITY_HIT_PRECISION = 0.0002f;
 		const string CITY_ATTRIB_DEFAULT_FILENAME = "citiesAttrib";
 
 		// resources & gameobjects

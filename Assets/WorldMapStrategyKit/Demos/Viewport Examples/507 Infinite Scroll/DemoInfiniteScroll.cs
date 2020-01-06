@@ -81,11 +81,12 @@ namespace WorldMapStrategyKit {
 					break;
 			} while (!map.ContainsWater (cityPosition, 0.001f, out waterPosition));
 			
-			if (safeAbort > 8000)
+			if (safeAbort > 8000) {
+				Debug.Log ("No water position found!");
 				return;
+			}
 			
 			// Create ship
-
 			ship = DropShipOnPosition (waterPosition);
 
 			// Fly to the location of ship with provided zoom level
@@ -108,6 +109,9 @@ namespace WorldMapStrategyKit {
 		Vector3 lastPosition;
 
 		void Update () {
+			if (ship == null)
+				return;
+			
 			float d = Vector3.Distance (ship.currentMap2DLocation, lastPosition);
 			if (d > 0.002f) {
 				if (ship.isMoving) {

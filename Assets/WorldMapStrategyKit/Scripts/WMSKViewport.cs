@@ -165,8 +165,8 @@ namespace WorldMapStrategyKit {
 					AssignRenderViewport (value);
 					isDirty = true;
 					SetupViewport();
-					RepositionViewportObjects();
-					RepositionCamera();
+                    RepositionViewportObjects();
+                    RepositionCamera();
 				}
 			}
 		}

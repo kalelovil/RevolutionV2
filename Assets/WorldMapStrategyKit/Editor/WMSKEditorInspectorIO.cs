@@ -227,14 +227,18 @@ namespace WorldMapStrategyKit {
 			texture.SetPixels (colors);
 			texture.Apply ();
 
-			if (File.Exists (outputFile))
-				File.Delete (outputFile);
+            if (File.Exists(outputFile)) {
+                File.Delete(outputFile);
+            }
 			File.WriteAllBytes (outputFile, texture.EncodeToPNG ());
+            AssetDatabase.Refresh();
 
 			map.HideProvinceSurfaces ();
-			TextureImporter imp = (TextureImporter)TextureImporter.GetAtPath (outputFile);
-			imp.maxTextureSize = 8192;
-			imp.SaveAndReimport ();
+			TextureImporter imp = (TextureImporter)AssetImporter.GetAtPath(outputFile);
+            if (imp != null) {
+                imp.maxTextureSize = 8192;
+                imp.SaveAndReimport();
+            }
 		}
 	}
 }

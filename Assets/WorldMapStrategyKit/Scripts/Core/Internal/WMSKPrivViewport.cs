@@ -25,9 +25,10 @@ namespace WorldMapStrategyKit {
 		// viewport game objects
 
 		// Overlay & Viewport
-		RenderTexture overlayRT;
+        RenderTexture overlayRT, overlayRTwrapped;
 		Camera _currentCamera, _wrapCamera, mapperCam;
 		GameObject _wrapCameraObj;
+        Material viewportMat;
 
 		// Terrain support
 		Material terrainMat;
@@ -490,6 +491,11 @@ namespace WorldMapStrategyKit {
 				DestroyImmediate (overlayRT);
 				overlayRT = null;
 			}
+            if (overlayRTwrapped != null) {
+                overlayRTwrapped.Release();
+                DestroyImmediate(overlayRTwrapped);
+                overlayRTwrapped = null;
+            }
 			_currentCamera = cameraMain; // Camera main;
 			if (_currentCamera == null) {
 				Debug.LogWarning ("Camera main not found. Ensure you have a camera in the scene tagged as MainCamera.");
@@ -548,7 +554,12 @@ namespace WorldMapStrategyKit {
 			SetupViewportUIPanel ();
 			CheckViewportScaleAndCurvature ();
 
-			if (overlayRT != null && (overlayRT.width != imageWidth || overlayRT.height != imageHeight || overlayRT.filterMode != _renderViewportFilterMode)) {
+			FilterMode filterMode = _renderViewportFilterMode;
+			if (filterMode == FilterMode.Trilinear && _wrapHorizontally) {
+				filterMode = FilterMode.Bilinear;
+			}
+
+			if (overlayRT != null && (overlayRT.width != imageWidth || overlayRT.height != imageHeight || overlayRT.filterMode != filterMode)) {
 				if (_currentCamera != null && _currentCamera.targetTexture != null) {
 					_currentCamera.targetTexture = null;
 				}
@@ -556,14 +567,23 @@ namespace WorldMapStrategyKit {
 				overlayRT.Release ();
 				DestroyImmediate (overlayRT);
 				overlayRT = null;
+                if (overlayRTwrapped != null) {
+                    if (_wrapCamera != null && _wrapCamera.targetTexture == overlayRTwrapped) {
+                        _wrapCamera.targetTexture = null;
+                    }
+                    overlayRTwrapped.Release();
+                    DestroyImmediate(overlayRTwrapped);
+                    overlayRTwrapped = null;
+                }
 			}
+
 			GameObject overlayLayer = GetOverlayLayer (true);
 			if (overlayRT == null) {
 				overlayRT = new RenderTexture (imageWidth, imageHeight, 24, RenderTextureFormat.ARGB32);
 				overlayRT.hideFlags = HideFlags.DontSave;	// don't add to the disposal manager
-				overlayRT.filterMode = _renderViewportFilterMode; // FilterMode.Trilinear; -> trilinear causes blurry issues with NGUI
+				overlayRT.filterMode = filterMode; // FilterMode.Trilinear; -> trilinear causes blurry issues with NGUI
 				overlayRT.anisoLevel = 0;
-				overlayRT.useMipMap = (_renderViewportFilterMode == FilterMode.Trilinear);
+				overlayRT.useMipMap = filterMode == FilterMode.Trilinear;
 			}
 			
 			// Camera
@@ -577,18 +597,16 @@ namespace WorldMapStrategyKit {
 			mapperCam.aspect = 2;
 			mapperCam.cullingMask = 1 << camObj.layer;
 			mapperCam.clearFlags = CameraClearFlags.SolidColor;
-			mapperCam.backgroundColor = new Color (0, 0, 0, _renderViewportIsTerrain ? 0f : 1f);
+            mapperCam.backgroundColor = Misc.ColorClear; // new Color(0, 0, 0, _renderViewportIsTerrain ? 0f : 1f);
 			mapperCam.targetTexture = overlayRT;
 			mapperCam.nearClipPlane = _renderViewportIsTerrain ? 0.3f : 0.01f;
 			mapperCam.farClipPlane = Mathf.Min (cameraMain.farClipPlane, 1000);
 			mapperCam.renderingPath = _renderViewportRenderingPath;
 			mapperCam.enabled = true;
 
-			#if UNITY_5_6_OR_NEWER
 												if (_wrapHorizontally) {
 												mapperCam.allowMSAA = false;
 												}
-			#endif
 			if (_currentCamera != mapperCam) {
 				_currentCamera = mapperCam;
 				CenterMap ();
@@ -607,38 +625,55 @@ namespace WorldMapStrategyKit {
 			} else {
 				// Additional setup steps for Viewport
 				// Create wrapper cam
-				_wrapCameraObj = GameObject.Find (MAPPER_CAM_WRAP);
-				if (_wrapCameraObj == null) {
-					_wrapCameraObj = Instantiate (camObj);
-					_wrapCameraObj.hideFlags = HideFlags.DontSave;
-					_wrapCameraObj.hideFlags |= HideFlags.HideInHierarchy;
-					_wrapCameraObj.layer = overlayLayer.layer;
-					_wrapCameraObj.name = MAPPER_CAM_WRAP;
-				}
-				if (_wrapCamera == null) {
-					_wrapCamera = _wrapCameraObj.GetComponent<Camera> ();
-					#if UNITY_5_6_OR_NEWER
-																				_wrapCamera.allowMSAA = false;
-					#endif
-					_wrapCamera.clearFlags = CameraClearFlags.Nothing;
-					_wrapCamera.tag = "Untagged";
-				}
-				_wrapCamera.enabled = _wrapHorizontally;
-				if (_wrapHorizontally)
-					UpdateWrapCam ();
+                // Setup viewport material and shader
+                Renderer viewportRenderer = _renderViewport.GetComponent<Renderer>();
+                viewportMat = viewportRenderer.sharedMaterial;
+                viewportMat.shader = _wrapHorizontally ? Shader.Find("WMSK/Lit Viewport Wrapped") : Shader.Find("WMSK/Lit Viewport");
+                SRP.Configure(viewportMat);
+                if (viewportMat != null) {
+                    viewportMat.mainTexture = overlayRT;
+                    if (_renderViewportLightingMode == VIEWPORT_LIGHTING_MODE.Unlit) {
+                        viewportMat.EnableKeyword("WMSK_VIEWPORT_UNLIT");
+                    } else {
+                        viewportMat.DisableKeyword("WMSK_VIEWPORT_UNLIT");
+                    }
+                }
 
-				// Assigns render texture to current material and recreates the camera
-				Material viewportMat = _renderViewport.GetComponent<Renderer> ().sharedMaterial;
-				if (viewportMat != null) {
-					viewportMat.mainTexture = overlayRT;
-					if (_renderViewportLightingMode == VIEWPORT_LIGHTING_MODE.Unlit) {
-						viewportMat.EnableKeyword ("WMSK_VIEWPORT_UNLIT");
-					} else {
-						viewportMat.DisableKeyword ("WMSK_VIEWPORT_UNLIT");
-					}
-				}
-			}
-			PointerTrigger pt = _renderViewport.GetComponent<PointerTrigger> () ?? _renderViewport.AddComponent<PointerTrigger> ();
+                // Create wrapper cam
+                _wrapCameraObj = GameObject.Find(MAPPER_CAM_WRAP);
+                if (_wrapCameraObj == null) {
+                    _wrapCameraObj = Instantiate(camObj);
+                    _wrapCameraObj.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
+                    _wrapCameraObj.layer = overlayLayer.layer;
+                    _wrapCameraObj.name = MAPPER_CAM_WRAP;
+                }
+                if (_wrapCamera == null) {
+                    _wrapCamera = _wrapCameraObj.GetComponent<Camera>();
+                    _wrapCamera.tag = "Untagged";
+                    _wrapCamera.aspect = 2;
+                    _wrapCamera.cullingMask = 1 << camObj.layer;
+                    _wrapCamera.clearFlags = CameraClearFlags.SolidColor;
+                    _wrapCamera.backgroundColor = Misc.ColorClear;
+                    _wrapCamera.nearClipPlane = _renderViewportIsTerrain ? 0.3f : 0.01f;
+                    _wrapCamera.farClipPlane = Mathf.Min(cameraMain.farClipPlane, 1000);
+                    _wrapCamera.renderingPath = _renderViewportRenderingPath;
+                }
+                if (_wrapHorizontally) {
+                    if (overlayRTwrapped == null) {
+                        overlayRTwrapped = new RenderTexture(imageWidth, imageHeight, 24, RenderTextureFormat.ARGB32);
+                        overlayRTwrapped.hideFlags = HideFlags.DontSave;   // don't add to the disposal manager
+						overlayRTwrapped.filterMode = filterMode; // FilterMode.Trilinear; -> trilinear causes blurry issues with NGUI
+                        overlayRTwrapped.anisoLevel = 0;
+						overlayRTwrapped.useMipMap = filterMode == FilterMode.Trilinear;
+                    }
+                    _wrapCamera.targetTexture = overlayRTwrapped;
+                    viewportMat.SetTexture("_WrappedTex", overlayRTwrapped);
+                    UpdateWrapCam();
+                } else {
+                    ToggleWrapCamera(false);
+                }
+            }
+            PointerTrigger pt = _renderViewport.GetComponent<PointerTrigger>() ?? _renderViewport.AddComponent<PointerTrigger>();
 			pt.map = this;
 
 			// Setup 3d surface, cloud and other visual effects
@@ -738,7 +773,7 @@ namespace WorldMapStrategyKit {
 			float x1 = v1.x;
 			if ((x0 < 0 && x1 > 1) || (x0 >= 0 && x1 <= 1)) {
 				// disable wrap cam as current camera is not over the edges or the zoom is too far
-				_wrapCamera.enabled = false;
+                ToggleWrapCamera(false);
 				transform.position += apos;
 				_currentCamera.transform.position += apos;
 				return;
@@ -774,13 +809,20 @@ namespace WorldMapStrategyKit {
 			_currentCamera.transform.position += apos;
 			_wrapCameraObj.transform.position += apos;
 
-			if (!_wrapCamera.enabled) {
-				_wrapCamera.enabled = true;
-				_wrapCamera.targetTexture = overlayRT;
-			}
-		}
+            if (!_wrapCamera.enabled) {
+                ToggleWrapCamera(true);
+            }
+        }
 
-		#endregion
+        void ToggleWrapCamera(bool enabled) {
+            if (_wrapCamera != null) {
+                _wrapCamera.enabled = enabled;
+            }
+            if (viewportMat != null) {
+                viewportMat.SetFloat("_WrapEnabled", enabled ? 1f : 0f);
+            }
+        }
+        #endregion
 
 		#region Viewport FX
 
@@ -812,10 +854,13 @@ namespace WorldMapStrategyKit {
 
 			t.transform.localPosition = new Vector3 (0, 0, _earthCloudLayerElevation * (_renderViewportElevationFactor + 0.01f));
 			Material cloudMat = renderer.sharedMaterial;
-			cloudMat.mainTextureScale = new Vector2 (scaleX, scaleY);
+            SRP.Configure(cloudMat);
+            Vector2 scale = new Vector2(scaleX, scaleY);
+            cloudMat.mainTextureScale = scale;
+            cloudMat.SetVector("_TextureScale", scale); // for LWRP
 			float brightness = Mathf.Clamp01 ((lastDistanceFromCamera + t.transform.localPosition.z - 5f) / 5f);
 			renderer.enabled = _earthCloudLayer && brightness > 0f;	// optimization: hide cloud layer entirely if it's 100% transparent
-			cloudMat.SetFloat ("_EmissionColor", brightness * _earthCloudLayerAlpha);
+			cloudMat.SetFloat ("_Brightness", brightness * _earthCloudLayerAlpha);
 			earthMat.SetFloat ("_CloudShadowStrength", _earthCloudLayer ? _earthCloudLayerShadowStrength * _earthCloudLayerAlpha : 0f);
 			CloudLayerAnimator cla = t.GetComponent<CloudLayerAnimator> ();
 			cla.earthMat = earthMat;

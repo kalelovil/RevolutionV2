@@ -250,7 +250,7 @@ namespace WorldMapStrategyKit {
 					max.y = y;
 				}
 			}
-			rect2D = new Rect (min.x, min.y, Math.Abs (max.x - min.x), Mathf.Abs (max.y - min.y));
+			rect2D = new Rect (min.x, min.y, max.x - min.x, max.y - min.y);
 			rect2DArea = rect2D.width * rect2D.height;
 			FastVector.Average (ref min, ref max, ref center); // center = (min + max) * 0.5f;
 		}

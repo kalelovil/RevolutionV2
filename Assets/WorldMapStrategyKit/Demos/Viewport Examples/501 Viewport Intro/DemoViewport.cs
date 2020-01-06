@@ -14,8 +14,6 @@ namespace WorldMapStrategyKit {
 		float zoomLevel = 1.0f;
 		bool showGUI = true;
 
-		public Texture2D texture;
-
 		void Start() {
 			// Get a reference to the World Map API:
 			map = WMSK.instance;
@@ -57,8 +55,9 @@ namespace WorldMapStrategyKit {
 			map.CenterMap();
 		}
 
-		// Update is called once per frame
-		void OnGUI() {
+
+        // Update is called once per frame
+        void OnGUI() {
 			if (!showGUI) return;
 
 			// Do autoresizing of GUI layer
@@ -330,11 +329,14 @@ namespace WorldMapStrategyKit {
 
 			map.AddMarker2DSprite(star, planeLocation, 0.02f, true);
 
-			// Add an optional click handler for this sprite
-			star.GetComponent<MarkerClickHandler>().OnMarkerMouseDown += (buttonIndex => Debug.Log("Click on sprite with button " + buttonIndex + "!"));
-		
-			// Fly to the destination and see the building created
-			map.FlyToLocation(planeLocation);
+            // Add an optional click handler for this sprite
+            MarkerClickHandler handler = star.GetComponent<MarkerClickHandler>();
+            handler.OnMarkerMouseDown += (buttonIndex => Debug.Log("Click on sprite with button " + buttonIndex + "!"));
+            handler.OnMarkerMouseEnter += () => Debug.Log("Pointer is on sprite!");
+            handler.OnMarkerMouseExit += () => Debug.Log("Pointer exits sprite!");
+
+            // Fly to the destination and see the building created
+            map.FlyToLocation(planeLocation);
 		
 			// Optionally add a blinking effect to the marker
 			MarkerBlinker.AddTo(star, 3, 0.2f);
@@ -367,9 +369,9 @@ namespace WorldMapStrategyKit {
 		/// Similar to the AddMarker functionality, you need two spherical coordinates and then call AddLine
 		/// </summary>
 		void AddTrajectories() {
-		
+
 			// In this example we will add random lines from 5 cities to another cities (see AddMaker example above for other options to get locations)
-//			map.SetZoomLevel(1f);
+			map.SetZoomLevel(1f);
 
 			for (int line = 0; line < 5; line++) {
 				// Get two random cities

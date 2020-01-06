@@ -54,6 +54,9 @@ namespace WorldMapStrategyKit {
 						Debug.LogWarning("'WorldMapStrategyKit' GameObject could not be found in the scene. Make sure it's created with this name before using any map functionality.");
 					}
 				}
+				if (_instance != null && _instance.countries == null) {
+					_instance.Init ();
+				}
 				return _instance;
 			}
 		}

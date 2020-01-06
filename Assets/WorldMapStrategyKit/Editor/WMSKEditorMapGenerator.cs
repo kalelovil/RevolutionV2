@@ -118,9 +118,7 @@ namespace WorldMapStrategyKit {
 			EditorGUILayout.HelpBox ("Map data, including heightMap, background and water mask textures, will be stored in Resources/WMSK/Geodata/" + outputFolder.stringValue + " folder.", MessageType.Info);
 
 			EditorGUILayout.PropertyField (mapGenerationQuality, new GUIContent ("Generation Quality"));
-			if (generateButtonStyle == null) {
-				generateButtonStyle = new GUIStyle (GUI.skin.button);
-			}
+			generateButtonStyle = new GUIStyle (GUI.skin.button);
 			generateButtonStyle.normal.textColor = Color.yellow;
 			generateButtonStyle.fontStyle = FontStyle.Bold;
 			generateButtonStyle.fixedHeight = 30;

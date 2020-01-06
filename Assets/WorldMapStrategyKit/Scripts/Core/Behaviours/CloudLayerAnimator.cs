@@ -27,6 +27,7 @@ public class CloudLayerAnimator : MonoBehaviour {
 		tdisp.x += Time.deltaTime * speed * 0.001f;
 		Vector2 offset = cloudMainTextureOffset + tdisp;
 		cloudMat.mainTextureOffset = offset;
+        cloudMat.SetVector("_TextureOffset", offset);
 		if (earthMat!=null) earthMat.SetVector("_CloudMapOffset", tdisp);
 	}
 }

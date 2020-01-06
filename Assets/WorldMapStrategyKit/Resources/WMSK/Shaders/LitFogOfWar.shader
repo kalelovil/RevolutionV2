@@ -2,8 +2,6 @@
 	Properties {
                 _MainTex ("Base (RGB)", 2D) = "black" {}
                 _NoiseTex ("Noise (RGB)", 2D) = "white" {}
-                _Specular ("Specular", Color) = (0, 0, 0, 0)
-                _Smoothness ("Smoothness", Range(0,1)) = 0.0
          		_EmissionColor("Color", Color) = (1,1,1,1)
         }
 
