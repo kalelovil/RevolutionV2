@@ -87,7 +87,11 @@ namespace WorldMapStrategyKit
 		{
 			foreach (City city in map.cities)
 			{
-				map.AddMarker2DText(city.name, city.unity2DLocation + (Vector2.down * 0.0005f), 0.001f);
+				bool isCapital = city.cityClass == CITY_CLASS.COUNTRY_CAPITAL;
+				Vector2 markerOffset = (isCapital) ? Vector2.down * 0.00075f : Vector2.down * 0.0005f;
+				float markerScale = (isCapital) ? 0.001125f : 0.001f;
+
+				map.AddMarker2DText(city.name, city.unity2DLocation + markerOffset, markerScale);
 			}
 		}
 
