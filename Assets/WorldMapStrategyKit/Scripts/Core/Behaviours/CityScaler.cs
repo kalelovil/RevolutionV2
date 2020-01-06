@@ -11,7 +11,7 @@ namespace WorldMapStrategyKit
 	public class CityScaler : MonoBehaviour
 	{
 
-		const float CITY_SIZE_ON_SCREEN = 10.0f;
+		const float CITY_SIZE_ON_SCREEN = 1f;
 		Vector3 lastCamPos, lastPos;
 		float lastIconSize;
 		float lastCustomSize;
@@ -22,7 +22,7 @@ namespace WorldMapStrategyKit
 
 		void Start ()
 		{
-			ScaleCities ();
+			//ScaleCities ();
 		}
 	
 		// Update is called once per frame
@@ -30,7 +30,7 @@ namespace WorldMapStrategyKit
 		{
 			if (lastPos != transform.position || lastCamPos != map.currentCamera.transform.position || lastIconSize != map.cityIconSize ||
 			             map.currentCamera.orthographic && map.currentCamera.orthographicSize != lastOrtographicSize) {
-				ScaleCities ();
+				//ScaleCities ();
 			}
 		}
 

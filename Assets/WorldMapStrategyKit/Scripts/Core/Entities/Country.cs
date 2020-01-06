@@ -61,6 +61,20 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
+        public City[] cities { get { return GetCities(); } }
+		private City[] GetCities()
+		{
+			var cities = new List<City>();
+			foreach (City city in cities)
+			{
+				if (city.countryIndex == uniqueId)
+				{
+					cities.Add(city);
+				}
+			}
+			return cities.ToArray();
+		}
+
 		/// <summary>
 		/// True for a country acting as a provinces pool created by CreateCountryProvincesPool function.
 		/// The effect of this field is that all transfer operations will ignore its borders which results in a faster operation
