@@ -207,12 +207,85 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119610530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.642, y: 0.171, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &408303478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 408303479}
+  m_Layer: 0
+  m_Name: Headquarters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &408303479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408303478}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.456975, y: 25.079983, z: 813.52686}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &652464397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 652464398}
+  - component: {fileID: 652464399}
+  m_Layer: 0
+  m_Name: Mount Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &652464398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652464397}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1443365430}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &652464399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652464397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &758800001
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +389,7 @@ GameObject:
   - component: {fileID: 796910175}
   - component: {fileID: 796910176}
   - component: {fileID: 796910174}
+  - component: {fileID: 796910177}
   m_Layer: 0
   m_Name: Demo
   m_TagString: Untagged
@@ -367,6 +441,18 @@ MonoBehaviour:
   textureWidth: 360
   textureHeight: 120
   showPicker: 0
+--- !u!114 &796910177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796910173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d47fc2133a1dc748b07001b9ea60eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1443365430
 Transform:
   m_ObjectHideFlags: 0
@@ -375,10 +461,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791826078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 86.60254}
+  m_LocalPosition: {x: -0.642, y: 0.171, z: 86.60254}
   m_LocalScale: {x: 200, y: 100, z: 1}
   m_Children:
-  - {fileID: 1861901578}
+  - {fileID: 652464398}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -395,6 +481,7 @@ GameObject:
   - component: {fileID: 1791826082}
   - component: {fileID: 1791826081}
   - component: {fileID: 1791826079}
+  - component: {fileID: 1791826080}
   m_Layer: 5
   m_Name: WorldMapStrategyKit
   m_TagString: Untagged
@@ -414,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4826812d57ee425dad93bf315e07090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCityScale: {x: 0.00019492873, y: 0.00038985745, z: 1}
+  currentCityScale: {x: 0.00019493654, y: 0.00038987308, z: 1}
   lastKnownZoomLevel: 0.8888889
   isDirty: 0
   _customCamera: {fileID: 0}
@@ -438,7 +525,7 @@ MonoBehaviour:
   _enableCountryHighlight: 0
   _highlightAllCountryRegions: 0
   _highlightMaxScreenAreaSize: 1
-  _showFrontiers: 0
+  _showFrontiers: 1
   _frontiersCoastlines: 1
   _fillColor: {r: 1, g: 0, b: 0, a: 0.7}
   _frontiersColor: {r: 0.23356402, g: 0.66176474, b: 0.23356402, a: 1}
@@ -616,6 +703,45 @@ MonoBehaviour:
   VGOBuoyancyAmplitude: 0.1
   VGOBuoyancyMaxZoomLevel: 0.15
   VGOGlobalSpeed: 0.5
+--- !u!114 &1791826080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791826078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78298af0bb413490a819e6fe36141735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromUnit: 0
+  fromLatDegrees: 0
+  fromLatMinutes: 0
+  fromLatSeconds: 0
+  fromLonDegrees: 0
+  fromLonMinutes: 0
+  fromLonSeconds: 0
+  fromLatDec: 0
+  fromLonDec: 0
+  fromX: 0
+  fromY: 0
+  toLatDegree: 0
+  toLatMinute: 0
+  toLatSeconds: 0
+  toLonDegree: 0
+  toLonMinute: 0
+  toLonSecond: 0
+  toLatDec: 0
+  toLonDec: 0
+  toX: 0
+  toY: 0
+  captureCursor: 0
+  isDirty: 0
+  cityDistanceFrom: -1
+  cityDistanceTo: -1
+  cityDistanceResult: 
+  errorMsg: 
 --- !u!65 &1791826081
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -676,46 +802,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791826078}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1861901577
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1861901578}
-  - component: {fileID: 1861901579}
-  m_Layer: 0
-  m_Name: Mount Points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1861901578
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1861901577}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1443365430}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1861901579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1861901577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

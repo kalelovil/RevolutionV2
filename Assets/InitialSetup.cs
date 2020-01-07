@@ -40,12 +40,14 @@ namespace WorldMapStrategyKit
 			GUIResizer.Init(800, 500);
 
 			/* Register events: this is optionally but allows your scripts to be informed instantly as the mouse enters or exits a country, province or city */
+			/*
 			map.OnCityEnter += (int cityIndex) => Debug.Log("Entered city " + map.cities[cityIndex].name);
 			map.OnCityExit += (int cityIndex) => Debug.Log("Exited city " + map.cities[cityIndex].name);
 			map.OnCityClick += (int cityIndex, int buttonIndex) => Debug.Log("Clicked city " + map.cities[cityIndex].name);
 			map.OnProvinceEnter += (int provinceIndex, int regionIndex) => Debug.Log("Entered province " + map.provinces[provinceIndex].name);
 			map.OnProvinceExit += (int provinceIndex, int regionIndex) => Debug.Log("Exited province " + map.provinces[provinceIndex].name);
 			map.OnProvinceClick += (int provinceIndex, int regionIndex, int buttonIndex) => Debug.Log("Clicked province " + map.provinces[provinceIndex].name);
+			*/
 
 
 			/*
