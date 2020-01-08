@@ -213,6 +213,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &264300336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 264300337}
+  - component: {fileID: 264300338}
+  m_Layer: 0
+  m_Name: Mount Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &264300337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264300336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1443365430}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &264300338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264300336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &408303478
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +286,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &548838435
+--- !u!1 &546369849
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,41 +294,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 548838436}
-  - component: {fileID: 548838437}
-  m_Layer: 0
-  m_Name: Mount Points
+  - component: {fileID: 546369850}
+  m_Layer: 5
+  m_Name: Surfaces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &548838436
+--- !u!4 &546369850
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548838435}
+  m_GameObject: {fileID: 546369849}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1443365430}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &548838437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548838435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &758800001
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,8 +494,8 @@ Transform:
   m_LocalPosition: {x: 0.559, y: -1.06, z: 86.60254}
   m_LocalScale: {x: 200, y: 100, z: 1}
   m_Children:
-  - {fileID: 548838436}
-  - {fileID: 1936516735}
+  - {fileID: 264300337}
+  - {fileID: 546369850}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -902,7 +932,7 @@ MonoBehaviour:
   reshapeCityMode: 0
   reshapeMountPointMode: 0
   createMode: 0
-  cursor: {x: 0.056292, y: 0.2430622, z: 0}
+  cursor: {x: 0.07008731, y: 0.24625267, z: 0}
   circleMoveConstant: 0
   circleCurrentRegionOnly: 0
   reshapeCircleWidth: 0.01
@@ -910,36 +940,36 @@ MonoBehaviour:
   magnetAgressiveMode: 0
   magnetIncludeCountries: 0
   snapPrecisionDigits: 7
-  infoMsg: 
+  infoMsg: Changes saved. Original geodata files in /Backup folder.
   editingMode: 1
   editingCountryFile: 0
   undoRegionsDummyFlag: 0
-  undoCitiesDummyFlag: 13
+  undoCitiesDummyFlag: 68
   undoMountPointsDummyFlag: 0
   newShape: []
   newShapeSegmentPointIndex: 0
   lastMinPopulation: 0
-  GUICityIndex: 13
-  GUICityName: Ulcinj
-  GUICityNewName: Ulcinj
+  GUICityIndex: 21
+  GUICityName: Presevo
+  GUICityNewName: Presevo
   GUICityPopulation: 100
   GUICityClass: 1
-  cityIndex: 54
-  cityChanges: 1
+  cityIndex: 122
+  cityChanges: 0
   cityAttribChanges: 0
-  GUICountryIndex: 5
-  GUICountryName: Montenegro
-  GUICountryNewName: Montenegro
+  GUICountryIndex: 6
+  GUICountryName: Republic of Serbia
+  GUICountryNewName: Republic of Serbia
   GUICountryNewContinent: Europe
-  GUICountryNewFIPS10_4: MJ
-  GUICountryNewISO_A2: ME
-  GUICountryNewISO_A3: MNE
-  GUICountryNewISO_N3: 499
+  GUICountryNewFIPS10_4: RI
+  GUICountryNewISO_A2: RS
+  GUICountryNewISO_A3: SRB
+  GUICountryNewISO_N3: 688
   GUICountryTransferToCountryIndex: -1
   groupByParentAdmin: 1
-  countryIndex: 3
+  countryIndex: 1
   countryRegionIndex: 0
-  countryChanges: 1
+  countryChanges: 0
   countryAttribChanges: 0
   _GUICountryHidden: 0
   GUIMountPointIndex: -1
@@ -953,44 +983,14 @@ MonoBehaviour:
   GUIMountPointMassPopulationSeparation: 10
   GUIMountPointMassPopulationType: 
   mountPointIndex: -1
-  mountPointChanges: 1
-  provinceIndex: 63
+  mountPointChanges: 0
+  provinceIndex: 42
   provinceRegionIndex: 0
-  GUIProvinceIndex: 6
-  GUIProvinceName: Ulcinj
-  GUIProvinceNewName: Ulcinj
+  GUIProvinceIndex: 10
+  GUIProvinceName: Pcinjski
+  GUIProvinceNewName: Pcinjski
   GUIProvinceToNewCountryName: 
   GUIProvinceTransferToCountryIndex: -1
   GUIProvinceTransferToProvinceIndex: -1
-  provinceChanges: 1
+  provinceChanges: 0
   provinceAttribChanges: 0
---- !u!1 &1936516734
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1936516735}
-  m_Layer: 5
-  m_Name: Surfaces
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1936516735
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1936516734}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1443365430}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
