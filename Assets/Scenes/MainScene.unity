@@ -213,49 +213,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &264300336
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 264300337}
-  - component: {fileID: 264300338}
-  m_Layer: 0
-  m_Name: Mount Points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &264300337
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264300336}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1443365430}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &264300338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264300336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &408303478
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 408303479}
+  - component: {fileID: 408303480}
   m_Layer: 0
   m_Name: Headquarters
   m_TagString: Untagged
@@ -286,36 +244,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &546369849
-GameObject:
+--- !u!114 &408303480
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 546369850}
-  m_Layer: 5
-  m_Name: Surfaces
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &546369850
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 546369849}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1443365430}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 408303478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9582378236b05944099ce6cf866586e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mountPointID: HQ
+  _headquartersPrefab: {fileID: 1868010382093712042, guid: 35efc2a190457bc4b8ebb32e0c62c984,
+    type: 3}
 --- !u!1 &758800001
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,11 +437,53 @@ Transform:
   m_LocalPosition: {x: 0.559, y: -1.06, z: 86.60254}
   m_LocalScale: {x: 200, y: 100, z: 1}
   m_Children:
-  - {fileID: 264300337}
-  - {fileID: 546369850}
+  - {fileID: 1503231413}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1503231412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1503231413}
+  - component: {fileID: 1503231414}
+  m_Layer: 0
+  m_Name: Mount Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1503231413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503231412}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1443365430}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1503231414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503231412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1791826078
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,8 +518,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4826812d57ee425dad93bf315e07090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCityScale: {x: 0.0002533313, y: 0.0005066626, z: 1}
-  lastKnownZoomLevel: 0.6666667
+  currentCityScale: {x: 0.0001950057, y: 0.0003900114, z: 1}
+  lastKnownZoomLevel: 0.8888889
   isDirty: 0
   _customCamera: {fileID: 0}
   _prewarm: 0
@@ -931,8 +916,8 @@ MonoBehaviour:
   reshapeRegionMode: 0
   reshapeCityMode: 0
   reshapeMountPointMode: 0
-  createMode: 0
-  cursor: {x: 0.07008731, y: 0.24625267, z: 0}
+  createMode: 5
+  cursor: {x: 0.0566665, y: 0.2481131, z: 0}
   circleMoveConstant: 0
   circleCurrentRegionOnly: 0
   reshapeCircleWidth: 0.01
@@ -940,21 +925,21 @@ MonoBehaviour:
   magnetAgressiveMode: 0
   magnetIncludeCountries: 0
   snapPrecisionDigits: 7
-  infoMsg: Changes saved. Original geodata files in /Backup folder.
+  infoMsg: 
   editingMode: 1
   editingCountryFile: 0
   undoRegionsDummyFlag: 0
-  undoCitiesDummyFlag: 68
-  undoMountPointsDummyFlag: 0
+  undoCitiesDummyFlag: 0
+  undoMountPointsDummyFlag: 2
   newShape: []
   newShapeSegmentPointIndex: 0
   lastMinPopulation: 0
-  GUICityIndex: 21
-  GUICityName: Presevo
-  GUICityNewName: Presevo
+  GUICityIndex: 26
+  GUICityName: Sabac
+  GUICityNewName: Sabac
   GUICityPopulation: 100
   GUICityClass: 1
-  cityIndex: 122
+  cityIndex: 59
   cityChanges: 0
   cityAttribChanges: 0
   GUICountryIndex: 6
@@ -972,23 +957,23 @@ MonoBehaviour:
   countryChanges: 0
   countryAttribChanges: 0
   _GUICountryHidden: 0
-  GUIMountPointIndex: -1
-  GUIMountPointName: 
-  GUIMountPointNewName: 
-  GUIMountPointNewType: 
+  GUIMountPointIndex: 0
+  GUIMountPointName: Partisan HQ 1
+  GUIMountPointNewName: Partisan HQ 1
+  GUIMountPointNewType: 0
   GUIMountPointNewTagKey: 
   GUIMountPointNewTagValue: 
   GUIMountPointMassPopulationMin: 1
   GUIMountPointMassPopulationMax: 3
   GUIMountPointMassPopulationSeparation: 10
   GUIMountPointMassPopulationType: 
-  mountPointIndex: -1
-  mountPointChanges: 0
-  provinceIndex: 42
+  mountPointIndex: 0
+  mountPointChanges: 1
+  provinceIndex: 38
   provinceRegionIndex: 0
-  GUIProvinceIndex: 10
-  GUIProvinceName: Pcinjski
-  GUIProvinceNewName: Pcinjski
+  GUIProvinceIndex: 2
+  GUIProvinceName: Grad Beograd
+  GUIProvinceNewName: Grad Beograd
   GUIProvinceToNewCountryName: 
   GUIProvinceTransferToCountryIndex: -1
   GUIProvinceTransferToProvinceIndex: -1
