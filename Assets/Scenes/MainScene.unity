@@ -207,7 +207,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119610530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.642, y: 0.171, z: 0}
+  m_LocalPosition: {x: -0.62639236, y: -1.0600028, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -243,7 +243,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &652464397
+--- !u!1 &424941597
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,41 +251,71 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 652464398}
-  - component: {fileID: 652464399}
-  m_Layer: 0
+  - component: {fileID: 424941598}
+  - component: {fileID: 424941599}
+  m_Layer: 5
   m_Name: Mount Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &652464398
+--- !u!4 &424941598
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652464397}
+  m_GameObject: {fileID: 424941597}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1443365430}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &652464399
+--- !u!114 &424941599
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652464397}
+  m_GameObject: {fileID: 424941597}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &569681235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569681236}
+  m_Layer: 5
+  m_Name: Surfaces
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &569681236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569681235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1443365430}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758800001
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,10 +491,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791826078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.642, y: 0.171, z: 86.60254}
+  m_LocalPosition: {x: 0.559, y: -1.06, z: 86.60254}
   m_LocalScale: {x: 200, y: 100, z: 1}
   m_Children:
-  - {fileID: 652464398}
+  - {fileID: 424941598}
+  - {fileID: 569681236}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -482,6 +513,7 @@ GameObject:
   - component: {fileID: 1791826081}
   - component: {fileID: 1791826079}
   - component: {fileID: 1791826080}
+  - component: {fileID: 1791826084}
   m_Layer: 5
   m_Name: WorldMapStrategyKit
   m_TagString: Untagged
@@ -501,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4826812d57ee425dad93bf315e07090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCityScale: {x: 0.00019493654, y: 0.00038987308, z: 1}
+  currentCityScale: {x: 0.0001949678, y: 0.0003899356, z: 1}
   lastKnownZoomLevel: 0.8888889
   isDirty: 0
   _customCamera: {fileID: 0}
@@ -528,7 +560,7 @@ MonoBehaviour:
   _showFrontiers: 1
   _frontiersCoastlines: 1
   _fillColor: {r: 1, g: 0, b: 0, a: 0.7}
-  _frontiersColor: {r: 0.23356402, g: 0.66176474, b: 0.23356402, a: 1}
+  _frontiersColor: {r: 0, g: 1, b: 0, a: 1}
   _frontiersColorOuter: {r: 0.22139925, g: 0.6691177, b: 0.22139925, a: 0.5}
   _thickerFrontiers: 0
   _frontiersDynamicWidth: 1
@@ -622,7 +654,7 @@ MonoBehaviour:
   _mouseDragSensitivity: 0.1
   _mouseDragThreshold: 0
   _showCursor: 1
-  _cursorColor: {r: 0.9264706, g: 0.85153544, b: 0.85153544, a: 1}
+  _cursorColor: {r: 0.8039216, g: 0.3529412, b: 0.23529412, a: 1}
   _cursorFollowMouse: 1
   _cursorAllwaysVisible: 1
   _showLatitudeLines: 0
@@ -642,7 +674,7 @@ MonoBehaviour:
   _highlightAllProvinceRegions: 0
   _drawAllProvinces: 1
   _provincesFillColor: {r: 0, g: 0, b: 1, a: 0.7}
-  _provincesColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+  _provincesColor: {r: 1, g: 1, b: 1, a: 0.69803923}
   _provincesCoastlines: 1
   _showProvinceNames: 0
   _showAllCountryProvinceNames: 1
@@ -802,3 +834,163 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791826078}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1791826084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791826078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37a9238fc52649d4b226e3df6a83cb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputFolder: CustomMap
+  seed: 1
+  seedNames: 1
+  gridRelaxation: 1
+  edgeMaxLength: 0.1
+  edgeNoise: 0
+  mapGenerationQuality: 0
+  numCitiesPerCountryMin: 3
+  numCitiesPerCountryMax: 10
+  numCountries: 32
+  backgroundTextureWidth: 2048
+  backgroundTextureHeight: 1024
+  userHeightMapTexture: {fileID: 0}
+  heightMapWidth: 2048
+  heightMapHeight: 1024
+  heightGradientPreset: 10
+  gradientPerPixel: 0
+  heightGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  changeStyle: 1
+  octavesBySeed: 1
+  noiseOctaves:
+  - disabled: 0
+    frecuency: 1.7742628
+    amplitude: 1
+    ridgeNoise: 0
+  - disabled: 0
+    frecuency: 3.3619676
+    amplitude: 0.5
+    ridgeNoise: 0
+  - disabled: 0
+    frecuency: 5.8418245
+    amplitude: 0.33333334
+    ridgeNoise: 0
+  - disabled: 0
+    frecuency: 12.755419
+    amplitude: 0.25
+    ridgeNoise: 0
+  - disabled: 0
+    frecuency: 28.556631
+    amplitude: 0.2
+    ridgeNoise: 0
+  - disabled: 0
+    frecuency: 61.26028
+    amplitude: 0.16666667
+    ridgeNoise: 0
+  noisePower: 3
+  islandFactor: 0.5
+  seaLevel: 0.2
+  seaColor: {r: 0, g: 0.4, b: 1, a: 1}
+  elevationShift: 0
+  numProvinces: 256
+  generateNormalMap: 0
+  normalMapBumpiness: 0.1
+  operationMode: 0
+  reshapeRegionMode: 0
+  reshapeCityMode: 0
+  reshapeMountPointMode: 0
+  createMode: 0
+  cursor: {x: 0.0534158, y: 0.2540453, z: 0}
+  circleMoveConstant: 0
+  circleCurrentRegionOnly: 0
+  reshapeCircleWidth: 0.01
+  shouldHideEditorMesh: 0
+  magnetAgressiveMode: 0
+  magnetIncludeCountries: 0
+  snapPrecisionDigits: 7
+  infoMsg: 
+  editingMode: 1
+  editingCountryFile: 0
+  undoRegionsDummyFlag: 0
+  undoCitiesDummyFlag: 108
+  undoMountPointsDummyFlag: 0
+  newShape: []
+  newShapeSegmentPointIndex: 0
+  lastMinPopulation: 0
+  GUICityIndex: 19
+  GUICityName: Sombor
+  GUICityNewName: Sombor
+  GUICityPopulation: 100
+  GUICityClass: 1
+  cityIndex: 81
+  cityChanges: 0
+  cityAttribChanges: 0
+  GUICountryIndex: 4
+  GUICountryName: Republic of Serbia
+  GUICountryNewName: Republic of Serbia
+  GUICountryNewContinent: Europe
+  GUICountryNewFIPS10_4: RI
+  GUICountryNewISO_A2: RS
+  GUICountryNewISO_A3: SRB
+  GUICountryNewISO_N3: 688
+  GUICountryTransferToCountryIndex: -1
+  groupByParentAdmin: 1
+  countryIndex: 1
+  countryRegionIndex: 0
+  countryChanges: 0
+  countryAttribChanges: 0
+  _GUICountryHidden: 0
+  GUIMountPointIndex: -1
+  GUIMountPointName: 
+  GUIMountPointNewName: 
+  GUIMountPointNewType: 
+  GUIMountPointNewTagKey: 
+  GUIMountPointNewTagValue: 
+  GUIMountPointMassPopulationMin: 1
+  GUIMountPointMassPopulationMax: 3
+  GUIMountPointMassPopulationSeparation: 10
+  GUIMountPointMassPopulationType: 
+  mountPointIndex: -1
+  mountPointChanges: 0
+  provinceIndex: 25
+  provinceRegionIndex: 0
+  GUIProvinceIndex: 22
+  GUIProvinceName: Zapadno-Backi
+  GUIProvinceNewName: Zapadno-Backi
+  GUIProvinceToNewCountryName: 
+  GUIProvinceTransferToCountryIndex: -1
+  GUIProvinceTransferToProvinceIndex: -1
+  provinceChanges: 0
+  provinceAttribChanges: 0
