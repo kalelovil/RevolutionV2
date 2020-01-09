@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UI_Resource_Panel : MonoBehaviour
 {
+    Resource _resource;
+
     [SerializeField] Image _iconImage;
     [SerializeField] TextMeshPro _amountText;
 
