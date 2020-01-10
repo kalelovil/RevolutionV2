@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Recruitment_Panel : MonoBehaviour
+public class Recruitment_Manager : MonoBehaviour
 {
-    [SerializeField] Transform _unitPanelArea;
-    [SerializeField] UI_Recruitment_Panel
-
     // Start is called before the first frame update
     void Start()
     {
