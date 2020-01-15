@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class UI_Recruitment_Unit_Bar : MonoBehaviour
 {
     [Header("Unit")]
     [SerializeField] Unit _unit;
-    [Space(10)]
+    [Space(10, order = 0)]
 
-    [Header("Display")]
-    [Header("Name")]
+    [Header("Display", order = 1)]
+    [Header("Name", order = 2)]
     [SerializeField] TextMeshProUGUI _nameText;
-    [Header("Resource Costs")]
+
+    [Header("Costs")]
     [SerializeField] Transform _resourceCostPanelArea;
     [SerializeField] UI_Resource_Panel _resourceCostPanelPrefab;
     [SerializeField] List<UI_Resource_Panel> _resourceCostPanels;
+
+    [Header("Stats")]
+    [SerializeField] TextMeshProUGUI _attackValueText;
+    [SerializeField] TextMeshProUGUI _healthValueText;
 
     // Start is called before the first frame update
     void Start()
@@ -27,5 +33,24 @@ public class UI_Recruitment_Unit_Bar : MonoBehaviour
     void Update()
     {
         
+    }
+
+    internal void Initialise(Unit unitDefinition)
+    {
+        _unit = unitDefinition;
+
+        // Set Unit Type Name Display
+        _nameText.text = $"{unitDefinition.name}";
+        
+        // Set Unit Costs Display
+        foreach (var cost in unitDefinition.CostList)
+        {
+            UI_Resource_Panel resourcePanel = Instantiate(_resourceCostPanelPrefab, _resourceCostPanelArea);
+            resourcePanel.Initialise(cost);
+        }
+
+        // Set Unit Stats Display
+        _attackValueText.text = $"{unitDefinition.Attack}";
+        _healthValueText.text = $"{unitDefinition.Health}";
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7629052444526462447}
   - component: {fileID: 6243630076041906855}
   - component: {fileID: 6310359639914700928}
+  - component: {fileID: 7192778293758082412}
   m_Layer: 5
   m_Name: UI_Recruitment_Unit_Bar
   m_TagString: Untagged
@@ -101,6 +102,23 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &7192778293758082412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5636864673880968024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46842aadea59cee498389d4fdf54b84a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unit: {fileID: 0}
+  _nameText: {fileID: 7002796072291853443}
+  _resourceCostPanelArea: {fileID: 8638033399043643167}
+  _resourceCostPanelPrefab: {fileID: 1768478175673512802}
+  _resourceCostPanels: []
 --- !u!1 &7186463897484626933
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,3 +470,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6397837279701882342}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1768478175673512802 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4630626876772918916, guid: 7b250c21ed0ce924da00dc7dde28355b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6397837279701882342}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2678265122c264193c6525f86e6344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

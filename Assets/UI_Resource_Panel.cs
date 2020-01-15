@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class UI_Resource_Panel : MonoBehaviour
 {
@@ -21,5 +22,13 @@ public class UI_Resource_Panel : MonoBehaviour
     void Update()
     {
         
+    }
+
+    internal void Initialise(Unit.ResourceQuantity cost)
+    {
+        // TODO : Set Resource Icon
+        _iconImage.sprite = cost.Resource.Icon;
+
+        _amountText.text = $"{cost.Quantity}";
     }
 }

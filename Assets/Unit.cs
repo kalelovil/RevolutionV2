@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] List<ResourceQuantity> _costList; 
+    [Header("Name")]
+    [SerializeField] string _name;
 
+    [Header("Costs")]
+    [SerializeField] List<ResourceQuantity> _costList;
+    internal List<ResourceQuantity> CostList => _costList;
+
+    [Header("Stats")]
     [SerializeField] float _attack;
+    public float Attack { get => _attack; }
     [SerializeField] float _health;
+    public float Health { get => _health; }
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +32,12 @@ public class Unit : MonoBehaviour
     }
 
     [Serializable]
-    private class ResourceQuantity
+    internal class ResourceQuantity
     {
         [SerializeField] Resource _resource;
+        internal Resource Resource { get => _resource; }
+
         [SerializeField] int _quantity;
+        internal int Quantity { get => _quantity; }
     }
 }
