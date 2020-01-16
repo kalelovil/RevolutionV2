@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ac42ecaa24d4c4ab34dbb60d664a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitPanelArea: {fileID: 1953893859140087162}
+  _unitBarArea: {fileID: 1953893859140087162}
   _unitBarPrefab: {fileID: 7192778293758082412, guid: 6295fdc2f2763754caad91f06b0e3ec3,
     type: 3}
   _selectedUnitBar: {fileID: 0}
