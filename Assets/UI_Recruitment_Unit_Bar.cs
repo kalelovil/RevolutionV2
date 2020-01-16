@@ -40,7 +40,7 @@ public class UI_Recruitment_Unit_Bar : MonoBehaviour
         _unit = unitDefinition;
 
         // Set Unit Type Name Display
-        _nameText.text = $"{unitDefinition.name}";
+        _nameText.text = $"{unitDefinition.name.Replace("_", " ")}";
         
         // Set Unit Costs Display
         foreach (var cost in unitDefinition.CostList)
