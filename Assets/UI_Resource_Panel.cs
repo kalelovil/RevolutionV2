@@ -10,7 +10,7 @@ public class UI_Resource_Panel : MonoBehaviour
     Resource _resource;
 
     [SerializeField] Image _iconImage;
-    [SerializeField] TextMeshPro _amountText;
+    [SerializeField] TextMeshProUGUI _amountText;
 
     // Start is called before the first frame update
     void Start()

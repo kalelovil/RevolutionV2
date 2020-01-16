@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
@@ -12,7 +13,13 @@ namespace WorldMapStrategyKit
         // Start is called before the first frame update
         void Start()
         {
-            map.OnProvinceClick += (int provinceIndex, int regionIndex, int buttonIndex) => Debug.Log("Clicked province 2" + map.provinces[provinceIndex].name);
+            map.OnProvinceClick += (int provinceIndex, int regionIndex, int buttonIndex) => ProvinceClicked(provinceIndex);
+        }
+
+        private void ProvinceClicked(int provinceIndex)
+        {
+            Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
+            UI_ProvincePanel.Instance.OpenRecruitmentPanel();
         }
 
         // Update is called once per frame
