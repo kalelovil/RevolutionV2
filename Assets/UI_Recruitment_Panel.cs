@@ -17,7 +17,10 @@ public class UI_Recruitment_Panel : MonoBehaviour
     {
         foreach (var unitDefinition in Recruitment_Manager.Instance.UnitDefinitionsList)
         {
-            AddUnitBar(unitDefinition);
+            if (unitDefinition.CostList.Count > 0)
+            {
+                AddUnitBar(unitDefinition);
+            }
         }
     }
 
