@@ -19,6 +19,7 @@ namespace WorldMapStrategyKit
         private void ProvinceClicked(int provinceIndex)
         {
             Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
+            UI_ProvincePanel.Instance.Province = map.provinces[provinceIndex];
             UI_ProvincePanel.Instance.OpenRecruitmentPanel();
         }
 

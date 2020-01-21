@@ -20,35 +20,11 @@ public class Recruitment_Manager : MonoBehaviour
         _instance = this;
     }
 
-    private void Start()
-    {
-        BuildUnitDefinitionList();
-    }
-
-    private void BuildUnitDefinitionList()
-    {
-        _unitDefinitionsList = GetComponentsInChildren<Unit>().ToList();
-    }
-
     int _childCount;
-    // Update is called once per frame
-    void Update()
-    {
-        CheckChildCount();
-    }
-    private void OnValidate()
-    {
-        BuildUnitDefinitionList();
-    }
 
-    private void CheckChildCount()
+    internal Unit GetUnitTypePrefab(Unit unitType)
     {
-        int newChildCount = transform.childCount;
-        if (newChildCount != _childCount)
-        {
-            _childCount = newChildCount;
-            BuildUnitDefinitionList();
-        }
+        return _unitDefinitionsList.Find(x => x.name == unitType.name);
     }
 
     public void Open()

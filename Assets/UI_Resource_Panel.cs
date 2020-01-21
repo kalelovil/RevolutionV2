@@ -7,7 +7,7 @@ using System;
 
 public class UI_Resource_Panel : MonoBehaviour
 {
-    Resource _resource;
+    ResourceType _resource;
 
     [SerializeField] Image _iconImage;
     [SerializeField] TextMeshProUGUI _amountText;
@@ -26,6 +26,8 @@ public class UI_Resource_Panel : MonoBehaviour
 
     internal void Initialise(Unit.ResourceQuantity cost)
     {
+        _resource = cost.Resource;
+
         // TODO : Set Resource Icon
         _iconImage.sprite = cost.Resource.Icon;
 

@@ -1,4 +1,0 @@
-﻿internal class GoldResource : Resource
-{
-
-}
