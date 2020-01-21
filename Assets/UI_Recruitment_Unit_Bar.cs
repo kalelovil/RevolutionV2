@@ -53,4 +53,10 @@ public class UI_Recruitment_Unit_Bar : MonoBehaviour
         _attackValueText.text = $"{unitDefinition.Attack}";
         _healthValueText.text = $"{unitDefinition.Health}";
     }
+
+    public void Clicked()
+    {
+        Debug.Log($"Unit ({_unit.name}) Bar Clicked");
+        UI_ProvincePanel.Instance.RecruitUnit(_unit);
+    }
 }

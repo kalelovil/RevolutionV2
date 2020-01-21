@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,5 +25,10 @@ public class UI_ProvincePanel : MonoBehaviour
     internal void OpenRecruitmentPanel()
     {
         _recruitmentPanel.gameObject.SetActive(true);
+    }
+
+    internal void RecruitUnit(Unit unit)
+    {
+        throw new NotImplementedException();
     }
 }
