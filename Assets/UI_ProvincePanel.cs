@@ -33,6 +33,12 @@ public class UI_ProvincePanel : MonoBehaviour
     internal void RecruitUnit(Unit unitType)
     {
         Unit unitPrefab = Recruitment_Manager.Instance.GetUnitTypePrefab(unitType);
-        Unit spawnedUnit = Instantiate(unitPrefab, Province.center, unitPrefab.transform.rotation);
+        var parent = WMSK.instance.gameObject.transform;
+        Unit spawnedUnit = Instantiate(unitPrefab, parent);
+        spawnedUnit.transform.localPosition = Province.center;
+        spawnedUnit.transform.localScale = new Vector3(spawnedUnit.transform.localScale.x / WMSK.instance.transform.localScale.x,
+                                                    spawnedUnit.transform.localScale.y / WMSK.instance.transform.localScale.y,
+                                                    spawnedUnit.transform.localScale.z / WMSK.instance.transform.localScale.z);
+
     }
 }

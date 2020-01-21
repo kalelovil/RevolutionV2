@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class Unit : MonoBehaviour
     public float Attack { get => _attack; }
     [SerializeField] float _health;
     public float Health { get => _health; }
+
+
+    [Header("Visual")]
+    [SerializeField] SpriteRenderer _image;
 
 
     // Start is called before the first frame update

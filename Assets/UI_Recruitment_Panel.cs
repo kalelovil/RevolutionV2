@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WorldMapStrategyKit;
 
 public class UI_Recruitment_Panel : MonoBehaviour
 {
