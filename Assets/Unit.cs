@@ -39,6 +39,12 @@ public class Unit : MonoBehaviour
     [Serializable]
     internal class ResourceQuantity
     {
+        internal ResourceQuantity(ResourceType resource, int quantity)
+        {
+            _resource = resource;
+            _quantity = quantity;
+        }
+
         [SerializeField] ResourceType _resource;
         internal ResourceType Resource { get => _resource; }
 
