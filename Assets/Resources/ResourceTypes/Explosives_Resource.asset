@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Explosives
   _icon: {fileID: 21300000, guid: 3d479b292b204b439eb34c797bb7bbb5, type: 3}
+  _order: 3

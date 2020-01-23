@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Horses
   _icon: {fileID: 21300000, guid: 4dfd8c158bf2b4e0abd71deb2f59f872, type: 3}
+  _order: 5

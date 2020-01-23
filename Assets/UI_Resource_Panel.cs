@@ -7,10 +7,12 @@ using System;
 
 public class UI_Resource_Panel : MonoBehaviour
 {
-    ResourceType _resource;
+    public ResourceType Resource { get => _resource; private set => _resource = value; }
+    [SerializeField] ResourceType _resource;
 
     [SerializeField] Image _iconImage;
     [SerializeField] TextMeshProUGUI _amountText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +28,16 @@ public class UI_Resource_Panel : MonoBehaviour
 
     internal void Initialise(Unit.ResourceQuantity cost)
     {
-        _resource = cost.Resource;
+        Resource = cost.Resource;
 
         // TODO : Set Resource Icon
         _iconImage.sprite = cost.Resource.Icon;
 
-        _amountText.text = $"{cost.Quantity}";
+        Update(cost.Quantity);
+    }
+
+    internal void Update(int quantity)
+    {
+        _amountText.text = $"{quantity}";
     }
 }

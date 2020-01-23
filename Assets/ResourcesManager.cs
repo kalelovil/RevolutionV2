@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DefaultExecutionOrder(-200)]
@@ -23,7 +24,7 @@ public class ResourcesManager : MonoBehaviour
     private void BuildResourcesMap()
     {
         var resources = Resources.LoadAll<ResourceType>("ResourceTypes");
-        foreach (var type in resources)
+        foreach (var type in resources.OrderBy(x => x.Order))
         {
             ResourceNameToTypeMap.Add(type.Name, type);
         }

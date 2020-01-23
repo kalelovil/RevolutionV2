@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Rifles
   _icon: {fileID: 21300000, guid: db4ba1f74b3f696409e1353a51331bec, type: 3}
+  _order: 4

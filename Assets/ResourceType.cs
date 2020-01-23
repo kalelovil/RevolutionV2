@@ -14,6 +14,9 @@ public class ResourceType : ScriptableObject, IEquatable<ResourceType>
     [SerializeField] Sprite _icon;
     internal Sprite Icon { get => _icon; }
 
+    [SerializeField] int _order;
+    internal int Order { get => _order; }
+
     //[SerializeField] int _amount;
     //internal int Amount { get => _amount; }
     public bool Equals(ResourceType other)
