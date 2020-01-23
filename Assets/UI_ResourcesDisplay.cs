@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class UI_ResourcesDisplay : MonoBehaviour
 {
-    [SerializeField] List<ResourceType> _resourceList;
-
     [SerializeField] UI_Resource_Panel _resourcePanelPrefab;
     [SerializeField] Transform _resourceListArea;
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var resourceType in _resourceList)
+        foreach (var resourceType in ResourcesManager.Instance.ResourceNameToTypeMap.Values)
         {
             var panel = Instantiate(_resourcePanelPrefab, _resourceListArea);
             var resourceQuantity = new Unit.ResourceQuantity(resourceType, 0);

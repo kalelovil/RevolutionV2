@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
@@ -7,6 +8,28 @@ public class HeadquarterManager : MonoBehaviour
 {
     [SerializeField] string _mountPointID;
     [SerializeField] Headquarters _headquartersPrefab;
+
+    [Header("Resources")]
+    [SerializeField] internal List<Unit.ResourceQuantity> _resourceStockpileList;
+
+
+    static HeadquarterManager _instance;
+    public static HeadquarterManager Instance => _instance;
+
+    private void Awake()
+    {
+        _instance = this;
+
+        SetUpStockpiles();
+    }
+
+    private void SetUpStockpiles()
+    {
+        foreach (var resourceType in ResourcesManager.Instance.ResourceNameToTypeMap.Values)
+        {
+            _resourceStockpileList.Add(new Unit.ResourceQuantity(resourceType, 0));
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +44,23 @@ public class HeadquarterManager : MonoBehaviour
             go.name = mp.name;
         }
         
+    }
+
+    internal void AddResources(List<Unit.ResourceQuantity> list)
+    {
+        foreach (var resource in list)
+        {
+            var toAddTo = _resourceStockpileList.Find(_x => _x == resource);
+            toAddTo.Add(resource.Quantity);
+        }
+    }
+    internal void SubtractResources(List<Unit.ResourceQuantity> list)
+    {
+        foreach (var resource in list)
+        {
+            var toAddTo = _resourceStockpileList.Find(x => x.Resource == resource.Resource);
+            toAddTo.Add(resource.Quantity * -1);
+        }
     }
 
     // Update is called once per frame
