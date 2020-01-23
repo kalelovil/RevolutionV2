@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
 
@@ -9,13 +10,11 @@ internal class ProvinceData : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] float _localSupportFraction;
 
-    const int Max_Manpower = 20;
-    [Range(0, Max_Manpower)]
-    [SerializeField] int _manpower;
-    public int Manpower { get => _manpower; set => _manpower = value; }
+    [SerializeField] List<Unit.ResourceQuantity> _resourceStockpileList;
 
     internal void Initialise(Province prov)
     {
+        gameObject.name = $"{prov.name}";
         _prov = prov;
 
         SetDebugSupport();
@@ -25,6 +24,7 @@ internal class ProvinceData : MonoBehaviour
     {
         _localSupportFraction = UnityEngine.Random.Range(0f, 1f);
 
-        Manpower = (int)(Max_Manpower * _localSupportFraction);
+        int startingManpower = (int)(_localSupportFraction * 20f);
+        _resourceStockpileList.Find(x => x.Resource.Name == "Manpower").Add(startingManpower);
     }
 }

@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 922eecb3e0839b6489e01b647f5f213b, type: 3}
-  m_Name: Manpower
+  m_Name: Manpower_Resource
   m_EditorClassIdentifier: 
   _name: Manpower
   _icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   _order: 6
+  _resourceScope: 1

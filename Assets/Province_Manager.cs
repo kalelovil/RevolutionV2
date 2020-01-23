@@ -6,10 +6,12 @@ using WorldMapStrategyKit;
 
 public class Province_Manager : MonoBehaviour
 {
-    public static Province_Manager Instance => _instance;
-    static Province_Manager _instance;
+    [SerializeField] ProvinceData _provinceDataPrefab;
 
     [SerializeField] List<ProvinceData> _provinceList;
+
+    public static Province_Manager Instance => _instance;
+    static Province_Manager _instance;
 
     // Start is called before the first frame update
     void Awake()
@@ -25,9 +27,7 @@ public class Province_Manager : MonoBehaviour
         _provinceList.Clear();
         foreach (var prov in WMSK.instance.provinces)
         {
-            GameObject go = new GameObject($"{prov.name}");
-            go.transform.SetParent(transform);
-            ProvinceData provData = go.AddComponent<ProvinceData>();
+            ProvinceData provData = Instantiate(_provinceDataPrefab, transform);
             provData.Initialise(prov);
             _provinceList.Add(provData);
         }
