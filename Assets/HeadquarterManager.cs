@@ -16,10 +16,9 @@ public class HeadquarterManager : MonoBehaviour
     static HeadquarterManager _instance;
     public static HeadquarterManager Instance => _instance;
 
-    private void Awake()
+    private void OnValidate()
     {
         _instance = this;
-
         SetUpStockpiles();
     }
 
@@ -27,7 +26,10 @@ public class HeadquarterManager : MonoBehaviour
     {
         foreach (var resourceType in ResourcesManager.Instance.ResourceNameToTypeMap.Values)
         {
-            _resourceStockpileList.Add(new Unit.ResourceQuantity(resourceType, 0));
+            if (_resourceStockpileList.Find(_x => _x.Resource == resourceType) == null)
+            {
+                _resourceStockpileList.Add(new Unit.ResourceQuantity(resourceType, 0));
+            }
         }
     }
 

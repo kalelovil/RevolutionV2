@@ -9,7 +9,7 @@ public class UI_ProvincePanel : MonoBehaviour
     static UI_ProvincePanel _instance;
     public static UI_ProvincePanel Instance => _instance;
 
-    public Province Province { get; internal set; }
+    public ProvinceData ProvinceData { get; internal set; }
 
     [SerializeField] private UI_Recruitment_Panel _recruitmentPanel;
 
@@ -34,30 +34,17 @@ public class UI_ProvincePanel : MonoBehaviour
     {
         Unit unitPrefab = Recruitment_Manager.Instance.GetUnitTypePrefab(unitType);
         var cost = unitPrefab.CostList;
-        bool canAfford = CanAfford(cost);
+        bool canAfford = ProvinceData.CanAfford(cost);
         if (canAfford)
         {
             HeadquarterManager.Instance.SubtractResources(cost);
 
             var parent = WMSK.instance.gameObject.transform;
             Unit spawnedUnit = Instantiate(unitPrefab, parent);
-            spawnedUnit.transform.localPosition = Province.center;
+            spawnedUnit.transform.localPosition = ProvinceData.Province.center;
             spawnedUnit.transform.localScale = new Vector3(spawnedUnit.transform.localScale.x / WMSK.instance.transform.localScale.x,
                                                         spawnedUnit.transform.localScale.y / WMSK.instance.transform.localScale.y,
                                                         spawnedUnit.transform.localScale.z / WMSK.instance.transform.localScale.z);
         }
-    }
-
-    private bool CanAfford(List<Unit.ResourceQuantity> cost)
-    {
-        foreach (var resource in cost)
-        {
-            if (!HeadquarterManager.Instance._resourceStockpileList.Contains(resource) || 
-                HeadquarterManager.Instance._resourceStockpileList.Find(x => x.Resource == resource.Resource).Quantity < resource.Quantity)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 }

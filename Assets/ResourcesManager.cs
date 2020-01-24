@@ -5,17 +5,17 @@ using System.Linq;
 using UnityEngine;
 
 [DefaultExecutionOrder(-200)]
+[ExecuteAlways]
 public class ResourcesManager : MonoBehaviour
 {
     static ResourcesManager _instance;
-    public static ResourcesManager Instance => _instance;
+    public static ResourcesManager Instance { get { return _instance; } }
 
     public Dictionary<string, ResourceType> ResourceNameToTypeMap { get => _resourceNameToTypeMap; private set => _resourceNameToTypeMap = value; }
 
     Dictionary<string, ResourceType> _resourceNameToTypeMap = new Dictionary<string, ResourceType>();
 
-    // Start is called before the first frame update
-    void Awake()
+    private void OnValidate()
     {
         _instance = this;
         BuildResourcesMap();
