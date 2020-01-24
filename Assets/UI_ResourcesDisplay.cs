@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UI_ResourcesDisplay : MonoBehaviour
@@ -27,8 +28,24 @@ public class UI_ResourcesDisplay : MonoBehaviour
         foreach(var resourcePanel in _resourcePanelList)
         {
             // TODO Replace Update with events and LINQ usages with maps
-            var updateWith = HeadquarterManager.Instance._resourceStockpileList.Find(x => x.Resource == resourcePanel.Resource);
-            resourcePanel.Update(updateWith.Quantity);
+            List<Unit.ResourceQuantity> updateWith = new List<Unit.ResourceQuantity>();
+            switch (resourcePanel.Resource.ResourceScope)
+            {
+                case ResourceType.Scope.Country:
+                    updateWith.Add(HeadquarterManager.Instance.ResourceStockpileList.Find(x => x.Resource == resourcePanel.Resource));
+                    break;
+                case ResourceType.Scope.Province:
+                    foreach (var prov in Province_Manager.Instance.ProvinceList)
+                    {
+                        updateWith.Add(prov.ResourceStockpileList.Find(x => x.Resource == resourcePanel.Resource));
+                    }
+                    break;
+                case ResourceType.Scope.City:
+                    break;
+                default:
+                    break;
+            }
+            resourcePanel.Update(updateWith.Sum(_x => _x.Quantity));
         }
     }
 }

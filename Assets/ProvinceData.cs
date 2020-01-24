@@ -6,11 +6,13 @@ using WorldMapStrategyKit;
 public class ProvinceData : MonoBehaviour
 {
     internal Province Province => _prov;
+
     Province _prov;
 
     [Range(0f, 1f)]
     [SerializeField] float _localSupportFraction;
 
+    internal List<Unit.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
     [SerializeField] List<Unit.ResourceQuantity> _resourceStockpileList;
 
     internal void Initialise(Province prov)
@@ -26,7 +28,7 @@ public class ProvinceData : MonoBehaviour
         _localSupportFraction = UnityEngine.Random.Range(0f, 1f);
 
         int startingManpower = (int)(_localSupportFraction * 20f);
-        _resourceStockpileList.Find(x => x.Resource.Name == "Manpower").Add(startingManpower);
+        ResourceStockpileList.Find(x => x.Resource.Name == "Manpower").Add(startingManpower);
     }
 
 
@@ -38,8 +40,8 @@ public class ProvinceData : MonoBehaviour
             {
                 case ResourceType.Scope.Country:
                 {
-                    if (!HeadquarterManager.Instance._resourceStockpileList.Contains(resource) ||
-                        HeadquarterManager.Instance._resourceStockpileList.Find(x => x.Resource == resource.Resource).Quantity < resource.Quantity)
+                    if (!HeadquarterManager.Instance.ResourceStockpileList.Contains(resource) ||
+                        HeadquarterManager.Instance.ResourceStockpileList.Find(x => x.Resource == resource.Resource).Quantity < resource.Quantity)
                     {
                         return false;
                     }
@@ -47,8 +49,8 @@ public class ProvinceData : MonoBehaviour
                 }
                 case ResourceType.Scope.Province:
                 {
-                    if (!_resourceStockpileList.Contains(resource) ||
-                        _resourceStockpileList.Find(x => x.Resource == resource.Resource).Quantity < resource.Quantity)
+                    if (!ResourceStockpileList.Contains(resource) ||
+                        ResourceStockpileList.Find(x => x.Resource == resource.Resource).Quantity < resource.Quantity)
                     {
                         return false;
                     }
@@ -80,10 +82,10 @@ public class ProvinceData : MonoBehaviour
         switch (resource.ResourceScope)
         {
             case ResourceType.Scope.Country:
-                toAddTo = HeadquarterManager.Instance._resourceStockpileList.Find(_x => _x.Resource == resource);
+                toAddTo = HeadquarterManager.Instance.ResourceStockpileList.Find(_x => _x.Resource == resource);
                 break;
             case ResourceType.Scope.Province:
-                toAddTo = _resourceStockpileList.Find(_x => _x.Resource == resource);
+                toAddTo = ResourceStockpileList.Find(_x => _x.Resource == resource);
                 break;
             case ResourceType.Scope.City:
                 throw new NotImplementedException();

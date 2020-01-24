@@ -10,11 +10,13 @@ public class HeadquarterManager : MonoBehaviour
     [SerializeField] Headquarters _headquartersPrefab;
 
     [Header("Resources")]
-    [SerializeField] internal List<Unit.ResourceQuantity> _resourceStockpileList;
+    [SerializeField] private List<Unit.ResourceQuantity> _resourceStockpileList;
+    internal List<Unit.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
 
 
     static HeadquarterManager _instance;
     public static HeadquarterManager Instance => _instance;
+
 
     private void OnValidate()
     {
@@ -26,9 +28,9 @@ public class HeadquarterManager : MonoBehaviour
     {
         foreach (var resourceType in ResourcesManager.Instance.ResourceNameToTypeMap.Values)
         {
-            if (_resourceStockpileList.Find(_x => _x.Resource == resourceType) == null)
+            if (ResourceStockpileList.Find(_x => _x.Resource == resourceType) == null)
             {
-                _resourceStockpileList.Add(new Unit.ResourceQuantity(resourceType, 0));
+                ResourceStockpileList.Add(new Unit.ResourceQuantity(resourceType, 0));
             }
         }
     }
