@@ -58,4 +58,39 @@ public class ProvinceData : MonoBehaviour
         }
         return true;
     }
+    internal void AddResources(List<Unit.ResourceQuantity> list)
+    {
+        foreach (var resource in list)
+        {
+            var toAddTo = GetStockpile(resource.Resource);
+            toAddTo.Add(resource.Quantity);
+        }
+    }
+    internal void SubtractResources(List<Unit.ResourceQuantity> list)
+    {
+        foreach (var resource in list)
+        {
+            var toAddTo = GetStockpile(resource.Resource);
+            toAddTo.Add(resource.Quantity * -1);
+        }
+    }
+    private Unit.ResourceQuantity GetStockpile(ResourceType resource)
+    {
+        Unit.ResourceQuantity toAddTo = null;
+        switch (resource.ResourceScope)
+        {
+            case ResourceType.Scope.Country:
+                toAddTo = HeadquarterManager.Instance._resourceStockpileList.Find(_x => _x.Resource == resource);
+                break;
+            case ResourceType.Scope.Province:
+                toAddTo = _resourceStockpileList.Find(_x => _x.Resource == resource);
+                break;
+            case ResourceType.Scope.City:
+                throw new NotImplementedException();
+                break;
+            default:
+                break;
+        }
+        return toAddTo;
+    }
 }

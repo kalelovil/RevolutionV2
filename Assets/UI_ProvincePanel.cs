@@ -37,7 +37,7 @@ public class UI_ProvincePanel : MonoBehaviour
         bool canAfford = ProvinceData.CanAfford(cost);
         if (canAfford)
         {
-            HeadquarterManager.Instance.SubtractResources(cost);
+            ProvinceData.SubtractResources(cost);
 
             var parent = WMSK.instance.gameObject.transform;
             Unit spawnedUnit = Instantiate(unitPrefab, parent);

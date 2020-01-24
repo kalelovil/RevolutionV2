@@ -45,24 +45,7 @@ public class HeadquarterManager : MonoBehaviour
                                                     go.transform.localScale.z / WMSK.instance.transform.localScale.z);
             go.name = mp.name;
         }
-        
-    }
 
-    internal void AddResources(List<Unit.ResourceQuantity> list)
-    {
-        foreach (var resource in list)
-        {
-            var toAddTo = _resourceStockpileList.Find(_x => _x == resource);
-            toAddTo.Add(resource.Quantity);
-        }
-    }
-    internal void SubtractResources(List<Unit.ResourceQuantity> list)
-    {
-        foreach (var resource in list)
-        {
-            var toAddTo = _resourceStockpileList.Find(x => x.Resource == resource.Resource);
-            toAddTo.Add(resource.Quantity * -1);
-        }
     }
 
     // Update is called once per frame
