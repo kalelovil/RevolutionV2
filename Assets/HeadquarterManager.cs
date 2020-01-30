@@ -8,6 +8,7 @@ public class HeadquarterManager : MonoBehaviour
 {
     [SerializeField] string _mountPointID;
     [SerializeField] Headquarters _headquartersPrefab;
+    [SerializeField] Province_Feature _forestFeaturePrefab;
 
     [Header("Resources")]
     [SerializeField] private List<Unit.ResourceQuantity> _resourceStockpileList;
@@ -38,9 +39,21 @@ public class HeadquarterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject mountPointTypePrefab = null;
         foreach (var mp in WMSK.instance.mountPoints)
         {
-            var go = Instantiate(_headquartersPrefab, WMSK.instance.gameObject.transform);
+            switch (mp.type)
+            {
+                case 0:
+                    mountPointTypePrefab = _headquartersPrefab.gameObject;
+                    break;
+                case 1:
+                    mountPointTypePrefab = _forestFeaturePrefab.gameObject;
+                    break;
+                default:
+                    break;
+            }
+            var go = Instantiate(mountPointTypePrefab, WMSK.instance.gameObject.transform);
             go.transform.localPosition = mp.unity2DLocation;
             go.transform.localScale = new Vector3(go.transform.localScale.x / WMSK.instance.transform.localScale.x,
                                                     go.transform.localScale.y / WMSK.instance.transform.localScale.y,
