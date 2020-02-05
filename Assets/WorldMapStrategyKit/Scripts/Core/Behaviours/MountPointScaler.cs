@@ -11,7 +11,7 @@ namespace WorldMapStrategyKit
 	public class MountPointScaler : MonoBehaviour
 	{
 
-		const float MOUNTPOINT_SIZE_ON_SCREEN = 10.0f;
+		const float MOUNTPOINT_SIZE_ON_SCREEN = 2.0f;
 		Vector3 lastCamPos, lastPos;
 		float lastIconSize;
 		float lastCustomSize;

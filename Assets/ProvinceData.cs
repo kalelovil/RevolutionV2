@@ -9,6 +9,8 @@ public class ProvinceData : MonoBehaviour
 
     Province _prov;
 
+    [SerializeField] int _population;
+
     [Range(0f, 1f)]
     [SerializeField] float _localSupportFraction;
 
@@ -20,14 +22,15 @@ public class ProvinceData : MonoBehaviour
         gameObject.name = $"{prov.name}";
         _prov = prov;
 
-        SetDebugSupport();
+        SetDebugStats();
     }
 
-    private void SetDebugSupport()
+    private void SetDebugStats()
     {
+        _population = UnityEngine.Random.Range(5, 21);
         _localSupportFraction = UnityEngine.Random.Range(0f, 1f);
 
-        int startingManpower = (int)(_localSupportFraction * 20f);
+        int startingManpower = (int)(_localSupportFraction * _population);
         ResourceStockpileList.Find(x => x.Resource.Name == "Manpower").Add(startingManpower);
     }
 
