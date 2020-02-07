@@ -13,6 +13,13 @@ public class ProvinceData : MonoBehaviour
     Province _prov;
 
     [SerializeField] int _population;
+    public int Population { get => _population; set => SetPopulation(value); }
+    private void SetPopulation(int value)
+    {
+        _population = value;
+
+        SetManpower();
+    }
 
     #region Local_Support
     [Header("Local Support")]
@@ -27,8 +34,16 @@ public class ProvinceData : MonoBehaviour
         Color color = new Color(0f, _localSupportFraction, 0f, 0.5f);
         map.ToggleProvinceSurface(provinceIndex, true, color);
         map.BlinkProvince(provinceIndex, Color.green, Color.grey, 0.8f, 0.2f);
+
+        SetManpower();
     }
     #endregion
+
+    private void SetManpower()
+    {
+        int startingManpower = (int)(LocalSupportFraction * _population);
+        ResourceStockpileList.Find(x => x.Resource.Name == "Manpower").Set(startingManpower);
+    }
 
     internal List<Unit.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
 
@@ -45,10 +60,7 @@ public class ProvinceData : MonoBehaviour
     private void SetDebugStats()
     {
         _population = UnityEngine.Random.Range(5, 21);
-        LocalSupportFraction = UnityEngine.Random.Range(0f, 0.5f);
-
-        int startingManpower = (int)(LocalSupportFraction * _population);
-        ResourceStockpileList.Find(x => x.Resource.Name == "Manpower").Add(startingManpower);
+        //LocalSupportFraction = UnityEngine.Random.Range(0f, 0.5f);
     }
 
 

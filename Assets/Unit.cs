@@ -64,5 +64,10 @@ public class Unit : MonoBehaviour
         {
             Quantity = Mathf.Max(0, Quantity + quantity);
         }
+
+        internal void Set(int quantity)
+        {
+            Quantity = Mathf.Max(0, quantity);
+        }
     }
 }

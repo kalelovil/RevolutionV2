@@ -59,6 +59,19 @@ public class HeadquarterManager : MonoBehaviour
                                                     go.transform.localScale.y / WMSK.instance.transform.localScale.y,
                                                     go.transform.localScale.z / WMSK.instance.transform.localScale.z);
             go.name = mp.name;
+
+            switch (mp.type)
+            {
+                case 0:
+                    Headquarters hq = go.GetComponent<Headquarters>();
+                    hq.Initialise(mp);
+                    break;
+                case 1:
+
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
