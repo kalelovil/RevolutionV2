@@ -19,6 +19,8 @@ namespace WorldMapStrategyKit
 		WMSK map;
 		GUIStyle labelStyle, labelStyleShadow, buttonStyle;
 
+		[SerializeField] bool Show_City_Names;
+
 		void Start()
 		{
 
@@ -81,8 +83,10 @@ namespace WorldMapStrategyKit
 			map.FlyToCountry(country, 2f, zoomLevel);
 
 			// Draw City Names
-			AddCityNames();
-
+			if (Show_City_Names)
+			{
+				AddCityNames();
+			}
 		}
 
 		private void AddCityNames()

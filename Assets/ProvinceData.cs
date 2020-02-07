@@ -2,19 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
+using Random = UnityEngine.Random;
 
 public class ProvinceData : MonoBehaviour
 {
+    WMSK map = WMSK.instance;
+
     internal Province Province => _prov;
 
     Province _prov;
 
     [SerializeField] int _population;
 
+    #region Local_Support
+    [Header("Local Support")]
     [Range(0f, 1f)]
     [SerializeField] float _localSupportFraction;
+    public float LocalSupportFraction { get => _localSupportFraction; set => SetLocalSupportFraction(value); }
+    private void SetLocalSupportFraction(float value)
+    {
+        _localSupportFraction = Mathf.Clamp(value, 0f, 1f);
+
+        var provinceIndex = map.GetProvinceIndex(Province);
+        Color color = new Color(0f, _localSupportFraction, 0f, 0.5f);
+        map.ToggleProvinceSurface(provinceIndex, true, color);
+        map.BlinkProvince(provinceIndex, Color.green, Color.grey, 0.8f, 0.2f);
+    }
+    #endregion
 
     internal List<Unit.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
+
     [SerializeField] List<Unit.ResourceQuantity> _resourceStockpileList;
 
     internal void Initialise(Province prov)
@@ -28,9 +45,9 @@ public class ProvinceData : MonoBehaviour
     private void SetDebugStats()
     {
         _population = UnityEngine.Random.Range(5, 21);
-        _localSupportFraction = UnityEngine.Random.Range(0f, 1f);
+        LocalSupportFraction = UnityEngine.Random.Range(0f, 0.5f);
 
-        int startingManpower = (int)(_localSupportFraction * _population);
+        int startingManpower = (int)(LocalSupportFraction * _population);
         ResourceStockpileList.Find(x => x.Resource.Name == "Manpower").Add(startingManpower);
     }
 
