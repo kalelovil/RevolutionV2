@@ -7,19 +7,26 @@ public class DateManager : MonoBehaviour
 {
     public static DateManager Instance { get; internal set; }
 
+    [SerializeField] DateTime _currentDate;
     #region Hour
     [Header("Hour")]
-    [SerializeField] int _currentHourNum;
-    public int CurrentHourNum { get { return _currentHourNum; } }
     float TimeOfLastHourUpdate = 0f;
-    internal static Action<int> CurrentHourChangedAction;
+    internal static Action<DateTime> CurrentHourChangedAction;
     #endregion
 
     #region Day
     [Header("Day")]
-    [SerializeField] int _currentDayNum;
-    public int CurrentDayNum { get { return _currentDayNum; } }
-    internal static Action<int> CurrentDayChangedAction;
+    internal static Action<DateTime> CurrentDayChangedAction;
+    #endregion
+
+    #region Month
+    [Header("Month")]
+    internal static Action<DateTime> CurrentMonthChangedAction;
+    #endregion
+
+    #region Year
+    [Header("Year")]
+    internal static Action<DateTime> CurrentYearChangedAction;
     #endregion
 
     static List<float> SPEED_TO_SECONDS_PER_DAY = new List<float>
@@ -50,8 +57,8 @@ public class DateManager : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        CurrentHourChangedAction?.Invoke(0);
-        CurrentDayChangedAction?.Invoke(1);
+        CurrentHourChangedAction?.Invoke(new DateTime());
+        CurrentDayChangedAction?.Invoke(new DateTime(1));
     }
 
     float _currentHourProgress = 0f;
@@ -62,17 +69,23 @@ public class DateManager : MonoBehaviour
         _currentHourProgress += Time.deltaTime;
         if (_currentHourProgress >= SPEED_TO_SECONDS_PER_DAY[_speedIndex])
         {
-            _currentHourNum++;
+            _currentDate.AddHours(1);
             TimeOfLastHourUpdate = Time.time;
-            if (CurrentHourNum % 24 == 0)
-            {
-                _currentDayNum++;
-                _currentHourNum = 0;
-                CurrentDayChangedAction.Invoke(_currentDayNum);
-            }
-            CurrentHourChangedAction?.Invoke(_currentHourNum);
-            _currentHourProgress = 0f;
 
+            CurrentHourChangedAction?.Invoke(_currentDate);
+            if (_currentDate.Hour == 0)
+            {
+                CurrentDayChangedAction?.Invoke(_currentDate);
+                if (_currentDate.Day == 0)
+                {
+                    CurrentMonthChangedAction?.Invoke(_currentDate);
+                    if (_currentDate.Month == 0)
+                    {
+                        CurrentYearChangedAction?.Invoke(_currentDate);
+                    }
+                }
+            }
+            _currentHourProgress = 0f;
         }
     }
 

@@ -1,15 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Time_Panel : MonoBehaviour
 {
+    [Header("Hour")]
+    [SerializeField] TextMeshProUGUI _hourValueText;
+
     [Header("Day")]
     [SerializeField] TextMeshProUGUI _dayValueText;
 
-    [Header("Hour")]
-    [SerializeField] TextMeshProUGUI _hourValueText;
+    [Header("Month")]
+    [SerializeField] TextMeshProUGUI _monthValueText;
+
+    [Header("Year")]
+    [SerializeField] TextMeshProUGUI _yearValueText;
 
     [Header("Speed")]
     [SerializeField] TextMeshProUGUI _speedValueText;
@@ -18,6 +25,8 @@ public class Time_Panel : MonoBehaviour
     {
         DateManager.CurrentHourChangedAction += CurrentHourChanged;
         DateManager.CurrentDayChangedAction += CurrentDayChanged;
+        DateManager.CurrentMonthChangedAction += CurrentMonthChanged;
+        DateManager.CurrentYearChangedAction += CurrentYearChanged;
 
         DateManager.CurrentSpeedChangedAction += CurrentSpeedChanged;
     }
@@ -26,17 +35,32 @@ public class Time_Panel : MonoBehaviour
     {
         DateManager.CurrentHourChangedAction -= CurrentHourChanged;
         DateManager.CurrentDayChangedAction -= CurrentDayChanged;
+        DateManager.CurrentMonthChangedAction -= CurrentMonthChanged;
+        DateManager.CurrentYearChangedAction -= CurrentYearChanged;
 
         DateManager.CurrentSpeedChangedAction -= CurrentSpeedChanged;
     }
 
-    private void CurrentHourChanged(int currentHour)
+
+    private void CurrentHourChanged(DateTime date)
     {
-        _hourValueText.text = $"{currentHour}";
+        _hourValueText.text = $"{date.Hour}";
+        Debug.Log($"Hour Changed, New Date: {date}");
     }
-    private void CurrentDayChanged(int currentDay)
+    private void CurrentDayChanged(DateTime date)
     {
-        _dayValueText.text = $"{currentDay}";
+        _dayValueText.text = $"{date.Day}";
+        Debug.Log($"Day Changed, New Date: {date}");
+    }
+    private void CurrentMonthChanged(DateTime date)
+    {
+        _monthValueText.text = $"{date.Month}";
+        Debug.Log($"Month Changed, New Date: {date}");
+    }
+    private void CurrentYearChanged(DateTime date)
+    {
+        _yearValueText.text = $"{date.Year}";
+        Debug.Log($"Year Changed, New Date: {date}");
     }
 
     private void CurrentSpeedChanged(int currentSpeedIndex)
