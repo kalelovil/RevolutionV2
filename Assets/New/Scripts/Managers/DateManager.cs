@@ -1,13 +1,29 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class DateManager : MonoBehaviour
 {
     public static DateManager Instance { get; internal set; }
 
+    public DateTime CurrentDate { get { return _currentDate; } set { SetCurrentDate(value); } }
+    private void SetCurrentDate(DateTime newDate)
+    {
+        if (newDate.Hour != _currentDate.Hour) CurrentHourChangedAction?.Invoke(newDate);
+        if (newDate.Day != _currentDate.Day) CurrentDayChangedAction?.Invoke(newDate);
+        if (newDate.Month != _currentDate.Month) CurrentMonthChangedAction?.Invoke(newDate);
+        if (newDate.Year != _currentDate.Year) CurrentYearChangedAction?.Invoke(newDate);
+
+        _currentDate = newDate;
+
+        _currentDateSerialized = _currentDate.ToLongTimeString();
+    }
     [SerializeField] DateTime _currentDate;
+    [SerializeField] string _currentDateSerialized;
+    readonly CultureInfo Provider = CultureInfo.InvariantCulture;
+
     #region Hour
     [Header("Hour")]
     float TimeOfLastHourUpdate = 0f;
@@ -33,13 +49,14 @@ public class DateManager : MonoBehaviour
     {
         2f,
         1f,
-        0.5f,
-        0.25f,
-        0.1f,
+        0.05f,
+        0.025f,
+        0.001f,
     };
     int SpeedIndex { get { return _speedIndex; } set { _speedIndex = value; CurrentSpeedChangedAction?.Invoke(SpeedIndex); } }
     [SerializeField] int _speedIndex = 1;
     internal float CurrentSecondsPerDay => SPEED_TO_SECONDS_PER_DAY[_speedIndex];
+
     internal static Action<int> CurrentSpeedChangedAction;
 
     internal float CurrentFrameAsFractionOfHourStep()
@@ -57,8 +74,7 @@ public class DateManager : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        CurrentHourChangedAction?.Invoke(new DateTime());
-        CurrentDayChangedAction?.Invoke(new DateTime(1));
+        CurrentDate = DateTime.ParseExact(_currentDateSerialized, "d", Provider);
     }
 
     float _currentHourProgress = 0f;
@@ -69,22 +85,8 @@ public class DateManager : MonoBehaviour
         _currentHourProgress += Time.deltaTime;
         if (_currentHourProgress >= SPEED_TO_SECONDS_PER_DAY[_speedIndex])
         {
-            _currentDate = _currentDate.AddHours(1);
+            CurrentDate = CurrentDate.AddHours(1);
             TimeOfLastHourUpdate = Time.time;
-
-            CurrentHourChangedAction?.Invoke(_currentDate);
-            if (_currentDate.Hour == 0)
-            {
-                CurrentDayChangedAction?.Invoke(_currentDate);
-                if (_currentDate.Day == 0)
-                {
-                    CurrentMonthChangedAction?.Invoke(_currentDate);
-                    if (_currentDate.Month == 0)
-                    {
-                        CurrentYearChangedAction?.Invoke(_currentDate);
-                    }
-                }
-            }
             _currentHourProgress = 0f;
         }
     }

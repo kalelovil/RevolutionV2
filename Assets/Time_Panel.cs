@@ -44,22 +44,22 @@ public class Time_Panel : MonoBehaviour
 
     private void CurrentHourChanged(DateTime date)
     {
-        _hourValueText.text = $"{date.Hour}";
+        _hourValueText.text = $"{date:HH:mm}";
         Debug.Log($"Hour Changed, New Date: {date}");
     }
     private void CurrentDayChanged(DateTime date)
     {
-        _dayValueText.text = $"{date.Day}";
+        _dayValueText.text = $"{date:%d}";
         Debug.Log($"Day Changed, New Date: {date}");
     }
     private void CurrentMonthChanged(DateTime date)
     {
-        _monthValueText.text = $"{date.Month}";
+        _monthValueText.text = $"{date:MMMM}".Substring(0, 3) + ".";
         Debug.Log($"Month Changed, New Date: {date}");
     }
     private void CurrentYearChanged(DateTime date)
     {
-        _yearValueText.text = $"{date.Year}";
+        _yearValueText.text = $"{date:yyyy}";
         Debug.Log($"Year Changed, New Date: {date}");
     }
 
