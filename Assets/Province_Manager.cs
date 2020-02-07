@@ -21,14 +21,13 @@ public class Province_Manager : MonoBehaviour
     {
         _instance = this;
 
-        StartCoroutine(BuildProvinceList());
+        BuildProvinceList();
     }
 
-    private IEnumerator BuildProvinceList()
+    private void BuildProvinceList()
     {
         // TODO Make these non-gameobjects, have a custom window to inspect them
         ProvinceList.Clear();
-        yield return null;
         foreach (var prov in WMSK.instance.provinces)
         {
             ProvinceData provData = Instantiate(_provinceDataPrefab, transform);

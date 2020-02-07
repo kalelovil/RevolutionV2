@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using WorldMapStrategyKit;
 
@@ -13,6 +14,12 @@ public class Headquarters : MonoBehaviour
     {
         _mountPoint = mountPoint;
 
+        StartCoroutine(InitialiseCoroutine());
+    }
+
+    private IEnumerator InitialiseCoroutine()
+    {
+        yield return null;
         Province.Population = UnityEngine.Random.Range(5, 21);
         Province.LocalSupportFraction = UnityEngine.Random.Range(0f, 0.5f);
     }

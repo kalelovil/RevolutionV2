@@ -54,6 +54,8 @@ public class HeadquarterManager : MonoBehaviour
                     break;
             }
             var go = Instantiate(mountPointTypePrefab, WMSK.instance.gameObject.transform);
+            var province = WMSK.instance.GetProvince(mp.unity2DLocation);
+            mp.provinceIndex = WMSK.instance.GetProvinceIndex(province);
             go.transform.localPosition = mp.unity2DLocation;
             go.transform.localScale = new Vector3(go.transform.localScale.x / WMSK.instance.transform.localScale.x,
                                                     go.transform.localScale.y / WMSK.instance.transform.localScale.y,
