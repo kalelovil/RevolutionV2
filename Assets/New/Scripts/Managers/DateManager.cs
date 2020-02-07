@@ -69,7 +69,7 @@ public class DateManager : MonoBehaviour
         _currentHourProgress += Time.deltaTime;
         if (_currentHourProgress >= SPEED_TO_SECONDS_PER_DAY[_speedIndex])
         {
-            _currentDate.AddHours(1);
+            _currentDate = _currentDate.AddHours(1);
             TimeOfLastHourUpdate = Time.time;
 
             CurrentHourChangedAction?.Invoke(_currentDate);

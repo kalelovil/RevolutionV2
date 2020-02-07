@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 48.55, y: 0}
-  m_SizeDelta: {x: 82.76, y: 0}
+  m_SizeDelta: {x: 90, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8731957192517903153
 CanvasRenderer:
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 29.75
+  m_fontSize: 32.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -977,10 +977,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 772ecdba971953644a8e1d3c549fec30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hourValueText: {fileID: 0}
+  _hourValueText: {fileID: 7869004730961377927}
   _dayValueText: {fileID: 4923523429414719647}
-  _monthValueText: {fileID: 0}
-  _yearValueText: {fileID: 0}
+  _monthValueText: {fileID: 7574060669880134768}
+  _yearValueText: {fileID: 8447522269194938294}
   _speedValueText: {fileID: 3287629275273576971}
 --- !u!1 &7574060669830506471
 GameObject:
@@ -1304,7 +1304,7 @@ GameObject:
   - component: {fileID: 7270784122119880646}
   - component: {fileID: 8447522269194938294}
   m_Layer: 5
-  m_Name: HourValue_Text
+  m_Name: YearValue_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1688,7 +1688,7 @@ GameObject:
   - component: {fileID: 547607151441102219}
   - component: {fileID: 5536291948142019015}
   m_Layer: 5
-  m_Name: HourLabel_Text
+  m_Name: YearLabel_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
