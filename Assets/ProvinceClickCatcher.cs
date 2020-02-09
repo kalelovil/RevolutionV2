@@ -11,9 +11,13 @@ namespace WorldMapStrategyKit
         WMSK map => WMSK.instance;
 
         // Start is called before the first frame update
-        void Start()
+        void OnEnable()
         {
             map.OnProvinceClick += (int provinceIndex, int regionIndex, int buttonIndex) => ProvinceClicked(provinceIndex);
+        }
+        void OnDisable()
+        {
+            map.OnProvinceClick -= (int provinceIndex, int regionIndex, int buttonIndex) => ProvinceClicked(provinceIndex);
         }
 
         private void ProvinceClicked(int provinceIndex)

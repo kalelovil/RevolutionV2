@@ -52,11 +52,8 @@ public class UI_ProvincePanel : MonoBehaviour
             ProvinceData.SubtractResources(cost);
 
             var parent = WMSK.instance.gameObject.transform;
+
             Unit spawnedUnit = Instantiate(unitPrefab, parent);
-            spawnedUnit.transform.localPosition = ProvinceData.Province.center;
-            spawnedUnit.transform.localScale = new Vector3(spawnedUnit.transform.localScale.x / WMSK.instance.transform.localScale.x,
-                                                        spawnedUnit.transform.localScale.y / WMSK.instance.transform.localScale.y,
-                                                        spawnedUnit.transform.localScale.z / WMSK.instance.transform.localScale.z);
-        }
+            spawnedUnit.Initialise(ProvinceData.Province.center);}
     }
 }

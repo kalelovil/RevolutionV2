@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using WorldMapStrategyKit;
 
 public class Unit : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class Unit : MonoBehaviour
     [SerializeField] float _health;
     public float Health { get => _health; }
 
+    [Header("WMSK Animator")]
+    GameObjectAnimator _goAnimator;
+    public GameObjectAnimator GoAnimator { get => _goAnimator; private set => _goAnimator = value; }
 
     [Header("Visual")]
     [SerializeField] SpriteRenderer _image;
@@ -69,5 +73,29 @@ public class Unit : MonoBehaviour
         {
             Quantity = Mathf.Max(0, quantity);
         }
+    }
+
+    internal void Initialise(Vector2 position)
+    {
+        GoAnimator = gameObject.WMSK_MoveTo(position.x, position.y);
+        GoAnimator.OnPointerDown += (GameObjectAnimator anim) => Debug.Log("UNIT EVENT: " + gameObject.name + " mouse button down.");
+
+        // Ensure unit is limited terrain, avoid water
+        GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
+
+        GoAnimator.autoScale = false;
+
+        //spawnedUnit.transform.localPosition = ProvinceData.Province.center;
+        transform.localScale = new Vector3( transform.localScale.x / WMSK.instance.transform.localScale.x,
+                                            transform.localScale.y / WMSK.instance.transform.localScale.y,
+                                            transform.localScale.z / WMSK.instance.transform.localScale.z);
+
+    }
+
+    static internal Unit SelectedUnit;
+    private void UnitClicked(GameObjectAnimator anim)
+    {
+        Debug.Log($"Unit Clicked: {anim.gameObject.name}");
+        SelectedUnit = this;
     }
 }

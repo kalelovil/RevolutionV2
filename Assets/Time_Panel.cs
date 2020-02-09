@@ -45,7 +45,7 @@ public class Time_Panel : MonoBehaviour
     private void CurrentHourChanged(DateTime date)
     {
         _hourValueText.text = $"{date:HH:mm}";
-        Debug.Log($"Hour Changed, New Date: {date}");
+        //Debug.Log($"Hour Changed, New Date: {date}");
     }
     private void CurrentDayChanged(DateTime date)
     {
