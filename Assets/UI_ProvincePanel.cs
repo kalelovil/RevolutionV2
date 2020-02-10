@@ -53,7 +53,7 @@ public class UI_ProvincePanel : MonoBehaviour
 
             var parent = WMSK.instance.gameObject.transform;
 
-            Unit spawnedUnit = Instantiate(unitPrefab, parent);
+            Unit spawnedUnit = Instantiate(unitPrefab);
             spawnedUnit.Initialise(ProvinceData.Province.center);}
     }
 }

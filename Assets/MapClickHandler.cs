@@ -37,7 +37,7 @@ public class MapClickHandler : MonoBehaviour
     void MoveUnitWithPathFinding(Unit unit, Vector2 destination)
     {
         // Example of durations
-        unit.GoAnimator.MoveTo(destination, 0.1f, DURATION_TYPE.Step);
+        unit.GoAnimator.MoveTo(destination, 1.1f, DURATION_TYPE.Step);
         //												tank.MoveTo (destination, 2f, DURATION_TYPE.Route);
         //												tank.MoveTo (destination, 100f, DURATION_TYPE.MapLap);
     }

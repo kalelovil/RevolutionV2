@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
     public GameObjectAnimator GoAnimator { get => _goAnimator; private set => _goAnimator = value; }
 
     [Header("Visual")]
-    [SerializeField] SpriteRenderer _image;
+    [SerializeField] Renderer[] _renderers;
 
 
     // Start is called before the first frame update
@@ -82,14 +82,6 @@ public class Unit : MonoBehaviour
 
         // Ensure unit is limited terrain, avoid water
         GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
-
-        GoAnimator.autoScale = false;
-
-        //spawnedUnit.transform.localPosition = ProvinceData.Province.center;
-        transform.localScale = new Vector3( transform.localScale.x / WMSK.instance.transform.localScale.x,
-                                            transform.localScale.y / WMSK.instance.transform.localScale.y,
-                                            transform.localScale.z / WMSK.instance.transform.localScale.z);
-
     }
 
     static internal Unit SelectedUnit;
