@@ -78,7 +78,7 @@ public class Unit : MonoBehaviour
     internal void Initialise(Vector2 position)
     {
         GoAnimator = gameObject.WMSK_MoveTo(position.x, position.y);
-        GoAnimator.OnPointerDown += (GameObjectAnimator anim) => Debug.Log("UNIT EVENT: " + gameObject.name + " mouse button down.");
+        GoAnimator.OnPointerDown += (GameObjectAnimator anim) => UnitClicked(anim);
 
         // Ensure unit is limited terrain, avoid water
         GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
