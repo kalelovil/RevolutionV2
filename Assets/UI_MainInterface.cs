@@ -11,7 +11,9 @@ public class UI_MainInterface : MonoBehaviour
     public UI_ProvincePanel ProvincePanel => _leftInterfacePanels.Find(e => e is UI_ProvincePanel) as UI_ProvincePanel;
     public UI_UnitPanel UnitPanel => _leftInterfacePanels.Find(e => e is UI_UnitPanel) as UI_UnitPanel;
 
-    List<UI_AbstractInterfacePanel> _leftInterfacePanels;
+    [SerializeField] List<UI_AbstractInterfacePanel> _leftInterfacePanels;
+
+    [SerializeField] UI_ResourcesDisplay _resourcesDisplay;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,7 +41,7 @@ public class UI_MainInterface : MonoBehaviour
         panel.Open();
     }
 
-    private void ClosePanels()
+    public void ClosePanels()
     {
         foreach (var panel in _leftInterfacePanels)
         {

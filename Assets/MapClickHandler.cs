@@ -36,9 +36,13 @@ public class MapClickHandler : MonoBehaviour
      /// </summary>
     void MoveUnitWithPathFinding(Unit unit, Vector2 destination)
     {
-        // Example of durations
-        unit.GoAnimator.MoveTo(destination, 1.1f, DURATION_TYPE.Step);
-        //												tank.MoveTo (destination, 2f, DURATION_TYPE.Route);
-        //												tank.MoveTo (destination, 100f, DURATION_TYPE.MapLap);
+        if (unit.Speed > float.Epsilon)
+        {
+            unit.GoAnimator.MoveTo(destination, 1e4f / unit.Speed, DURATION_TYPE.MapLap);
+        }
+        else
+        {
+            Debug.LogWarning($"Unit ({unit}) Has 0 Speed: Cannot Give It A Movement Order");
+        }
     }
 }

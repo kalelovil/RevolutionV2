@@ -22,8 +22,11 @@ namespace WorldMapStrategyKit
 
         private void ProvinceClicked(int provinceIndex)
         {
-            Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
-            UI_MainInterface.Instance.OpenProvincePanel(Province_Manager.Instance.ProvinceList[provinceIndex]);
+            if (!Unit.SelectedUnit)
+            {
+                Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
+                UI_MainInterface.Instance.OpenProvincePanel(Province_Manager.Instance.ProvinceList[provinceIndex]);
+            }
         }
 
         // Update is called once per frame

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class ProvinceData : MonoBehaviour
 {
-    WMSK map = WMSK.instance;
+    WMSK map => WMSK.instance;
 
     internal Province Province => _prov;
 

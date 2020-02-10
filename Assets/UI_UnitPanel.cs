@@ -6,8 +6,13 @@ using UnityEngine;
 public class UI_UnitPanel : UI_AbstractInterfacePanel
 {
     [Header("Data")]
-    [SerializeField] Unit _unit;
-    public Unit Unit { get => _unit; set => _unit = value; }
+    [SerializeField] Unit _unit; 
+    public Unit Unit { get { return _unit; } internal set { UnitSelected(value); } }
+    private void UnitSelected(Unit value)
+    {
+        _unit = value;
+        _nameText.text = Unit.Name;
+    }
 
     //[Header("UI")]
 

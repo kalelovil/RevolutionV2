@@ -104,5 +104,10 @@ PrefabInstance:
       propertyPath: _costList.Array.data[2]._quantity
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6628859470006252303, guid: f52b6e605919d6e4393f13996ec10e60,
+        type: 3}
+      propertyPath: _speed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f52b6e605919d6e4393f13996ec10e60, type: 3}

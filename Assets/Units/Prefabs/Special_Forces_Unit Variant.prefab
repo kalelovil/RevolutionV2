@@ -65,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 6628859470006252301, guid: f52b6e605919d6e4393f13996ec10e60,
         type: 3}
       propertyPath: m_Name
-      value: Special_Forces_Unit
+      value: Special_Forces_Unit Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6628859470006252303, guid: f52b6e605919d6e4393f13996ec10e60,
         type: 3}
@@ -81,6 +81,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _health
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628859470006252303, guid: f52b6e605919d6e4393f13996ec10e60,
+        type: 3}
+      propertyPath: _speed
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f52b6e605919d6e4393f13996ec10e60, type: 3}

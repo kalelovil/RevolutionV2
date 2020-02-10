@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
 {
     [Header("Name")]
     [SerializeField] string _name;
+    internal string Name => gameObject.name;//_name;
 
     [Header("Costs")]
     [SerializeField] List<ResourceQuantity> _costList;
@@ -19,6 +20,8 @@ public class Unit : MonoBehaviour
     public float Attack { get => _attack; }
     [SerializeField] float _health;
     public float Health { get => _health; }
+    [SerializeField] float _speed;
+    public float Speed { get => _speed; }
 
     [Header("WMSK Animator")]
     GameObjectAnimator _goAnimator;
@@ -84,10 +87,31 @@ public class Unit : MonoBehaviour
         GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
     }
 
-    static internal Unit SelectedUnit;
+    static Unit _selectedUnit;
+    static internal Unit SelectedUnit { get { return _selectedUnit; } set { SetSelectedUnit(value); } }
+    private static void SetSelectedUnit(Unit value)
+    {
+        _selectedUnit = value;
+        if (_selectedUnit)
+        {
+            UI_MainInterface.Instance.OpenUnitPanel(_selectedUnit);
+        }
+        else
+        {
+            UI_MainInterface.Instance.ClosePanels();
+        }
+    }
+
     private void UnitClicked(GameObjectAnimator anim)
     {
         Debug.Log($"Unit Clicked: {anim.gameObject.name}");
-        SelectedUnit = this;
+        if (SelectedUnit == this)
+        {
+            SelectedUnit = null;
+        }
+        else
+        {
+            SelectedUnit = this;
+        }
     }
 }
