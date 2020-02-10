@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 using WorldMapStrategyKit;
 
-public class UI_ProvincePanel : MonoBehaviour
+public class UI_ProvincePanel : UI_AbstractInterfacePanel
 {
     [Header("Data")]
     [SerializeField] ProvinceData _provinceData;
@@ -13,33 +13,22 @@ public class UI_ProvincePanel : MonoBehaviour
     private void ProvinceSelected(ProvinceData value)
     {
         _provinceData = value;
-        _provinceNameText.text = ProvinceData.Province.name;
+        _nameText.text = ProvinceData.Province.name;
     }
 
     [Header("UI")]
-    [SerializeField] GameObject _visualsParentObject;
-    [SerializeField] TextMeshProUGUI _provinceNameText;
-
     [SerializeField] private UI_Recruitment_Panel _recruitmentPanel;
 
-    static UI_ProvincePanel _instance;
-    public static UI_ProvincePanel Instance => _instance;
-
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        _instance = this;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    internal void OpenRecruitmentPanel()
-    {
-        _visualsParentObject.SetActive(true);
     }
 
     internal void RecruitUnit(Unit unitType)
