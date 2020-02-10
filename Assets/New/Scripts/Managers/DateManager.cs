@@ -49,9 +49,9 @@ public class DateManager : MonoBehaviour
     {
         2f,
         1f,
-        0.05f,
-        0.025f,
-        0.001f,
+        0.50f,
+        0.25f,
+        0.10f,
     };
     int SpeedIndex { get { return _speedIndex; } set { _speedIndex = value; CurrentSpeedChangedAction?.Invoke(SpeedIndex); } }
     [SerializeField] int _speedIndex = 1;
@@ -81,6 +81,8 @@ public class DateManager : MonoBehaviour
     private void Update()
     {
         HandleInputs();
+
+        Time.timeScale = 1f / SPEED_TO_SECONDS_PER_DAY[_speedIndex];
 
         _currentHourProgress += Time.deltaTime;
         if (_currentHourProgress >= SPEED_TO_SECONDS_PER_DAY[_speedIndex])
