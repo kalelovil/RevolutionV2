@@ -87,31 +87,9 @@ public class Unit : MonoBehaviour
         GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
     }
 
-    static Unit _selectedUnit;
-    static internal Unit SelectedUnit { get { return _selectedUnit; } set { SetSelectedUnit(value); } }
-    private static void SetSelectedUnit(Unit value)
-    {
-        _selectedUnit = value;
-        if (_selectedUnit)
-        {
-            UI_MainInterface.Instance.OpenUnitPanel(_selectedUnit);
-        }
-        else
-        {
-            UI_MainInterface.Instance.ClosePanels();
-        }
-    }
-
     private void UnitClicked(GameObjectAnimator anim)
     {
         Debug.Log($"Unit Clicked: {anim.gameObject.name}");
-        if (SelectedUnit == this)
-        {
-            SelectedUnit = null;
-        }
-        else
-        {
-            SelectedUnit = this;
-        }
+        Unit_Manager.Instance.SelectedUnit = (Unit_Manager.Instance.SelectedUnit == this) ? null : this;
     }
 }
