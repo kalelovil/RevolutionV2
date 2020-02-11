@@ -18,14 +18,14 @@ public class Unit_Manager : MonoBehaviour
         {
             UI_MainInterface.Instance.OpenUnitPanel(_selectedUnit);
 
-            _unitSelectionCircle.transform.SetParent(_selectedUnit.transform);
+            _unitSelectionCircle.transform.SetParent(_selectedUnit.transform, false);
             _unitSelectionCircle.gameObject.SetActive(true);
         }
         else
         {
             UI_MainInterface.Instance.ClosePanels();
 
-            _unitSelectionCircle.transform.SetParent(transform);
+            _unitSelectionCircle.transform.SetParent(transform, false);
             _unitSelectionCircle.gameObject.SetActive(false);
         }
     }
