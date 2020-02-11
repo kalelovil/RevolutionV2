@@ -5,7 +5,7 @@ using UnityEngine;
 public class Unit_Manager : MonoBehaviour
 {
     #region Sub Managers
-    [SerializeField] Recruitment_Manager _recruitmentManager;
+    [SerializeField] internal Recruitment_Manager _recruitmentManager;
     #endregion
 
     #region Selected Unit

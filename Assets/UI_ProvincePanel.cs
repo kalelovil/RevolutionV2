@@ -33,7 +33,7 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
 
     internal void RecruitUnit(Unit unitType)
     {
-        Unit unitPrefab = Recruitment_Manager.Instance.GetUnitTypePrefab(unitType);
+        Unit unitPrefab = Unit_Manager.Instance._recruitmentManager.GetUnitTypePrefab(unitType);
         var cost = unitPrefab.CostList;
         bool canAfford = ProvinceData.CanAfford(cost);
         if (canAfford)

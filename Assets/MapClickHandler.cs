@@ -12,10 +12,10 @@ public class MapClickHandler : MonoBehaviour
     {
         _map.OnClick += (float x, float y, int buttonIndex) => 
         {
-            if (Unit.SelectedUnit) 
+            if (Unit_Manager.Instance.SelectedUnit) 
             {
-                Debug.Log($"Move Unit: {Unit.SelectedUnit.gameObject.name} to {x}, {y}");
-                MoveUnitWithPathFinding(Unit.SelectedUnit, new Vector2(x, y));
+                Debug.Log($"Move Unit: {Unit_Manager.Instance.SelectedUnit.gameObject.name} to {x}, {y}");
+                MoveUnitWithPathFinding(Unit_Manager.Instance.SelectedUnit, new Vector2(x, y));
             }
             else if (true)
             {

@@ -22,7 +22,7 @@ namespace WorldMapStrategyKit
 
         private void ProvinceClicked(int provinceIndex)
         {
-            if (!Unit.SelectedUnit)
+            if (!Unit_Manager.Instance.SelectedUnit)
             {
                 Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
                 UI_MainInterface.Instance.OpenProvincePanel(Province_Manager.Instance.ProvinceList[provinceIndex]);
