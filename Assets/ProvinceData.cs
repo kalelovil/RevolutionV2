@@ -46,8 +46,6 @@ public class ProvinceData : MonoBehaviour
     }
 
     internal List<UnitScript.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
-    
-    public IEnumerable<BrigadeLeader> LeaderPool { get; internal set; }
 
     [SerializeField] List<UnitScript.ResourceQuantity> _resourceStockpileList;
 

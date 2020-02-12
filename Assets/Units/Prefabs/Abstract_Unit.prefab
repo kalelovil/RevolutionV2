@@ -82,12 +82,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6628859470006252301}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9759e8714fd99a4caac63c26eea8916, type: 3}
+  m_Script: {fileID: 11500000, guid: 18e72765bdd43064996b01f6a46776fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
   _costList:
-  - _resource: {fileID: 11400000, guid: b8f993c33a1dd0e41979fba1b8225978, type: 2}
+  - _resource: {fileID: 11400000, guid: 31caf7554659f9648bfcd4c6bb941c1c, type: 2}
     _quantity: 0
   - _resource: {fileID: 11400000, guid: 03740524adfb24d44aed78704f190f93, type: 2}
     _quantity: 0
@@ -95,6 +95,7 @@ MonoBehaviour:
     _quantity: 0
   _attack: 0
   _health: 0
+  _speed: 0
   _renderers:
   - {fileID: 3790149862952692102}
   - {fileID: 3791773291462453720}

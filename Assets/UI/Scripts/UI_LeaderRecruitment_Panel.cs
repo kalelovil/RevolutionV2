@@ -14,7 +14,7 @@ public class UI_LeaderRecruitment_Panel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var leaderInPool in UI_MainInterface.Instance.ProvincePanel.ProvinceData.LeaderPool)
+        foreach (var leaderInPool in Unit_Manager.Instance._leaderPool.LeaderPool)
         {
             AddLeaderBar(leaderInPool);
         }

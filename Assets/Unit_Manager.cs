@@ -6,6 +6,7 @@ public class Unit_Manager : MonoBehaviour
 {
     #region Sub Managers
     [SerializeField] internal Recruitment_Manager _recruitmentManager;
+    [SerializeField] internal Leader_Pool _leaderPool;
     #endregion
 
     #region Selected Unit

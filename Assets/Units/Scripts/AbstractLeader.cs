@@ -10,19 +10,19 @@ public abstract class AbstractLeader : MonoBehaviour
 
     #region Authority
     [Header("Authority")]
-    int _authority;
+    [SerializeField] int _authority;
     public int Authority { get => _authority; set => _authority = value; }
     #endregion
 
     #region Cunning
     [Header("Cunning")]
-    int _cunning;
+    [SerializeField] int _cunning;
     public int Cunning { get => _cunning; set => _cunning = value; }
     #endregion
 
     #region Management
     [Header("Management")]
-    int _management;
+    [SerializeField] int _management;
     public int Management { get => _management; set => _management = value; }
     #endregion
 }
