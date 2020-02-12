@@ -733,7 +733,6 @@ GameObject:
   - component: {fileID: 7629052444526462447}
   - component: {fileID: 6243630076041906855}
   - component: {fileID: 6310359639914700928}
-  - component: {fileID: 7192778293758082412}
   - component: {fileID: -1718777469761286921}
   - component: {fileID: 8063134451025822137}
   m_Layer: 5
@@ -826,26 +825,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &7192778293758082412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5636864673880968024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46842aadea59cee498389d4fdf54b84a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unit: {fileID: 0}
-  _nameText: {fileID: 7002796072291853443}
-  _resourceCostPanelArea: {fileID: 8638033399043643167}
-  _resourceCostPanelPrefab: {fileID: 4630626876772918916, guid: 7b250c21ed0ce924da00dc7dde28355b,
-    type: 3}
-  _resourceCostPanels: []
-  _attackValueText: {fileID: 1671628039646404243}
-  _healthValueText: {fileID: 1774713380747548896}
 --- !u!114 &-1718777469761286921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,7 +889,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7192778293758082412}
+      - m_Target: {fileID: -1718777469761286921}
         m_MethodName: Clicked
         m_Mode: 1
         m_Arguments:
