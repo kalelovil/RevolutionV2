@@ -45,9 +45,9 @@ public class ProvinceData : MonoBehaviour
         ResourceStockpileList.Find(x => x.Resource.Name == "Manpower").Set(startingManpower);
     }
 
-    internal List<Unit.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
+    internal List<UnitScript.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
 
-    [SerializeField] List<Unit.ResourceQuantity> _resourceStockpileList;
+    [SerializeField] List<UnitScript.ResourceQuantity> _resourceStockpileList;
 
     internal void Initialise(Province prov)
     {
@@ -64,7 +64,7 @@ public class ProvinceData : MonoBehaviour
     }
 
 
-    internal bool CanAfford(List<Unit.ResourceQuantity> cost)
+    internal bool CanAfford(List<UnitScript.ResourceQuantity> cost)
     {
         foreach (var resource in cost)
         {
@@ -92,7 +92,7 @@ public class ProvinceData : MonoBehaviour
         }
         return true;
     }
-    internal void AddResources(List<Unit.ResourceQuantity> list)
+    internal void AddResources(List<UnitScript.ResourceQuantity> list)
     {
         foreach (var resource in list)
         {
@@ -100,7 +100,7 @@ public class ProvinceData : MonoBehaviour
             toAddTo.Add(resource.Quantity);
         }
     }
-    internal void SubtractResources(List<Unit.ResourceQuantity> list)
+    internal void SubtractResources(List<UnitScript.ResourceQuantity> list)
     {
         foreach (var resource in list)
         {
@@ -108,9 +108,9 @@ public class ProvinceData : MonoBehaviour
             toAddTo.Add(resource.Quantity * -1);
         }
     }
-    private Unit.ResourceQuantity GetStockpile(ResourceType resource)
+    private UnitScript.ResourceQuantity GetStockpile(ResourceType resource)
     {
-        Unit.ResourceQuantity toAddTo = null;
+        UnitScript.ResourceQuantity toAddTo = null;
         switch (resource.ResourceScope)
         {
             case ResourceType.Scope.Country:

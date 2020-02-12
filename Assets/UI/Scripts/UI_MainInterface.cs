@@ -33,7 +33,7 @@ public class UI_MainInterface : MonoBehaviour
         panel.Open();
     }
 
-    public void OpenUnitPanel(Unit unit)
+    public void OpenUnitPanel(UnitScript unit)
     {
         ClosePanels();
         UI_UnitPanel panel = UnitPanel;

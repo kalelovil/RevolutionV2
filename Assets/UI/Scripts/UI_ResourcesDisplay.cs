@@ -16,7 +16,7 @@ public class UI_ResourcesDisplay : MonoBehaviour
         foreach (var resourceType in ResourcesManager.Instance.ResourceNameToTypeMap.Values)
         {
             var panel = Instantiate(_resourcePanelPrefab, _resourceListArea);
-            var resourceQuantity = new Unit.ResourceQuantity(resourceType, 0);
+            var resourceQuantity = new UnitScript.ResourceQuantity(resourceType, 0);
             panel.Initialise(resourceQuantity);
             _resourcePanelList.Add(panel);
         }
@@ -28,7 +28,7 @@ public class UI_ResourcesDisplay : MonoBehaviour
         foreach(var resourcePanel in _resourcePanelList)
         {
             // TODO Replace Update with events and LINQ usages with maps
-            List<Unit.ResourceQuantity> updateWith = new List<Unit.ResourceQuantity>();
+            List<UnitScript.ResourceQuantity> updateWith = new List<UnitScript.ResourceQuantity>();
             switch (resourcePanel.Resource.ResourceScope)
             {
                 case ResourceType.Scope.Country:

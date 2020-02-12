@@ -9,9 +9,9 @@ public class Unit_Manager : MonoBehaviour
     #endregion
 
     #region Selected Unit
-    Unit _selectedUnit;
-    internal Unit SelectedUnit { get { return _selectedUnit; } set { SetSelectedUnit(value); } }
-    private void SetSelectedUnit(Unit value)
+    UnitScript _selectedUnit;
+    internal UnitScript SelectedUnit { get { return _selectedUnit; } set { SetSelectedUnit(value); } }
+    private void SetSelectedUnit(UnitScript value)
     {
         _selectedUnit = value;
         if (_selectedUnit)

@@ -7,7 +7,7 @@ using System;
 public class UI_Recruitment_Unit_Bar : MonoBehaviour
 {
     [Header("Unit")]
-    [SerializeField] Unit _unit;
+    [SerializeField] UnitScript _unit;
     [Space(10, order = 0)]
 
     [Header("Display", order = 1)]
@@ -35,7 +35,7 @@ public class UI_Recruitment_Unit_Bar : MonoBehaviour
         
     }
 
-    internal void Initialise(Unit unitDefinition)
+    internal void Initialise(UnitScript unitDefinition)
     {
         _unit = unitDefinition;
 

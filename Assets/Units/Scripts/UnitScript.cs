@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using WorldMapStrategyKit;
 
-public class Unit : MonoBehaviour
+public class UnitScript : MonoBehaviour
 {
     [Header("Name")]
     [SerializeField] string _name;

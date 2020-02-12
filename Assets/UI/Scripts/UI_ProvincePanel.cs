@@ -17,7 +17,8 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
     }
 
     [Header("UI")]
-    [SerializeField] private UI_Recruitment_Panel _recruitmentPanel;
+    [SerializeField] private UI_LeaderRecruitment_Panel _leaderRecruitmentPanel;
+    [SerializeField] private UI_UnitRecruitment_Panel _unitRecruitmentPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -31,9 +32,9 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
         
     }
 
-    internal void RecruitUnit(Unit unitType)
+    internal void RecruitUnit(UnitScript unitType)
     {
-        Unit unitPrefab = Unit_Manager.Instance._recruitmentManager.GetUnitTypePrefab(unitType);
+        UnitScript unitPrefab = Unit_Manager.Instance._recruitmentManager.GetUnitTypePrefab(unitType);
         var cost = unitPrefab.CostList;
         bool canAfford = ProvinceData.CanAfford(cost);
         if (canAfford)
@@ -42,7 +43,7 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
 
             var parent = WMSK.instance.gameObject.transform;
 
-            Unit spawnedUnit = Instantiate(unitPrefab);
+            UnitScript spawnedUnit = Instantiate(unitPrefab);
             spawnedUnit.Initialise(ProvinceData.Province.center);}
     }
 }

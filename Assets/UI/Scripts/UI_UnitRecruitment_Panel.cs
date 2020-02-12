@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
 
-public class UI_Recruitment_Panel : MonoBehaviour
+public class UI_UnitRecruitment_Panel : MonoBehaviour
 {
     [Header("Instantiation")]
     [SerializeField] Transform _unitBarArea;
@@ -25,7 +25,7 @@ public class UI_Recruitment_Panel : MonoBehaviour
         }
     }
 
-    private void AddUnitBar(Unit unitDefinition)
+    private void AddUnitBar(UnitScript unitDefinition)
     {
         UI_Recruitment_Unit_Bar unitBar = Instantiate(_unitBarPrefab, _unitBarArea);
         unitBar.Initialise(unitDefinition);

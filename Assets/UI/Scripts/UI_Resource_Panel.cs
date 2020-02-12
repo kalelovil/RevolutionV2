@@ -26,7 +26,7 @@ public class UI_Resource_Panel : MonoBehaviour
         
     }
 
-    internal void Initialise(Unit.ResourceQuantity cost)
+    internal void Initialise(UnitScript.ResourceQuantity cost)
     {
         Resource = cost.Resource;
 

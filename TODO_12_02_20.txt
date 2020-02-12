@@ -1,0 +1,19 @@
+Partisans TODO
+
+- unit selected panel
+
+
+- brigade leaders
+- multiple units combine into brigade
+
+- brigade missions
+
+- special forces
+
+
+- unit vision range circle?
+   - engage if unit sighted within distance
+   - set unit stance : engage, return fire, or retreat
+   
+   
+- selectable custom shape? (for forest)
