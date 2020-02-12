@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -39}
-  m_SizeDelta: {x: -64, y: 50}
+  m_AnchoredPosition: {x: 0, y: -53.1}
+  m_SizeDelta: {x: -64, y: 78.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1936609970313978648
 CanvasRenderer:
@@ -63,7 +63,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Unit Recruitment
+  m_text: 'Brigade Recruitment
+
+    Pick Leader'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -91,7 +93,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 42
+  m_fontSize: 34.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -132,12 +134,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 638006473539208859}
-    characterCount: 16
+    characterCount: 31
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 3
+    wordCount: 4
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -166,9 +168,9 @@ GameObject:
   - component: {fileID: 5142281565026994740}
   - component: {fileID: 3547825575238606373}
   - component: {fileID: 7942124786522052467}
-  - component: {fileID: 6112026554410352333}
+  - component: {fileID: 6180626529586508017}
   m_Layer: 5
-  m_Name: UI_Recruitment_Panel
+  m_Name: UI_LeaderRecruitment_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,7 +234,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6112026554410352333
+--- !u!114 &6180626529586508017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,11 +243,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2744583381221689354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22ac42ecaa24d4c4ab34dbb60d664a9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 36cc8f21e8c7c6d4a8f27a22332ecf4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitBarArea: {fileID: 1953893859140087162}
-  _unitBarPrefab: {fileID: 7192778293758082412, guid: 6295fdc2f2763754caad91f06b0e3ec3,
+  _leaderBarArea: {fileID: 1953893859140087162}
+  _leaderBarPrefab: {fileID: -1718777469761286921, guid: 24de8f001b560ed4a8191408df223198,
     type: 3}
   _selectedUnitBar: {fileID: 0}
 --- !u!1 &8650093669671956966
@@ -281,8 +283,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -4}
-  m_SizeDelta: {x: -32, y: -136}
+  m_AnchoredPosition: {x: 0, y: -14.099976}
+  m_SizeDelta: {x: -32, y: -156.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8685017965430544100
 MonoBehaviour:
@@ -577,7 +579,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 4560188046561381493}
   m_OnClick:
     m_PersistentCalls:

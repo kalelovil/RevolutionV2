@@ -46,4 +46,9 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
             UnitScript spawnedUnit = Instantiate(unitPrefab);
             spawnedUnit.Initialise(ProvinceData.Province.center);}
     }
+
+    internal void RecruitBrigade(BrigadeLeader leader)
+    {
+        throw new NotImplementedException();
+    }
 }
