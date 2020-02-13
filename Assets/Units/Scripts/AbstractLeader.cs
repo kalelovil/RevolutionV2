@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class AbstractLeader : MonoBehaviour
 {
     [Header("Costs")]
-    [SerializeField] List<UnitScript.ResourceQuantity> _costList;
-    internal List<UnitScript.ResourceQuantity> CostList => _costList;
+    [SerializeField] List<ResourceQuantity> _costList;
+    internal List<ResourceQuantity> CostList => _costList;
 
     #region Authority
     [Header("Authority")]

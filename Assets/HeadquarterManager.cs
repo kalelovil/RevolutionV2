@@ -11,8 +11,8 @@ public class HeadquarterManager : MonoBehaviour
     [SerializeField] Province_Feature _forestFeaturePrefab;
 
     [Header("Resources")]
-    [SerializeField] private List<UnitScript.ResourceQuantity> _resourceStockpileList;
-    internal List<UnitScript.ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
+    [SerializeField] private List<ResourceQuantity> _resourceStockpileList;
+    internal List<ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
 
 
     static HeadquarterManager _instance;
@@ -31,7 +31,7 @@ public class HeadquarterManager : MonoBehaviour
         {
             if (ResourceStockpileList.Find(_x => _x.Resource == resourceType) == null)
             {
-                ResourceStockpileList.Add(new UnitScript.ResourceQuantity(resourceType, 0));
+                ResourceStockpileList.Add(new ResourceQuantity(resourceType, 0));
             }
         }
     }

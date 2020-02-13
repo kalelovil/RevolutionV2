@@ -10,9 +10,9 @@ public class Unit_Manager : MonoBehaviour
     #endregion
 
     #region Selected Unit
-    UnitScript _selectedUnit;
-    internal UnitScript SelectedUnit { get { return _selectedUnit; } set { SetSelectedUnit(value); } }
-    private void SetSelectedUnit(UnitScript value)
+    Brigade _selectedUnit;
+    internal Brigade SelectedUnit { get { return _selectedUnit; } set { SetSelectedUnit(value); } }
+    private void SetSelectedUnit(Brigade value)
     {
         _selectedUnit = value;
         if (_selectedUnit)

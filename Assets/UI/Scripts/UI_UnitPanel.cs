@@ -6,9 +6,9 @@ using UnityEngine;
 public class UI_UnitPanel : UI_AbstractInterfacePanel
 {
     [Header("Data")]
-    [SerializeField] UnitScript _unit; 
-    public UnitScript Unit { get { return _unit; } internal set { UnitSelected(value); } }
-    private void UnitSelected(UnitScript value)
+    [SerializeField] Brigade _unit; 
+    public Brigade Unit { get { return _unit; } internal set { UnitSelected(value); } }
+    private void UnitSelected(Brigade value)
     {
         _unit = value;
         _nameText.text = Unit.Name;

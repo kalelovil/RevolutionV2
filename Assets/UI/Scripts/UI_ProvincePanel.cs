@@ -32,9 +32,9 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
         
     }
 
-    internal void RecruitUnit(UnitScript unitType)
+    internal void RecruitUnit(BrigadeElement unitType)
     {
-        UnitScript unitPrefab = Unit_Manager.Instance._recruitmentManager.GetUnitTypePrefab(unitType);
+        BrigadeElement unitPrefab = Unit_Manager.Instance._recruitmentManager.GetUnitTypePrefab(unitType);
         var cost = unitPrefab.CostList;
         bool canAfford = ProvinceData.CanAfford(cost);
         if (canAfford)
@@ -43,7 +43,7 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
 
             var parent = WMSK.instance.gameObject.transform;
 
-            UnitScript spawnedUnit = Instantiate(unitPrefab);
+            BrigadeElement spawnedUnit = Instantiate(unitPrefab);
             spawnedUnit.Initialise(ProvinceData.Province.center);}
     }
 

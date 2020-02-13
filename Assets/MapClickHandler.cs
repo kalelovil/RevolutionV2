@@ -63,7 +63,7 @@ public class MapClickHandler : MonoBehaviour
     /// <summary>
      /// Moves the unit with path finding.
      /// </summary>
-    void MoveUnitWithPathFinding(UnitScript unit, Vector2 destination)
+    void MoveUnitWithPathFinding(Brigade unit, Vector2 destination)
     {
         if (unit.Speed > float.Epsilon)
         {

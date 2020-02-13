@@ -25,7 +25,7 @@ public class UI_UnitRecruitment_Panel : MonoBehaviour
         }
     }
 
-    private void AddUnitBar(UnitScript unitDefinition)
+    private void AddUnitBar(BrigadeElement unitDefinition)
     {
         UI_Recruitment_Unit_Bar unitBar = Instantiate(_unitBarPrefab, _unitBarArea);
         unitBar.Initialise(unitDefinition);
