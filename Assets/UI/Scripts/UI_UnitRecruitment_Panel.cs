@@ -16,7 +16,7 @@ public class UI_UnitRecruitment_Panel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var unitDefinition in Unit_Manager.Instance._recruitmentManager.UnitDefinitionsList)
+        foreach (var unitDefinition in Unit_Manager.Instance._recruitmentManager.ElementDefinitionsList)
         {
             if (unitDefinition.CostList.Count > 0)
             {

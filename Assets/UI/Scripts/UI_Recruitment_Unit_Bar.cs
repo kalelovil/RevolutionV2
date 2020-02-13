@@ -57,6 +57,6 @@ public class UI_Recruitment_Unit_Bar : MonoBehaviour
     public void Clicked()
     {
         Debug.Log($"Unit ({_unit.name}) Bar Clicked");
-        UI_MainInterface.Instance.ProvincePanel.RecruitUnit(_unit);
+        //UI_MainInterface.Instance.ProvincePanel.RecruitUnit(_unit);
     }
 }

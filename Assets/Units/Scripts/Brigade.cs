@@ -54,8 +54,9 @@ public class Brigade : MonoBehaviour
         
     }
 
-    internal void Initialise(Vector2 position)
+    internal void Initialise(BrigadeLeader leader, ProvinceData province)
     {
+        Vector2 position = province.Province.center;
         GoAnimator = gameObject.WMSK_MoveTo(position.x, position.y);
         GoAnimator.OnPointerDown += (GameObjectAnimator anim) => UnitClicked(anim);
 

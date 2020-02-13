@@ -25,4 +25,15 @@ public abstract class AbstractLeader : MonoBehaviour
     [SerializeField] int _management;
     public int Management { get => _management; set => _management = value; }
     #endregion
+
+    #region Level
+    [Header("Level")]
+    [SerializeField] int _level;
+    public int Level { get => _level; set => _level = value; }
+    #endregion
+
+    #region Speed
+    // TODO get lowest speed among elements
+    public float Speed { get =>  1f; }
+    #endregion
 }

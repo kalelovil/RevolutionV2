@@ -8,12 +8,15 @@ using UnityEngine;
 [ExecuteAlways]
 public class Recruitment_Manager : MonoBehaviour
 {
-    [SerializeField] List<BrigadeElement> _unitDefinitionsList = new List<BrigadeElement>();
-    internal List<BrigadeElement> UnitDefinitionsList => _unitDefinitionsList;
+    [SerializeField] List<BrigadeElement> _elementDefinitionsList = new List<BrigadeElement>();
+    internal List<BrigadeElement> ElementDefinitionsList => _elementDefinitionsList;
+
+    [SerializeField] Brigade _brigadePrefab;
+    public Brigade BrigadePrefab => _brigadePrefab;
 
     internal BrigadeElement GetUnitTypePrefab(BrigadeElement unitType)
     {
-        return _unitDefinitionsList.Find(x => x.name == unitType.name);
+        return _elementDefinitionsList.Find(x => x.name == unitType.name);
     }
 
     public void Open()
