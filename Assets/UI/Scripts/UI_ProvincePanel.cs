@@ -27,24 +27,4 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
     {
         
     }
-
-    internal void RecruitUnit(BrigadeLeader leader)
-    {
-        Brigade brigadePrefab = Unit_Manager.Instance._recruitmentManager.BrigadePrefab;
-        var cost = new List<ResourceQuantity>();//brigadePrefab.CostList;
-        bool canAfford = ProvinceData.CanAfford(cost);
-        if (canAfford)
-        {
-            ProvinceData.SubtractResources(cost);
-
-            var parent = WMSK.instance.gameObject.transform;
-
-            Brigade spawnedUnit = Instantiate(brigadePrefab);
-            spawnedUnit.Initialise(leader, ProvinceData);}
-    }
-
-    internal void RecruitBrigade(BrigadeLeader leader)
-    {
-        throw new NotImplementedException();
-    }
 }

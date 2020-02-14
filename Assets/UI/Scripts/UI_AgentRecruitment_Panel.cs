@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WorldMapStrategyKit;
 
 public class UI_AgentRecruitment_Panel : MonoBehaviour
 {
@@ -46,6 +47,22 @@ public class UI_AgentRecruitment_Panel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    internal void RecruitBrigade(BrigadeLeader leader)
+    {
+        Brigade brigadePrefab = Unit_Manager.Instance._recruitmentManager.BrigadePrefab;
+        var cost = new List<ResourceQuantity>();//brigadePrefab.CostList;
+        //bool canAfford = ProvinceData.CanAfford(cost);
+        //if (canAfford)
+        {
+            //ProvinceData.SubtractResources(cost);
+
+            var parent = WMSK.instance.gameObject.transform;
+
+            Brigade spawnedUnit = Instantiate(brigadePrefab);
+            spawnedUnit.Initialise(leader, HeadquarterManager.Instance.HQList[0]);
+        }
     }
 }

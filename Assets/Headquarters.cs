@@ -6,6 +6,7 @@ using WorldMapStrategyKit;
 public class Headquarters : MonoBehaviour
 {
     MountPoint _mountPoint;
+    internal MountPoint MountPoint => _mountPoint;
 
     WMSK Map => WMSK.instance;
     ProvinceData Province => Province_Manager.Instance.ProvinceList[_mountPoint.provinceIndex];

@@ -14,6 +14,9 @@ public class HeadquarterManager : MonoBehaviour
     [SerializeField] private List<ResourceQuantity> _resourceStockpileList;
     internal List<ResourceQuantity> ResourceStockpileList { get => _resourceStockpileList; private set => _resourceStockpileList = value; }
 
+    [Header("HQ List")]
+    [SerializeField] List<Headquarters> _hqList;
+    internal List<Headquarters> HQList => _hqList;
 
     static HeadquarterManager _instance;
     public static HeadquarterManager Instance => _instance;
