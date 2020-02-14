@@ -6,13 +6,15 @@ using TMPro;
 
 public abstract class UI_AbstractAgent_Icon : MonoBehaviour
 {
-    [SerializeField] Image _imageIcon;
+    [SerializeField] protected Image _imageIcon;
 
-    [SerializeField] TextMeshProUGUI _nameText;
-    [SerializeField] TextMeshProUGUI _levelText;
-    [SerializeField] TextMeshProUGUI _speedText;
+    [SerializeField] protected TextMeshProUGUI _nameText;
+    [SerializeField] protected TextMeshProUGUI _levelText;
+    [SerializeField] protected TextMeshProUGUI _speedText;
 
-    [SerializeField] Transform _elementArea;
+    [SerializeField] protected UI_AbstractAgentElement_Panel _elementPrefab;
+    [SerializeField] protected Transform _elementArea;
+    [SerializeField] protected List<UI_AbstractAgentElement_Panel> _elementList;
 
     // Start is called before the first frame update
     void Start()
