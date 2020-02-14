@@ -26,23 +26,4 @@ public class UI_Agent_Outliner : MonoBehaviour
         Saboteur,
         Diplomat,
     }
-
-    public void AddBrigadeButtonClicked() => AddAgentButtonClicked(AgentType.Brigade);
-    public void AddSaboteurButtonClicked() => AddAgentButtonClicked(AgentType.Saboteur);
-    public void AddDiplomatButtonClicked() => AddAgentButtonClicked(AgentType.Diplomat);
-    void AddAgentButtonClicked(AgentType type)
-    {
-        Debug.Log("Add Agent Button Click");
-        switch (type)
-        {
-            case AgentType.Brigade:
-                break;
-            case AgentType.Saboteur:
-                break;
-            case AgentType.Diplomat:
-                break;
-            default:
-                break;
-        }
-    }
 }

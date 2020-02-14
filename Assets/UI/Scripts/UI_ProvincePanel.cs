@@ -16,10 +16,6 @@ public class UI_ProvincePanel : UI_AbstractInterfacePanel
         _nameText.text = ProvinceData.Province.name;
     }
 
-    [Header("UI")]
-    [SerializeField] private UI_LeaderRecruitment_Panel _leaderRecruitmentPanel;
-    [SerializeField] private UI_UnitRecruitment_Panel _unitRecruitmentPanel;
-
     // Start is called before the first frame update
     void Start()
     {

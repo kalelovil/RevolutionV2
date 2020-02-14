@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_LeaderRecruitment_Panel : MonoBehaviour
+public class UI_AgentRecruitment_Panel : MonoBehaviour
 {
     [Header("Instantiation")]
     [SerializeField] Transform _leaderBarArea;
@@ -11,8 +12,24 @@ public class UI_LeaderRecruitment_Panel : MonoBehaviour
     [Header("Game Logic")]
     [SerializeField] UI_Recruitment_Leader_Bar _selectedUnitBar;
 
+    #region Agent Type
+    [Header("Agent Type")]
+    UI_Agent_Outliner.AgentType _agentType;
+    public UI_Agent_Outliner.AgentType AgentType { get { return _agentType; } internal set { SetAgentType(value); } }
+    private void SetAgentType(UI_Agent_Outliner.AgentType value)
+    {
+        _agentType = value;
+        Populate();
+    }
+    #endregion
+
     // Start is called before the first frame update
     void Start()
+    {
+
+    }
+
+    private void Populate()
     {
         foreach (var leaderInPool in Unit_Manager.Instance._leaderPool.LeaderPool)
         {

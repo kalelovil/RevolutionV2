@@ -15,6 +15,14 @@ public class UI_MainInterface : MonoBehaviour
 
     [SerializeField] UI_ResourcesDisplay _resourcesDisplay;
 
+    #region UI
+    [Header("UI")]
+    [SerializeField] internal UI_AgentRecruitment_Panel _agentRecruitmentPanel;
+    [SerializeField] internal UI_ElementRecruitment_Panel _elementRecruitmentPanel;
+
+    [SerializeField] internal UI_Agent_Outliner _agentOutliner;
+    #endregion
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -39,6 +47,13 @@ public class UI_MainInterface : MonoBehaviour
         UI_UnitPanel panel = UnitPanel;
         panel.Unit = unit;
         panel.Open();
+    }
+
+    internal void OpenLeaderRecruitmentPanel(UI_Agent_Outliner.AgentType agentType, Transform attachToTransform)
+    {
+        _agentRecruitmentPanel.transform.SetParent(attachToTransform, false);
+        _agentRecruitmentPanel.gameObject.SetActive(true);
+        _agentRecruitmentPanel.AgentType = agentType;
     }
 
     public void ClosePanels()
