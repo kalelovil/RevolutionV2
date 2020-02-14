@@ -19,4 +19,9 @@ public class UI_Agent_Outliner : MonoBehaviour
     {
         
     }
+
+    public void AddAgentButtonClicked()
+    {
+        Debug.Log("Add Agent Button Click");
+    }
 }
