@@ -70,6 +70,7 @@ public class HeadquarterManager : MonoBehaviour
                 case 0:
                     Headquarters hq = go.GetComponent<Headquarters>();
                     hq.Initialise(mp);
+                    HQList.Add(hq);
                     break;
                 case 1:
 
