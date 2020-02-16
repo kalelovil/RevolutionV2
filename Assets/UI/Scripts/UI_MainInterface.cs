@@ -55,6 +55,12 @@ public class UI_MainInterface : MonoBehaviour
         _agentRecruitmentPanel.gameObject.SetActive(true);
         _agentRecruitmentPanel.AgentType = agentType;
     }
+    internal void CloseLeaderRecruitmentPanel()
+    {
+        _agentRecruitmentPanel.transform.SetParent(transform, false);
+        _agentRecruitmentPanel.gameObject.SetActive(false);
+        //_agentRecruitmentPanel.AgentType = agentType;
+    }
 
     public void ClosePanels()
     {

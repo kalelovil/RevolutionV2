@@ -47,5 +47,6 @@ internal class UI_Recruitment_Leader_Bar : MonoBehaviour
     {
         Debug.Log($"Unit ({_leader.name}) Bar Clicked");
         UI_MainInterface.Instance._agentRecruitmentPanel.RecruitBrigade(_leader);
+        UI_MainInterface.Instance.CloseLeaderRecruitmentPanel();
     }
 }
