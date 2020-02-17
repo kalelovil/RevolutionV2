@@ -59,6 +59,7 @@ public class Brigade : MonoBehaviour
         Vector2 position = hq.MountPoint.unity2DLocation;
         GoAnimator = gameObject.WMSK_MoveTo(position.x, position.y);
         GoAnimator.OnPointerDown += (GameObjectAnimator anim) => UnitClicked(anim);
+        GoAnimator.OnMoveEnd += (GameObjectAnimator anim) => MoveEnded(anim);
 
         // Ensure unit is limited terrain, avoid water
         GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
@@ -68,5 +69,11 @@ public class Brigade : MonoBehaviour
     {
         Debug.Log($"Unit Clicked: {anim.gameObject.name}");
         Unit_Manager.Instance.SelectedUnit = (Unit_Manager.Instance.SelectedUnit == this) ? null : this;
+    }
+
+    private void MoveEnded(GameObjectAnimator anim)
+    {
+        Region region = WMSK.instance.GetProvinceRegion(anim.currentMap2DLocation);
+        Debug.Log($"Unit Movement Ended: {anim.gameObject.name} In Region #{region.regionIndex} of Province {region.entity.name}");
     }
 }

@@ -15,6 +15,12 @@ public class Province_Manager : MonoBehaviour
     [Header("Province Feature Textures")]
     [SerializeField] Texture2D _forestTexture;
     public Texture2D ForestTexture => _forestTexture;
+
+    [SerializeField] Texture2D _swampTexture;
+    public Texture2D SwampTexture => _swampTexture;
+
+    [SerializeField] Texture2D _hillsTexture;
+    public Texture2D HillsTexture => _hillsTexture;
     #endregion
 
     public static Province_Manager Instance => _instance;
