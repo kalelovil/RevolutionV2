@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-
 [CreateAssetMenu(fileName = "ResourceType", menuName = "ScriptableObjects/ResourceType", order = 1)]
 public class ResourceType : ScriptableObject, IEquatable<ResourceType>
 {
@@ -31,6 +29,7 @@ public class ResourceType : ScriptableObject, IEquatable<ResourceType>
 
 
 
+    #region IEquatable
     public bool Equals(ResourceType other)
     {
         return null != other && Name.GetHashCode() == other.Name.GetHashCode();
@@ -43,4 +42,5 @@ public class ResourceType : ScriptableObject, IEquatable<ResourceType>
     {
         return Name.GetHashCode();
     }
+    #endregion
 }

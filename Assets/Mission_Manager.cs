@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Agent_Outliner : MonoBehaviour
+public class Mission_Manager : MonoBehaviour
 {
-    [SerializeField] UI_BrigadeLeader_Icon _agentIconPrefab;
-    [SerializeField] Transform _agentIconArea;
-    [SerializeField] List<UI_BrigadeLeader_Icon> _agentIconList;
-
     // Start is called before the first frame update
     void Start()
     {

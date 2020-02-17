@@ -49,7 +49,7 @@ public class UI_MainInterface : MonoBehaviour
         panel.Open();
     }
 
-    internal void OpenLeaderRecruitmentPanel(UI_Agent_Outliner.AgentType agentType, Transform attachToTransform)
+    internal void OpenLeaderRecruitmentPanel(Brigade.AgentType agentType, Transform attachToTransform)
     {
         _agentRecruitmentPanel.transform.SetParent(attachToTransform, false);
         _agentRecruitmentPanel.gameObject.SetActive(true);

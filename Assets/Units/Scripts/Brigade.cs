@@ -7,6 +7,13 @@ using WorldMapStrategyKit;
 
 public class Brigade : MonoBehaviour
 {
+    public enum AgentType
+    {
+        Brigade,
+        Saboteur,
+        Diplomat,
+    }
+
     [Header("Name")]
     [SerializeField] string _name;
     internal string Name => gameObject.name;//_name;

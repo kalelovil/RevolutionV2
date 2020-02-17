@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_AddAgentButton : MonoBehaviour
 {
-    [SerializeField] UI_Agent_Outliner.AgentType _agentType;
+    [SerializeField] Brigade.AgentType _agentType;
 
     public void Clicked()
     {

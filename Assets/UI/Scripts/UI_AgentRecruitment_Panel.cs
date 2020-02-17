@@ -15,9 +15,9 @@ public class UI_AgentRecruitment_Panel : MonoBehaviour
 
     #region Agent Type
     [Header("Agent Type")]
-    UI_Agent_Outliner.AgentType _agentType;
-    public UI_Agent_Outliner.AgentType AgentType { get { return _agentType; } internal set { SetAgentType(value); } }
-    private void SetAgentType(UI_Agent_Outliner.AgentType value)
+    Brigade.AgentType _agentType;
+    public Brigade.AgentType AgentType { get { return _agentType; } internal set { SetAgentType(value); } }
+    private void SetAgentType(Brigade.AgentType value)
     {
         _agentType = value;
         Populate();
