@@ -22,13 +22,25 @@ namespace WorldMapStrategyKit
 
         private void ProvinceClicked(int provinceIndex, int regionIndex)
         {
-            Debug.Log($"Province Clicked   {regionIndex} of {map.provinces[provinceIndex].name}");
+            ProvinceData provinceData = Province_Manager.Instance.ProvinceList[provinceIndex];
+
+            //Debug.Log($"Province Clicked   {regionIndex} of {map.provinces[provinceIndex].name}");
+            if (regionIndex > 0)
+            {
+                ProvinceRegionClicked(provinceIndex, regionIndex);
+            }
 
             if (!Unit_Manager.Instance.SelectedUnit)
             {
                 //Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
-                UI_MainInterface.Instance.OpenProvincePanel(Province_Manager.Instance.ProvinceList[provinceIndex]);
+                UI_MainInterface.Instance.OpenProvincePanel(provinceData);
             }
+        }
+
+        private void ProvinceRegionClicked(int provinceIndex, int regionIndex)
+        {
+            Color color = new Color(1f, 0f, 0f, 0.5f);
+            map.ToggleProvinceRegionSurface(provinceIndex, regionIndex, true, color);
         }
 
         // Update is called once per frame
