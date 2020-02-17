@@ -31,9 +31,11 @@ public class ProvinceData : MonoBehaviour
         _localSupportFraction = Mathf.Clamp(value, 0f, 1f);
 
         var provinceIndex = map.GetProvinceIndex(Province);
+        /*
         Color color = new Color(0f, _localSupportFraction, 0f, 0.5f);
         map.ToggleProvinceSurface(provinceIndex, true, color);
         map.BlinkProvince(provinceIndex, Color.green, Color.grey, 0.8f, 0.2f);
+        */
 
         SetManpower();
     }
