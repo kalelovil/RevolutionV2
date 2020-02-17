@@ -51,13 +51,33 @@ public class Province_Manager : MonoBehaviour
         for (int provIndex = 0; provIndex < ProvinceList.Count; provIndex++)
         {
             Province province = WMSK.instance.provinces[provIndex];
-            for (int regionIndex = 1; regionIndex < province.regions.Count; regionIndex++)
+            int[] forestRegionIndexes = GetForestRegionIndexes(province);
+            foreach (int index in forestRegionIndexes)
             {
-                var region = province.regions[regionIndex];
+                var region = province.regions[index];
                 Vector2 textureScale = new Vector2(((1f / region.rect2D.width) / 10000f), (((1f / region.rect2D.height) / 10000f) / textureAspectRatio) / 0.5f);
-                WMSK.instance.ToggleProvinceRegionSurface(provIndex, regionIndex, true, color, ForestTexture, textureScale, Vector2.zero, 0f);
+                WMSK.instance.ToggleProvinceRegionSurface(provIndex, index, true, color, ForestTexture, textureScale, Vector2.zero, 0f);
 
             }
+        }
+    }
+
+    private int[] GetForestRegionIndexes(Province province)
+    {
+        string forestRegionIndexesString = province.attrib["Forests"];
+        if (string.IsNullOrEmpty(forestRegionIndexesString))
+        {
+            return new int[0];
+        }
+        else
+        {
+            string[] splitForestRegionIndexes = forestRegionIndexesString.Split(';');
+            int[] regionIndexArray = new int[splitForestRegionIndexes.Length];
+            for (int i = 0; i < splitForestRegionIndexes.Length; i++)
+            {
+                regionIndexArray[i] = Convert.ToInt32(splitForestRegionIndexes[i]);
+            }
+            return regionIndexArray;
         }
     }
 
