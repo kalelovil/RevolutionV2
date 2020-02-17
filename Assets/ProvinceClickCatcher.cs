@@ -13,18 +13,20 @@ namespace WorldMapStrategyKit
         // Start is called before the first frame update
         void OnEnable()
         {
-            map.OnProvinceClick += (int provinceIndex, int regionIndex, int buttonIndex) => ProvinceClicked(provinceIndex);
+            map.OnProvinceClick += (int provinceIndex, int regionIndex, int buttonIndex) => ProvinceClicked(provinceIndex, regionIndex);
         }
         void OnDisable()
         {
-            map.OnProvinceClick -= (int provinceIndex, int regionIndex, int buttonIndex) => ProvinceClicked(provinceIndex);
+            map.OnProvinceClick -= (int provinceIndex, int regionIndex, int buttonIndex) => ProvinceClicked(provinceIndex, regionIndex);
         }
 
-        private void ProvinceClicked(int provinceIndex)
+        private void ProvinceClicked(int provinceIndex, int regionIndex)
         {
+            Debug.Log($"Province Clicked   {regionIndex} of {map.provinces[provinceIndex].name}");
+
             if (!Unit_Manager.Instance.SelectedUnit)
             {
-                Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
+                //Debug.Log("Clicked province: Open Recruitment Panel" + map.provinces[provinceIndex].name);
                 UI_MainInterface.Instance.OpenProvincePanel(Province_Manager.Instance.ProvinceList[provinceIndex]);
             }
         }
