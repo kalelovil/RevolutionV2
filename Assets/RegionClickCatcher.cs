@@ -27,7 +27,7 @@ public class RegionClickCatcher : MonoBehaviour
     {
         if (region.entity is Province)
         {
-            //Debug.Log($"Province Region Clicked   {region.regionIndex} of {region.entity.name}");
+            Debug.Log($"Province Region Clicked   {region.regionIndex} of {region.entity.name}");
         }
         else if (region.entity is Country)
         {

@@ -24,7 +24,7 @@ namespace WorldMapStrategyKit
         {
             ProvinceData provinceData = Province_Manager.Instance.ProvinceList[provinceIndex];
 
-            //Debug.Log($"Province Clicked   {regionIndex} of {map.provinces[provinceIndex].name}");
+            Debug.Log($"Province Clicked   {regionIndex} of {map.provinces[provinceIndex].name}");
             if (regionIndex > 0)
             {
                 ProvinceRegionClicked(provinceIndex, regionIndex);
