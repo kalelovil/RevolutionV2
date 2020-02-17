@@ -43,11 +43,7 @@ namespace WorldMapStrategyKit
         [SerializeField] float textureRotation;
         private void ProvinceRegionClicked(int provinceIndex, int regionIndex)
         {
-            Color color = new Color(1f, 0f, 0f, 0.5f);
-            //map.ToggleProvinceRegionSurface(provinceIndex, regionIndex, true, color);
 
-
-            map.ToggleProvinceRegionSurface(provinceIndex, regionIndex, true, color, texture, textureScale, textureOffset, textureRotation);
         }
 
         // Update is called once per frame
