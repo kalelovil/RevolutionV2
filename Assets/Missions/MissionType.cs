@@ -16,7 +16,7 @@ public class MissionType : ScriptableObject, IEquatable<ResourceType>
     internal Brigade.AgentType AgentType { get => _agentType; }
 
     [Range(1, 5)]
-    [SerializeField] int _difficulty;
+    [SerializeField] int _difficulty = 1;
     internal int Difficulty { get => _difficulty; }
 
 
