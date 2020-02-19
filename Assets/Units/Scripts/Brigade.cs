@@ -65,6 +65,7 @@ public class Brigade : MonoBehaviour
     {
         Vector2 position = hq.MountPoint.unity2DLocation;
         GoAnimator = gameObject.WMSK_MoveTo(position.x, position.y);
+        GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
         GoAnimator.OnPointerDown += (GameObjectAnimator anim) => UnitClicked(anim);
         GoAnimator.OnMoveEnd += (GameObjectAnimator anim) => MoveEnded(anim);
 

@@ -116,9 +116,8 @@ namespace WorldMapStrategyKit {
 			}
 		}
 
-		[SerializeField]
 		bool
-			_pathFindingEnableCustomRouteMatrix = false;
+			_pathFindingEnableCustomRouteMatrix = true;
 
 		/// <summary>
 		/// Enables user-defined location crossing costs for path finding engine.
