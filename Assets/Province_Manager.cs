@@ -39,43 +39,48 @@ public class Province_Manager : MonoBehaviour
             ProvinceList.Add(provData);
         }
 
-        StartCoroutine(InitialiseForests());
+        StartCoroutine(InitialiseTerrainFeatures());
     }
 
-    private IEnumerator InitialiseForests()
+    private IEnumerator InitialiseTerrainFeatures()
     {
         yield return null;
         Color color = new Color(1f, 0f, 0f, 0.5f);
-        var forestTexture = _province_feature_types.Find(_x => _x.Name == "Forest").Icon.texture;
-        float textureAspectRatio = (float)forestTexture.width / (float)forestTexture.height;
-        for (int provIndex = 0; provIndex < ProvinceList.Count; provIndex++)
-        {
-            Province province = WMSK.instance.provinces[provIndex];
-            int[] forestRegionIndexes = GetForestRegionIndexes(province);
-            foreach (int index in forestRegionIndexes)
-            {
-                var region = province.regions[index];
-                Vector2 textureScale = new Vector2(((1f / region.rect2D.width) / 10000f), (((1f / region.rect2D.height) / 10000f) / textureAspectRatio) / 0.5f);
-                WMSK.instance.ToggleProvinceRegionSurface(provIndex, index, true, color, forestTexture, textureScale, Vector2.zero, 0f);
 
+        foreach (var feature in _province_feature_types)
+        {
+            var texture = feature.Texture;
+            float textureAspectRatio = (float)texture.width / (float)texture.height;
+            for (int provIndex = 0; provIndex < ProvinceList.Count; provIndex++)
+            {
+                var name = feature.Name;
+                Province province = WMSK.instance.provinces[provIndex];
+                int[] featureRegionIndexes = GetProvinceFeatureRegionIndexes(province, name);
+                foreach (int index in featureRegionIndexes)
+                {
+                    var region = province.regions[index];
+                    Vector2 textureScale = new Vector2(((1f / region.rect2D.width) / 10000f), (((1f / region.rect2D.height) / 10000f) / textureAspectRatio) / 0.5f);
+                    WMSK.instance.ToggleProvinceRegionSurface(provIndex, index, true, color, texture, textureScale, Vector2.zero, 0f);
+
+                }
             }
         }
     }
 
-    private int[] GetForestRegionIndexes(Province province)
+    private int[] GetProvinceFeatureRegionIndexes(Province province, string featureName)
     {
-        string forestRegionIndexesString = province.attrib["Forests"];
-        if (string.IsNullOrEmpty(forestRegionIndexesString))
+        string featureRegionIndexesString = province.attrib[featureName];
+        if (string.IsNullOrEmpty(featureRegionIndexesString))
         {
             return new int[0];
         }
         else
         {
-            string[] splitForestRegionIndexes = forestRegionIndexesString.Split(';');
-            int[] regionIndexArray = new int[splitForestRegionIndexes.Length];
-            for (int i = 0; i < splitForestRegionIndexes.Length; i++)
+            string[] splitFeatureRegionIndexes = featureRegionIndexesString.Split(';');
+            int[] regionIndexArray = new int[splitFeatureRegionIndexes.Length];
+            for (int i = 0; i < splitFeatureRegionIndexes.Length; i++)
             {
-                regionIndexArray[i] = Convert.ToInt32(splitForestRegionIndexes[i]);
+                regionIndexArray[i] = Convert.ToInt32(splitFeatureRegionIndexes[i]);
             }
             return regionIndexArray;
         }

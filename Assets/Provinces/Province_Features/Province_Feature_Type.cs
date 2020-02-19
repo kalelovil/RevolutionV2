@@ -13,6 +13,9 @@ public class Province_Feature_Type : ScriptableObject, IEquatable<ResourceType>
     [SerializeField] Sprite _icon;
     internal Sprite Icon { get => _icon; }
 
+    [SerializeField] Texture2D _texture;
+    internal Texture2D Texture { get => _texture; }
+
     [Range(0f, 1f)]
     [SerializeField] float _movement_multiplier = 1f;
     internal float Movement_Multiplier { get => _movement_multiplier; }

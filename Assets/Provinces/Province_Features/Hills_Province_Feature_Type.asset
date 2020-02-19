@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Hills
   _icon: {fileID: 21300000, guid: f04434fb4a1c74d4b8e635c1ce57405a, type: 3}
+  _texture: {fileID: 2800000, guid: 4a3250b44c6d2e84fb76c7ed008d16fb, type: 3}
   _movement_multiplier: 0.9
   _view_range_multiplier: 1.25
   _blocks_view_range: 1
