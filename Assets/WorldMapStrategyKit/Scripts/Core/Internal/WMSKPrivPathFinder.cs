@@ -31,9 +31,9 @@ namespace WorldMapStrategyKit {
 		// A lower alpha value in texture means water
 
 		int earthWaterMaskWidth, earthWaterMaskHeight;
-		int EARTH_ROUTE_SPACE_WIDTH = 2048;
+		int EARTH_ROUTE_SPACE_WIDTH = 8192;
 		// both must be power of 2
-		int EARTH_ROUTE_SPACE_HEIGHT = 1024;
+		int EARTH_ROUTE_SPACE_HEIGHT = 4096;
 		PathFinderFast finder;
 		PathFinderAdminEntity finderCountries;
 		PathFinderAdminEntity finderProvinces;
