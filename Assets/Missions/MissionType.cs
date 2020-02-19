@@ -6,11 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MissionType", menuName = "ScriptableObjects/MissionType", order = 2)]
 public class MissionType : ScriptableObject, IEquatable<ResourceType>
 {
+    #region Properties
     [SerializeField] string _name;
     internal string Name { get => _name; }
-
-    [SerializeField] Province_Feature _provinceFeature;
-    internal Province_Feature ProvinceFeature { get => _provinceFeature; }
 
     [SerializeField] Brigade.AgentType _agentType;
     internal Brigade.AgentType AgentType { get => _agentType; }
@@ -18,6 +16,7 @@ public class MissionType : ScriptableObject, IEquatable<ResourceType>
     [Range(1, 5)]
     [SerializeField] int _difficulty = 1;
     internal int Difficulty { get => _difficulty; }
+    #endregion
 
 
     #region IEquatable
