@@ -11,16 +11,9 @@ public class Province_Manager : MonoBehaviour
     public List<ProvinceData> ProvinceList { get => _provinceList; private set => _provinceList = value; }
     [SerializeField] List<ProvinceData> _provinceList;
 
-    #region Province Feature Textures
-    [Header("Province Feature Textures")]
-    [SerializeField] Texture2D _forestTexture;
-    public Texture2D ForestTexture => _forestTexture;
-
-    [SerializeField] Texture2D _swampTexture;
-    public Texture2D SwampTexture => _swampTexture;
-
-    [SerializeField] Texture2D _hillsTexture;
-    public Texture2D HillsTexture => _hillsTexture;
+    #region Province Feature Types
+    [SerializeField] List<Province_Feature_Type> _province_feature_types;
+    internal List<Province_Feature_Type> Province_Feature_Types => _province_feature_types;
     #endregion
 
     public static Province_Manager Instance => _instance;
@@ -53,7 +46,8 @@ public class Province_Manager : MonoBehaviour
     {
         yield return null;
         Color color = new Color(1f, 0f, 0f, 0.5f);
-        float textureAspectRatio = (float)ForestTexture.width / (float)ForestTexture.height;
+        var forestTexture = _province_feature_types.Find(_x => _x.Name == "Forest").Icon.texture;
+        float textureAspectRatio = (float)forestTexture.width / (float)forestTexture.height;
         for (int provIndex = 0; provIndex < ProvinceList.Count; provIndex++)
         {
             Province province = WMSK.instance.provinces[provIndex];
@@ -62,7 +56,7 @@ public class Province_Manager : MonoBehaviour
             {
                 var region = province.regions[index];
                 Vector2 textureScale = new Vector2(((1f / region.rect2D.width) / 10000f), (((1f / region.rect2D.height) / 10000f) / textureAspectRatio) / 0.5f);
-                WMSK.instance.ToggleProvinceRegionSurface(provIndex, index, true, color, ForestTexture, textureScale, Vector2.zero, 0f);
+                WMSK.instance.ToggleProvinceRegionSurface(provIndex, index, true, color, forestTexture, textureScale, Vector2.zero, 0f);
 
             }
         }

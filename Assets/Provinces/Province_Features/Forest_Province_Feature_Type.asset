@@ -16,4 +16,5 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 231aa88aa78ec8e4db781664d1ff8029, type: 3}
   _movement_multiplier: 1
   _view_range_multiplier: 0.75
+  _blocks_view_range: 1
   _mission_types: []

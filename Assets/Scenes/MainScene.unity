@@ -975,9 +975,11 @@ MonoBehaviour:
   _provinceDataPrefab: {fileID: 5515238986365934390, guid: 5b707114b28f0b1449dbef2c10ab4bc0,
     type: 3}
   _provinceList: []
-  _forestTexture: {fileID: 2800000, guid: c82eda23ffaa37148a827d488d2d799b, type: 3}
-  _swampTexture: {fileID: 0}
-  _hillsTexture: {fileID: 0}
+  _province_feature_types:
+  - {fileID: 11400000, guid: 867313829503fa4478afa5a15d31ae0f, type: 2}
+  - {fileID: 11400000, guid: 9959f7be4ea1eee489d7c3496b02b6cb, type: 2}
+  - {fileID: 11400000, guid: 02fec3b3c13142e4b960d501e35f0573, type: 2}
+  - {fileID: 11400000, guid: 4dbbed97d34ba11428e7e5c710a480d3, type: 2}
 --- !u!4 &663834034
 Transform:
   m_ObjectHideFlags: 0
@@ -1219,6 +1221,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c225873085aca041a3c9f3b383b5cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &857264744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 857264745}
+  - component: {fileID: 857264746}
+  m_Layer: 0
+  m_Name: Mount Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &857264745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857264744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1443365430}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &857264746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857264744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &875444480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7923165444417378314, guid: 3864ae98276f51242ad41ca430c323da,
@@ -1357,49 +1402,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!1 &916880550
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 916880551}
-  - component: {fileID: 916880552}
-  m_Layer: 0
-  m_Name: Mount Points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &916880551
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 916880550}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1443365430}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &916880552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 916880550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462d8354b0cbf4bc6a3f969984dee6ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &977752485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,7 +1880,7 @@ Transform:
   m_LocalPosition: {x: 0.605, y: -1.033, z: 86.60254}
   m_LocalScale: {x: 200, y: 100, z: 1}
   m_Children:
-  - {fileID: 916880551}
+  - {fileID: 857264745}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
