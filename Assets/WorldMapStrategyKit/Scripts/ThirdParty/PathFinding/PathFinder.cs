@@ -16,8 +16,8 @@ using System.Collections.Generic;
 namespace WorldMapStrategyKit.PathFinding {
 
 				public struct PathFinderNode {
-								public int F;
-								public int G;
+								public float F;
+								public float G;
 								public int H;
 								// f = gone + heuristic
 								public int X;
@@ -28,9 +28,9 @@ namespace WorldMapStrategyKit.PathFinding {
 				}
 
 				struct PathFinderNodeFast {
-								public int F;
+								public float F;
 								// f = gone + heuristic
-								public int G;
+								public float G;
 								public ushort PX;
 								// Parent
 								public ushort PY;
@@ -38,9 +38,9 @@ namespace WorldMapStrategyKit.PathFinding {
 				}
 
 				public struct PathFinderNodeAdmin {
-								public int F;
+								public float F;
 								// f = gone + heuristic
-								public int G;
+								public float G;
 								public int Index;
 								public int Parent;
 								public byte Status;

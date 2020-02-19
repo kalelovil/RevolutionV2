@@ -342,7 +342,7 @@ namespace WorldMapStrategyKit {
 		/// </summary>
 		/// <returns>The cell path cost.</returns>
 		/// <param name="cellIndex">Cell index.</param>
-		public int GetCellPathCost(int cellIndex) {
+		public float GetCellPathCost(int cellIndex) {
 			if (cellIndex < 0 || cellIndex >= _cellsCosts.Length)
 				return -1;
 			return _cellsCosts[cellIndex].lastPathFindingCost;
@@ -873,16 +873,16 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Get a list of cells which are nearer than a given distance in cell count with optional parameters
 		/// </summary>
-		public List<int> GetCellNeighbours(int cellIndex, int distance, int maxSearchCost = 0, TERRAIN_CAPABILITY terrainCapability = TERRAIN_CAPABILITY.Any) {
+		public List<int> GetCellNeighbours(int cellIndex, float distance, float maxSearchCost = 0, TERRAIN_CAPABILITY terrainCapability = TERRAIN_CAPABILITY.Any) {
 			if (cellIndex < 0 || cellIndex >= cells.Length)
 				return null;
 			distance++;
 			Cell cell = cells[cellIndex];
 			List<int> cc = new List<int>();
-			for (int x = cell.column - distance; x <= cell.column + distance; x++) {
+			for (int x = cell.column - (int)distance; x <= cell.column + distance; x++) {
 				if (x < 0 || x >= _gridColumns)
 					continue;
-				for (int y = cell.row - distance; y <= cell.row + distance; y++) {
+				for (int y = cell.row - (int)distance; y <= cell.row + distance; y++) {
 					if (y < 0 || y >= _gridRows)
 						continue;
 					if (x == cell.column && y == cell.row)

@@ -33,7 +33,7 @@ namespace WorldMapStrategyKit {
 								/// <summary>
 								/// This is the cost for crossing to this cell in the last pathfinding call.
 								/// </summary>
-								public int lastPathFindingCost;
+								public float lastPathFindingCost;
 
 								/// <summary>
 								/// The elevation for the center of the cell.

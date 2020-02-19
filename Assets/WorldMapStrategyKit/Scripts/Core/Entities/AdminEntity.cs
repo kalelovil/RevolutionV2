@@ -83,13 +83,13 @@ namespace WorldMapStrategyKit {
 			set { _canCross = value; }
 		}
 
-		int _crossCost = 1;
+		float _crossCost = 1;
 
 		/// <summary>
 		/// Used by pathfinding in country/province. Cost for crossing a country/province. Defaults to 1.
 		/// </summary>
 		/// <value>The cross cost.</value>
-		public int crossCost {
+		public float crossCost {
 			get { return _crossCost; }
 			set { _crossCost = value; }
 		}

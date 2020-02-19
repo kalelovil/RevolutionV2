@@ -193,7 +193,7 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// The max search cost for the path finding algorithm. A value of -1 will use the global default max defined by pathFindingMaxCost
 		/// </summary>
-		public int maxSearchCost = -1;
+		public float maxSearchCost = -1;
 
 		/// <summary>
 		/// The max movement steps for the path finding algorithm. A value of -1 will use the global default max defined by pathFindingMaxSteps
@@ -508,7 +508,7 @@ namespace WorldMapStrategyKit {
 		/// <returns>The route.</returns>
 		/// <param name="destination">Destination.</param>
 		/// <param name="totalCost">The cost for traversing this path.</param>
-		public List<Vector2> FindRoute (Vector2 destination, out int totalCost) {
+		public List<Vector2> FindRoute (Vector2 destination, out float totalCost) {
 			List<Vector2> route = map.FindRoute (_currentMap2DLocation, destination, out totalCost, terrainCapability, minAltitude, maxAltitude, maxSearchCost, maxSearchSteps);
 			return route;
 		}
@@ -529,7 +529,7 @@ namespace WorldMapStrategyKit {
 		/// </summary>
 		/// <returns>The route.</returns>
 		/// <param name="destination">Destination.</param>
-		public List<Vector2> FindRoute (Cell destinationCell, out int totalCost) {
+		public List<Vector2> FindRoute (Cell destinationCell, out float totalCost) {
 			Cell startingCell = map.GetCell (_currentMap2DLocation);
 			List<int> route = map.FindRoute (startingCell, destinationCell, out totalCost, terrainCapability, maxSearchCost, maxSearchSteps);
 			return CellsToVector2List (route);

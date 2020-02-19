@@ -30,13 +30,13 @@ namespace WorldMapStrategyKit.PathFinding {
 								private int mHEstimate = 2;
 								private bool mHeavyDiagonals = false;
 								private int mMaxSteps = 2000;
-								private int mMaxSearchCost = 100000;
+								private float mMaxSearchCost = 100000;
 								private PathFinderNodeFast[] mCalcGrid = null;
 								private byte mOpenNodeValue = 1;
 								private byte mCloseNodeValue = 2;
 								private byte mGridBit = 1;
 								private OnCellCross mOnCellCross = null;
-								private int[] mCustomCosts = null;
+								private float[] mCustomCosts = null;
 								// optional values for custom validation
 
 								//Promoted local variables to member variables to avoid recreation between calls
@@ -76,14 +76,14 @@ namespace WorldMapStrategyKit.PathFinding {
 												}
 								};
 								private int mEndLocation = 0;
-								private int mNewG = 0;
+								private float mNewG = 0;
 
-								public PathFinderFast (byte[] grid, byte gridBit, int gridWidth, int gridHeight, int[] customCosts) {
+								public PathFinderFast (byte[] grid, byte gridBit, int gridWidth, int gridHeight, float[] customCosts) {
 												if (grid == null)
 																throw new Exception ("Grid cannot be null");
 
 												mGrid = grid;
-												mCustomCosts	= customCosts;
+												mCustomCosts = customCosts;
 												mGridBit = gridBit;
 												mGridX = (ushort)gridWidth; // (ushort) (mGrid.GetUpperBound(0) + 1);
 												mGridY = (ushort)gridHeight; // (ushort) (mGrid.GetUpperBound(1) + 1);
@@ -114,7 +114,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												comparer.SetMatrix (mCalcGrid);
 								}
 
-								public void SetCustomRouteMatrix (int[] newRouteMatrix) {
+								public void SetCustomRouteMatrix (float[] newRouteMatrix) {
 												if (newRouteMatrix != null && newRouteMatrix.Length != mCustomCosts.Length)
 																throw new Exception ("SetCustomRouteMatrix called with matrix with different dimensions.");
 												mCustomCosts = newRouteMatrix;
@@ -146,7 +146,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												set { mHEstimate = value; }
 								}
 
-								public int MaxSearchCost {
+								public float MaxSearchCost {
 												get { return mMaxSearchCost; }
 												set { mMaxSearchCost = value; }
 								}
@@ -173,7 +173,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												set { mOnCellCross = value; }
 								}
 
-								public List<PathFinderNode> FindPath (Point start, Point end, out int totalCost) {
+								public List<PathFinderNode> FindPath (Point start, Point end, out float totalCost) {
 												totalCost = 0;
 												mFound = false;
 												mCloseNodeCounter = 0;
@@ -231,13 +231,13 @@ namespace WorldMapStrategyKit.PathFinding {
 
 																				// Unbreakeable?
 																				mNewLocation = (mNewLocationY << mGridYLog2) + mNewLocationX;
-																				int gridValue = (mGrid [mNewLocation] & mGridBit) > 0 ? 1 : 0;
+																				float gridValue = (mGrid [mNewLocation] & mGridBit) > 0 ? 1 : 0;
 																				if (gridValue == 0)
 																								continue;
 
 																				// Check custom validator
 																				if (mCustomCosts != null) {
-																								int customValue = mCustomCosts [mNewLocation];
+																								float customValue = mCustomCosts [mNewLocation];
 																								if (mOnCellCross != null && customValue < 0) {
 																												customValue = mOnCellCross (mNewLocation);
 																								}

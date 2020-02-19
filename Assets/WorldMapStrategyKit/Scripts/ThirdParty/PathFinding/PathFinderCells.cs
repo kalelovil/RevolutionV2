@@ -27,7 +27,7 @@ namespace WorldMapStrategyKit.PathFinding {
 								private HeuristicFormula mFormula = HeuristicFormula.Manhattan;
 								private int mHEstimate = 1;
 								private int mMaxSteps = 2000;
-								private int mMaxSearchCost = 100000;
+								private float mMaxSearchCost = 100000;
 								private PathFinderNodeFast[] mCalcGrid = null;
 								private byte mOpenNodeValue = 1;
 								private byte mCloseNodeValue = 2;
@@ -80,7 +80,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												(int)CELL_SIDE.BottomRight
 								};
 								private int mEndLocation = 0;
-								private int mNewG = 0;
+								private float mNewG = 0;
 								private TERRAIN_CAPABILITY mTerrainCapability = TERRAIN_CAPABILITY.Any;
 								private int callNumber = 0;
 
@@ -117,7 +117,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												set { mHEstimate = value; }
 								}
 
-								public int MaxSearchCost {
+								public float MaxSearchCost {
 												get { return mMaxSearchCost; }
 												set { mMaxSearchCost = value; }
 								}
@@ -142,7 +142,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												set { mMaxAltitude = value; }
 								}
 
-								public List<PathFinderNode> FindPath (Point start, Point end, out int totalCost) {
+								public List<PathFinderNode> FindPath (Point start, Point end, out float totalCost) {
 												totalCost = 0;
 
 												mFound = false;

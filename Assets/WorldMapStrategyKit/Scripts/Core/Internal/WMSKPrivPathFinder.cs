@@ -21,7 +21,7 @@ namespace WorldMapStrategyKit {
 
 		byte[] earthRouteMatrix;
 		// bit 1 for custom elevation, bit 2 for ground without elevation restrictions, bit 3 for water without elevation restrictions
-		int[] _customRouteMatrix;
+		float[] _customRouteMatrix;
 		// optional values for custom validation
 		float earthRouteMatrixWithElevationMinAltitude, earthRouteMatrixWithElevationMaxAltitude;
 		byte computedMatrixBits;
@@ -31,9 +31,9 @@ namespace WorldMapStrategyKit {
 		// A lower alpha value in texture means water
 
 		int earthWaterMaskWidth, earthWaterMaskHeight;
-		int EARTH_ROUTE_SPACE_WIDTH = 2048;
+		int EARTH_ROUTE_SPACE_WIDTH = 4096;
 		// both must be power of 2
-		int EARTH_ROUTE_SPACE_HEIGHT = 1024;
+		int EARTH_ROUTE_SPACE_HEIGHT = 2048;
 		PathFinderFast finder;
 		PathFinderAdminEntity finderCountries;
 		PathFinderAdminEntity finderProvinces;
@@ -43,7 +43,7 @@ namespace WorldMapStrategyKit {
 		bool cellsCostsComputed;
 		CellCosts[] _cellsCosts;
 
-		int[] customRouteMatrix {
+		float[] customRouteMatrix {
 			get { 
 				if (_customRouteMatrix == null || _customRouteMatrix.Length == 0) {
 					PathFindingCustomRouteMatrixReset();
@@ -299,7 +299,7 @@ namespace WorldMapStrategyKit {
 				pathFindingCustomMatrixCostTexture.filterMode = FilterMode.Point;
 			}
 			int len = customRouteMatrix.Length;
-			int maxValue = 0;
+			float maxValue = 0;
 			for (int k = 0; k < len; k++) {
 				if (_customRouteMatrix[k] > maxValue)
 					maxValue = _customRouteMatrix[k];

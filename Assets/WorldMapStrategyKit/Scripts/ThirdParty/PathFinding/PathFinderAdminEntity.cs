@@ -38,7 +38,7 @@ namespace WorldMapStrategyKit.PathFinding {
 								private int mCloseNodeCounter = 0;
 								private bool mFound = false;
 								private ushort mEndLocation = 0;
-								private int mNewG = 0;
+								private float mNewG = 0;
 
 								public PathFinderAdminEntity (AdminEntity[] entities) {
 												if (entities == null)
@@ -126,7 +126,7 @@ namespace WorldMapStrategyKit.PathFinding {
 																								continue;
 
 																				// Check custom validator
-																				int gridValue = mEntities [mNewLocation].crossCost;
+																				float gridValue = mEntities [mNewLocation].crossCost;
 																				if (mOnAdminEntityCross != null) {
 																								int customValue = mOnAdminEntityCross (mNewLocation);
 																								if (customValue < 0) {

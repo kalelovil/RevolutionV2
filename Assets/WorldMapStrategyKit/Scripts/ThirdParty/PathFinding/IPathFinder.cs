@@ -15,7 +15,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												set;
 								}
 
-								int MaxSearchCost {
+								float MaxSearchCost {
 												get;
 												set;
 								}
@@ -25,7 +25,7 @@ namespace WorldMapStrategyKit.PathFinding {
 												set;
 								}
 
-								List<PathFinderNode> FindPath (Point start, Point end, out int totalCost);
+								List<PathFinderNode> FindPath (Point start, Point end, out float totalCost);
 
 				}
 }
