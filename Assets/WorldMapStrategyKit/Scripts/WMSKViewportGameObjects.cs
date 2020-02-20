@@ -66,9 +66,14 @@ namespace WorldMapStrategyKit {
 		public Action<GameObjectAnimator> OnVGOCountryEnter;
 		
 		/// <summary>
-		/// Triggered when an unit enters a country
+		/// Triggered when an unit enters a region
 		/// </summary>
 		public Action<GameObjectAnimator> OnVGOProvinceEnter;
+
+		/// <summary>
+		/// Triggered when an unit enters a province region
+		/// </summary>
+		public Action<GameObjectAnimator> OnVGOProvinceRegionEnter;
 
 		/// <summary>
 		/// Tiggered when the unit is destroyed.

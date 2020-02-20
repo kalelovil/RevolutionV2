@@ -68,9 +68,16 @@ public class Brigade : MonoBehaviour
         GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
         GoAnimator.OnPointerDown += (GameObjectAnimator anim) => UnitClicked(anim);
         GoAnimator.OnMoveEnd += (GameObjectAnimator anim) => MoveEnded(anim);
+        GoAnimator.OnProvinceRegionEnter += (GameObjectAnimator anim) => ProvinceRegionEntered(anim);
 
         // Ensure unit is limited terrain, avoid water
         GoAnimator.terrainCapability = TERRAIN_CAPABILITY.OnlyGround;
+    }
+
+    private void ProvinceRegionEntered(GameObjectAnimator anim)
+    {
+        var region = WMSK.instance.GetProvinceRegion(anim.currentMap2DLocation);
+        Debug.Log("Tank has entered province region " + region.entity.name + "{" + region.regionIndex + "}" + ".");
     }
 
     private void UnitClicked(GameObjectAnimator anim)

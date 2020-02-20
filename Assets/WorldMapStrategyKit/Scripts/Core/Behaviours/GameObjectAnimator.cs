@@ -362,6 +362,11 @@ namespace WorldMapStrategyKit {
 		public event GOEvent OnProvinceEnter;
 
 		/// <summary>
+		/// Fired when the Unit enters a new region
+		/// </summary>
+		public event GOEvent OnProvinceRegionEnter;
+
+		/// <summary>
 		/// Fired when this Unit becomes visible or invisible either using the visible property or because the unit exits the map in viewport mode
 		/// </summary>
 		public event GOEvent OnVisibleChange;
@@ -612,7 +617,7 @@ namespace WorldMapStrategyKit {
 		bool isAffectedByBuoyancy;
 		float progress;
 		float currentAltitude;
-		int lastCountryIndex = -1, lastProvinceIndex = -1;
+		int lastCountryIndex = -1, lastProvinceIndex = -1, lastProvinceRegionIndex = -1;
 		bool onFixedMoveEnabled;
         bool mouseEventProcessedThisFrame;
 		float spriteRotation;
@@ -1131,8 +1136,14 @@ namespace WorldMapStrategyKit {
 					}
 				}
 			}
+			int provinceIndex = -1;
+			int provinceRegionIndex = -1;
 			if (OnProvinceEnter != null) {
-				int provinceIndex = map.GetProvinceIndex (_currentMap2DLocation, countryIndex);
+				map.GetProvinceRegionIndex
+				(
+					_currentMap2DLocation, countryIndex, 
+					out provinceIndex, out provinceRegionIndex
+				);
 				if (provinceIndex != lastProvinceIndex) {
 					lastProvinceIndex = provinceIndex;
 					if (provinceIndex >= 0) {
@@ -1140,6 +1151,17 @@ namespace WorldMapStrategyKit {
 							OnProvinceEnter (this);
 						if (map.OnVGOProvinceEnter != null)
 							map.BubbleEvent (map.OnVGOProvinceEnter, this);
+					}
+				}
+				if (provinceRegionIndex != lastProvinceRegionIndex)
+				{
+					lastProvinceRegionIndex = provinceRegionIndex;
+					if (provinceRegionIndex >= 0)
+					{
+						if (OnProvinceRegionEnter != null)
+							OnProvinceRegionEnter(this);
+						if (map.OnVGOProvinceRegionEnter != null)
+							map.BubbleEvent(map.OnVGOProvinceRegionEnter, this);
 					}
 				}
 			}
