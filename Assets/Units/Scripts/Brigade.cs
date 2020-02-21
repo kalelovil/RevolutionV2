@@ -43,11 +43,12 @@ public class Brigade : MonoBehaviour
     #endregion
 
     [Header("WMSK Animator")]
-    GameObjectAnimator _goAnimator;
+    [SerializeField] GameObjectAnimator _goAnimator;
     public GameObjectAnimator GoAnimator { get => _goAnimator; private set => _goAnimator = value; }
 
     [Header("Line Animator")]
-    LineMarkerAnimator _lineAnimator;
+    [SerializeField] LineMarkerAnimator _lineAnimatorPrefab;
+    [SerializeField] LineMarkerAnimator _lineAnimator;
     public LineMarkerAnimator LineAnimator { get => _lineAnimator; private set => _lineAnimator = value; }
 
     [Header("Visual")]
@@ -133,9 +134,16 @@ public class Brigade : MonoBehaviour
                     DestroyImmediate(LineAnimator.gameObject);
                     LineAnimator = null;
                 }
+
                 // Add Line
                 LineAnimator = WMSK.instance.AddLine(
-                    route.ToArray(), Color.red, elevation, width);
+                    route.ToArray(), _lineAnimatorPrefab.color, _lineAnimatorPrefab.arcElevation, _lineAnimatorPrefab.lineWidth);
+                LineAnimator.reverseMode = _lineAnimatorPrefab.reverseMode;
+                LineAnimator.autoFadeAfter = _lineAnimatorPrefab.autoFadeAfter;
+                LineAnimator.dashAnimationDuration = _lineAnimatorPrefab.dashAnimationDuration;
+                LineAnimator.dashInterval = _lineAnimatorPrefab.dashInterval;
+                LineAnimator.drawingDuration = _lineAnimatorPrefab.drawingDuration;
+                LineAnimator.fadeOutDuration = _lineAnimatorPrefab.fadeOutDuration;
             }
         }
         else

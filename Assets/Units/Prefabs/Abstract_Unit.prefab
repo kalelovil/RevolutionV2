@@ -86,16 +86,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
-  _costList:
-  - _resource: {fileID: 11400000, guid: 31caf7554659f9648bfcd4c6bb941c1c, type: 2}
-    _quantity: 0
-  - _resource: {fileID: 11400000, guid: 03740524adfb24d44aed78704f190f93, type: 2}
-    _quantity: 0
-  - _resource: {fileID: 11400000, guid: 31caf7554659f9648bfcd4c6bb941c1c, type: 2}
-    _quantity: 0
+  _leader: {fileID: 0}
+  _unitList: []
   _attack: 0
   _health: 0
   _speed: 0
+  _goAnimator: {fileID: 5152379201381076891}
+  _lineAnimatorPrefab: {fileID: 6845783682261334742, guid: 5a9a0146da3121f47a891fbf6db5cbdc,
+    type: 3}
+  _lineAnimator: {fileID: 0}
   _renderers:
   - {fileID: 3790149862952692102}
   - {fileID: 3791773291462453720}
