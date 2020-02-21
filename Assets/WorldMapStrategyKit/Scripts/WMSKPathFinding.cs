@@ -541,7 +541,7 @@ namespace WorldMapStrategyKit {
 		/// <param name="startingCountryIndex">The index for the starting country</param>
 		/// <param name="destinationCountryIndex">The index for the destination country</param>
 		/// <param name="maxSearchCost">Maximum search cost for the path finding algorithm. A value of -1 will use the global default defined by pathFindingMaxCost</param>
-		public List<int> FindRoute (Country startingCountry, Country destinationCountry, int maxSearchCost = -1) {
+		public List<int> FindRoute (Country startingCountry, Country destinationCountry, float maxSearchCost = -1) {
 			int startingCountryIndex = GetCountryIndex (startingCountry);
 			int destinationCountryIndex = GetCountryIndex (destinationCountry);
 			if (destinationCountryIndex == startingCountryIndex || destinationCountryIndex < 0 || startingCountryIndex < 0)
@@ -579,7 +579,7 @@ namespace WorldMapStrategyKit {
 		/// <param name="startingProvince">The index for the starting province</param>
 		/// <param name="destinationProvince">The index for the destination province</param>
 		/// <param name="maxSearchCost">Maximum search cost for the path finding algorithm. A value of -1 will use the global default defined by pathFindingMaxCost</param>
-		public List<int> FindRoute (Province startingProvince, Province destinationProvince, int maxSearchCost = -1) {
+		public List<int> FindRoute (Province startingProvince, Province destinationProvince, float maxSearchCost = -1) {
 			int startingProvinceIndex = GetProvinceIndex (startingProvince);
 			int destinationProvinceIndex = GetProvinceIndex (destinationProvince);
 			if (destinationProvinceIndex == startingProvinceIndex || destinationProvinceIndex < 0 || startingProvinceIndex < 0)

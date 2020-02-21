@@ -24,10 +24,10 @@ namespace WorldMapStrategyKit {
 			GUIResizer.Init (800, 500); 
 
 			// Create two tanks
-			Vector2 parisLocation = map.GetCity ("Paris", "France").unity2DLocation;
+			Vector2 parisLocation = map.GetCity ("Zagreb", "Croatia").unity2DLocation;
 			tank1 = DropTankOnPosition(parisLocation);
 			tank1.name = "French Tank";
-			Vector2 madridLocation = map.GetCity ("Madrid", "Spain").unity2DLocation;
+			Vector2 madridLocation = map.GetCity ("Podgorica", "Montenegro").unity2DLocation;
 			tank2 = DropTankOnPosition(madridLocation);
 			tank2.name = "Spanish Tank";
 

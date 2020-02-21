@@ -24,8 +24,8 @@ namespace WorldMapStrategyKit.PathFinding {
 								private AdminEntity[] mEntities = null;
 								private PriorityQueueB<int> mOpen = null;
 								private List<PathFinderNodeAdmin> mClose = new List<PathFinderNodeAdmin> ();
-								private int mHEstimate = 2;
-								private int mSearchLimit = 2000;
+								private float mHEstimate = 2;
+								private float mSearchLimit = 2000;
 								private PathFinderNodeAdmin[] mCalcGrid = null;
 								private byte mOpenNodeValue = 1;
 								private byte mCloseNodeValue = 2;
@@ -52,12 +52,12 @@ namespace WorldMapStrategyKit.PathFinding {
 												mOpen = new PriorityQueueB<int> (new ComparePFNodeMatrix (mCalcGrid));
 								}
 
-								public int HeuristicEstimate {
+								public float HeuristicEstimate {
 												get { return mHEstimate; }
 												set { mHEstimate = value; }
 								}
 
-								public int SearchLimit {
+								public float SearchLimit {
 												get { return mSearchLimit; }
 												set { mSearchLimit = value; }
 								}
