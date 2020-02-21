@@ -46,6 +46,10 @@ public class Brigade : MonoBehaviour
     GameObjectAnimator _goAnimator;
     public GameObjectAnimator GoAnimator { get => _goAnimator; private set => _goAnimator = value; }
 
+    [Header("Line Animator")]
+    LineMarkerAnimator _lineAnimator;
+    public LineMarkerAnimator LineAnimator { get => _lineAnimator; private set => _lineAnimator = value; }
+
     [Header("Visual")]
     [SerializeField] Renderer[] _renderers;
 
@@ -106,6 +110,38 @@ public class Brigade : MonoBehaviour
     {
         Debug.Log($"Unit Clicked: {anim.gameObject.name}");
         Unit_Manager.Instance.SelectedUnit = (Unit_Manager.Instance.SelectedUnit == this) ? null : this;
+    }
+
+
+    /// <summary>
+    /// Moves the unit with path finding.
+    /// </summary>
+    internal void MoveWithPathFinding(Vector2 destination)
+    {
+        if (Speed > float.Epsilon)
+        {
+            List<Vector2> route = GoAnimator.FindRoute(destination);
+            if (route.Count > 0)
+            {
+                GoAnimator.MoveTo(destination, 1e4f / Speed, DURATION_TYPE.MapLap);
+                float elevation = 0f;
+                float width = 0.02f;
+
+                // Remove existing line
+                if (LineAnimator)
+                {
+                    DestroyImmediate(LineAnimator.gameObject);
+                    LineAnimator = null;
+                }
+                // Add Line
+                LineAnimator = WMSK.instance.AddLine(
+                    route.ToArray(), Color.red, elevation, width);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Unit ({Name}) Has 0 Speed: Cannot Give It A Movement Order");
+        }
     }
 
     private void MoveEnded(GameObjectAnimator anim)

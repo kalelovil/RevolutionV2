@@ -15,7 +15,7 @@ public class MapClickHandler : MonoBehaviour
             if (Unit_Manager.Instance.SelectedUnit) 
             {
                 Debug.Log($"Move Unit: {Unit_Manager.Instance.SelectedUnit.gameObject.name} to {x}, {y}");
-                MoveUnitWithPathFinding(Unit_Manager.Instance.SelectedUnit, new Vector2(x, y));
+                Unit_Manager.Instance.SelectedUnit.MoveWithPathFinding(new Vector2(x, y));
             }
             else if (true)
             {
@@ -59,22 +59,6 @@ public class MapClickHandler : MonoBehaviour
     {
         
     }
-    
-    /// <summary>
-     /// Moves the unit with path finding.
-     /// </summary>
-    void MoveUnitWithPathFinding(Brigade unit, Vector2 destination)
-    {
-        if (unit.Speed > float.Epsilon)
-        {
-            unit.GoAnimator.MoveTo(destination, 1e4f / unit.Speed, DURATION_TYPE.MapLap);
-        }
-        else
-        {
-            Debug.LogWarning($"Unit ({unit}) Has 0 Speed: Cannot Give It A Movement Order");
-        }
-    }
-
 
     void ColorTankHover(GameObjectAnimator obj)
     {
