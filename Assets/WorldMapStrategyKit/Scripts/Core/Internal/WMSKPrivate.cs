@@ -2033,7 +2033,7 @@ namespace WorldMapStrategyKit
 		{
 			Material customMat;
 			if (texture == null) {
-				if (coloredMatCache.TryGetValue (color, out customMat)) {
+				if (cacheMaterials && coloredMatCache.TryGetValue (color, out customMat)) {
 					customMat.renderQueue += renderQueueIncrement;
 					return customMat;
 				}
@@ -2049,11 +2049,14 @@ namespace WorldMapStrategyKit
 					customMat = Instantiate (coloredMat);
 				}
 				customMat.name = coloredMat.name;
-				coloredMatCache [color] = customMat;
+				if (cacheMaterials) {
+					coloredMatCache[color] = customMat;
+				}
 			}
 			customMat.color = color;
-			if (disposalManager != null)
-				disposalManager.MarkForDisposal (customMat); //.hideFlags = HideFlags.DontSave;
+			if (disposalManager != null) {
+				disposalManager.MarkForDisposal(customMat);
+			}
 			customMat.renderQueue += renderQueueIncrement;
 			return customMat;
 		}

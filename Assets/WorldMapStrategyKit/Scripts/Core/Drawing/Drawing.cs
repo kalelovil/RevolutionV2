@@ -39,8 +39,9 @@ namespace WorldMapStrategyKit {
 				disposalManager.MarkForDisposal (hexa); // hexa.hideFlags = HideFlags.DontSave;
 			hexa.hideFlags |= HideFlags.HideInHierarchy;
 			Mesh mesh = new Mesh ();
-			if (disposalManager != null)
-				disposalManager.MarkForDisposal (mesh); //mesh.hideFlags = HideFlags.DontSave;
+			if (disposalManager != null) {
+				disposalManager.MarkForDisposal(mesh); //mesh.hideFlags = HideFlags.DontSave;
+			}
 			mesh.vertices = points;
 			mesh.triangles = indices;
 			// uv mapping

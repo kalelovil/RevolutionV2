@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 
 
 namespace WorldMapStrategyKit {
-	public class DemoViewport : MonoBehaviour {
+    public class DemoViewport : MonoBehaviour {
 
 		WMSK map;
 		GUIStyle labelStyle, labelStyleShadow, buttonStyle, sliderStyle, sliderThumbStyle;

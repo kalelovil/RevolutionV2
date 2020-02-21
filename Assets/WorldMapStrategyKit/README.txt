@@ -40,6 +40,13 @@ Please read the documentation PDF and browse/play with the demo scene and sample
 Version history
 ---------------
 
+Version 9.3
+   - API: added cacheMaterials property. Set this to false to force WMSK avoid caching materials (if you need to change directly renderer materials)
+   - API: added GetCountryRegionIndex, GetProvinceRegionIndex to obtain region under certain map position
+   - API: added renderer property to cell class. Contains a reference to the MeshRenderer component of the cell surface gameobject
+   - API: added OnVGOCountryRegionEnter, OnVGOProvinceRegionEnter globa events
+   - API: added OnCountryRegionEnter, OnprovinceRegionEnter events to GameObjectAnimator
+
 Version 9.2
    - MapPopulation demo scene: added button/example of provinces between two countries (France/Germany)
    - Tile system: added "Restrict To Area" option with lat/lon defined limits

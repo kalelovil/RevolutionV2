@@ -362,7 +362,12 @@ namespace WorldMapStrategyKit {
 		public event GOEvent OnProvinceEnter;
 
 		/// <summary>
-		/// Fired when the Unit enters a new region
+		/// Fired when the Unit enters a new country region
+		/// </summary>
+		public event GOEvent OnCountryRegionEnter;
+
+		/// <summary>
+		/// Fired when the Unit enters a new country region
 		/// </summary>
 		public event GOEvent OnProvinceRegionEnter;
 
@@ -617,7 +622,8 @@ namespace WorldMapStrategyKit {
 		bool isAffectedByBuoyancy;
 		float progress;
 		float currentAltitude;
-		int lastCountryIndex = -1, lastProvinceIndex = -1, lastProvinceRegionIndex = -1;
+		int lastCountryIndex = -1, lastProvinceIndex = -1;
+		int lastCountryRegionIndex = -1, lastProvinceRegionIndex = -1;
 		bool onFixedMoveEnabled;
         bool mouseEventProcessedThisFrame;
 		float spriteRotation;
@@ -1136,14 +1142,22 @@ namespace WorldMapStrategyKit {
 					}
 				}
 			}
-			int provinceIndex = -1;
-			int provinceRegionIndex = -1;
+
+			if (OnCountryRegionEnter != null || map.OnVGOCountryRegionEnter != null) {
+				int regionIndex = map.GetCountryRegionIndex(_currentMap2DLocation);
+				if (regionIndex != lastCountryRegionIndex) {
+					lastCountryRegionIndex = regionIndex;
+					if (regionIndex >= 0) {
+						if (OnCountryRegionEnter != null)
+							OnCountryRegionEnter(this);
+						if (map.OnVGOCountryRegionEnter != null)
+							map.BubbleEvent(map.OnVGOCountryRegionEnter, this);
+					}
+				}
+			}
+
 			if (OnProvinceEnter != null) {
-				map.GetProvinceRegionIndex
-				(
-					_currentMap2DLocation, countryIndex, 
-					out provinceIndex, out provinceRegionIndex
-				);
+				int provinceIndex = map.GetProvinceIndex (_currentMap2DLocation, countryIndex);
 				if (provinceIndex != lastProvinceIndex) {
 					lastProvinceIndex = provinceIndex;
 					if (provinceIndex >= 0) {
@@ -1153,11 +1167,13 @@ namespace WorldMapStrategyKit {
 							map.BubbleEvent (map.OnVGOProvinceEnter, this);
 					}
 				}
-				if (provinceRegionIndex != lastProvinceRegionIndex)
-				{
-					lastProvinceRegionIndex = provinceRegionIndex;
-					if (provinceRegionIndex >= 0)
-					{
+			}
+
+			if (OnProvinceRegionEnter != null || map.OnVGOProvinceRegionEnter != null) {
+				int regionIndex = map.GetProvinceRegionIndex(_currentMap2DLocation);
+				if (regionIndex != lastProvinceRegionIndex) {
+					lastProvinceRegionIndex = regionIndex;
+					if (regionIndex >= 0) {
 						if (OnProvinceRegionEnter != null)
 							OnProvinceRegionEnter(this);
 						if (map.OnVGOProvinceRegionEnter != null)
@@ -1165,6 +1181,7 @@ namespace WorldMapStrategyKit {
 					}
 				}
 			}
+
 
 		}
 

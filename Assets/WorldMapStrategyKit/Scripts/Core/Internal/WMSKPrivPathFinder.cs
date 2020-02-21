@@ -120,10 +120,11 @@ namespace WorldMapStrategyKit {
 					earthRouteMatrixWithElevationMaxAltitude = maxAltitude;
 				}
 			} else {
-				if (terrainCapability == TERRAIN_CAPABILITY.OnlyGround)
+				if (terrainCapability == TERRAIN_CAPABILITY.OnlyGround) {
 					thisMatrix = 2;
-				else
+				} else {
 					thisMatrix = 4; // water
+				}
 				if ((computedMatrixBits & thisMatrix) == 0) {
 					computeMatrix = true;
 					computedMatrixBits |= thisMatrix;	// mark computedMatrixBits

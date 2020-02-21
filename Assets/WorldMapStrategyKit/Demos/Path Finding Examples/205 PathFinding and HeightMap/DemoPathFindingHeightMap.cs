@@ -11,7 +11,7 @@ namespace WorldMapStrategyKit {
 		int startCellIndex;
 		GameObjectAnimator tank;
 		List<int> path;
-		float pathCost;
+		int pathCost;
 		List<TextMesh> texts = new List<TextMesh> ();
 
 		void Start () {
@@ -191,7 +191,7 @@ namespace WorldMapStrategyKit {
 				map.SetCellTemporaryColor (cellIndex, pathColor);
 
 				// Show the accumulated cost
-				float accumCost = map.GetCellPathCost (cellIndex);
+				int accumCost = map.GetCellPathCost (cellIndex);
 				Vector3 cellPosition = map.GetCellPosition (cellIndex);
 				TextMesh text = map.AddMarker2DText (accumCost.ToString (), cellPosition);
 				text.transform.localScale *= 0.3f;	// make font smaller

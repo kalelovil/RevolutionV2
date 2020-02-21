@@ -1145,6 +1145,18 @@ namespace WorldMapStrategyKit {
 
 
 		/// <summary>
+		/// Gets the region index of the country that contains the provided map coordinates. This will ignore hidden countries.
+		/// </summary>
+		/// <returns>The Region index or -1 if no region found.</returns>
+		/// <param name="localPosition">Map coordinates in the range of (-0.5 .. 0.5)</param>
+		public int GetCountryRegionIndex(Vector2 localPosition) {
+			Region region = GetCountryRegion(localPosition);
+			if (region == null) return -1;
+			return region.regionIndex;
+		}
+
+
+		/// <summary>
 		/// Returns all neighbour countries
 		/// </summary>
 		public List<Country> CountryNeighbours (int countryIndex) {

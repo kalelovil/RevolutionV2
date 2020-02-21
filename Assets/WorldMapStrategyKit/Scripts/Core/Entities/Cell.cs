@@ -73,6 +73,10 @@ namespace WorldMapStrategyKit {
 		/// </summary>
 		public bool flag;
 
+        /// <summary>
+        /// Reference to the renderer component when surface is present
+        /// </summary>
+		public Renderer renderer;
 
 		public Cell (int row, int column, Vector2 center) {
 			this.row = row;

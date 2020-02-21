@@ -51,7 +51,7 @@ namespace WorldMapStrategyKit {
 		public Action<GameObjectAnimator> OnVGOMoveStart;
 
 		/// <summary>
-		/// Tiggered when an unit stops moving.
+		/// Tiggered when an unit moves.
 		/// </summary>
 		public Action<GameObjectAnimator> OnVGOMove;
 
@@ -66,9 +66,14 @@ namespace WorldMapStrategyKit {
 		public Action<GameObjectAnimator> OnVGOCountryEnter;
 		
 		/// <summary>
-		/// Triggered when an unit enters a region
+		/// Triggered when an unit enters a province
 		/// </summary>
 		public Action<GameObjectAnimator> OnVGOProvinceEnter;
+
+		/// <summary>
+		/// Triggered when an unit enters a country region
+		/// </summary>
+		public Action<GameObjectAnimator> OnVGOCountryRegionEnter;
 
 		/// <summary>
 		/// Triggered when an unit enters a province region

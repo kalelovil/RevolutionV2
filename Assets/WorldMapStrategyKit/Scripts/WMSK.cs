@@ -108,6 +108,12 @@ namespace WorldMapStrategyKit {
 		[SerializeField]
 		Camera _customCamera;
 
+        /// <summary>
+        /// Set this property to false to force WMSK not cache materials
+        /// </summary>
+        [NonSerialized]
+		public bool cacheMaterials = true;
+
 		/// <summary>
 		/// Optional main camera
 		/// </summary>

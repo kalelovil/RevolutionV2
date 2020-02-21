@@ -28,8 +28,8 @@ namespace WorldMapStrategyKit {
 			// Get a reference to the World Map API:
 			map = WMSK.instance;
 
-			// UI Setup - non-important, only for this demo
-			labelStyle = new GUIStyle ();
+            // UI Setup - non-important, only for this demo
+            labelStyle = new GUIStyle ();
 			labelStyle.alignment = TextAnchor.MiddleCenter;
 			labelStyle.normal.textColor = Color.white;
 			labelStyleShadow = new GUIStyle (labelStyle);
@@ -78,12 +78,10 @@ namespace WorldMapStrategyKit {
 			cellsCount = map.gridColumns;
 
 			map.FlyToCountry ("Spain", 0, 0.17f);
-
 		}
 	
 		// Update is called once per frame
 		void OnGUI () {
-			
 			// Do autoresizing of GUI layer
 			GUIResizer.AutoResize ();
 			

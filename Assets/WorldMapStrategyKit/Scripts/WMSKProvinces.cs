@@ -553,7 +553,7 @@ namespace WorldMapStrategyKit {
 		}
 
 		/// <summary>
-		/// Gets the region of the province that contains the provided map coordinates. This will ignore hidden countries.
+		/// Gets the region of the province that contains the provided map coordinates.
 		/// </summary>
 		/// <returns>The province region.</returns>
 		/// <param name="localPosition">Map coordinates in the range of (-0.5 .. 0.5)</param>
@@ -565,6 +565,20 @@ namespace WorldMapStrategyKit {
 			}
 			return null;
 		}
+
+
+		/// <summary>
+		/// Gets the region index of the province that contains the provided map coordinates.
+		/// </summary>
+		/// <returns>The Region index or -1 if no region found.</returns>
+		/// <param name="localPosition">Map coordinates in the range of (-0.5 .. 0.5)</param>
+		public int GetProvinceRegionIndex(Vector2 localPosition) {
+			Region region = GetProvinceRegion(localPosition);
+			if (region == null) return -1;
+			return region.regionIndex;
+		}
+
+
 
 		/// <summary>
 		/// Gets the index of the province region.
