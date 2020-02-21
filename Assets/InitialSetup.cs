@@ -79,8 +79,11 @@ namespace WorldMapStrategyKit
 
 			// 7) Fly to country and fit zoom
 			var country = map.GetCountryIndex("Republic of Serbia");
-			float zoomLevel = map.GetCountryRegionZoomExtents(country);
-			map.FlyToCountry(country, 2f, zoomLevel);
+			//float zoomLevel = map.GetCountryRegionZoomExtents(country);
+			//map.FlyToCountry(country, 2f, zoomLevel);
+			int provIndex = map.GetProvinceIndex("Republic of Serbia", "Grad Beograd");
+			float zoomLevel = map.GetProvinceZoomExtents(country);
+			map.FlyToProvince(provIndex, 1.5f, zoomLevel * 2.5f);
 
 			// Draw City Names
 			if (Show_City_Names)

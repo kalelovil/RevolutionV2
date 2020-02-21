@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using WorldMapStrategyKit;
@@ -77,7 +78,28 @@ public class Brigade : MonoBehaviour
     private void ProvinceRegionEntered(GameObjectAnimator anim)
     {
         var region = WMSK.instance.GetProvinceRegion(anim.currentMap2DLocation);
-        Debug.Log("Tank has entered province region " + region.entity.name + "{" + region.regionIndex + "}" + ".");
+        Debug.LogWarning("Tank has entered province region " + region.entity.name + "{" + region.regionIndex + "}" + ".");
+        SetMovementSpeed(region);
+    }
+
+    private void SetMovementSpeed(Region region)
+    {
+        float modifier = GetRegionMovementSpeedModifier(region);
+        WMSK.instance.VGOGlobalSpeed = (0.5f / modifier);
+    }
+
+    private float GetRegionMovementSpeedModifier(Region region)
+    {
+        var prov = (Province)region.entity;
+        foreach (var feature in Province_Manager.Instance.Province_Feature_Types)
+        {
+            int[] regionIndexes = Province_Manager.Instance.GetProvinceFeatureRegionIndexes(prov, feature.Name);
+            if (regionIndexes.Contains(region.regionIndex))
+            {
+                return feature.Movement_Multiplier;
+            }
+        }
+        return 1f;
     }
 
     private void UnitClicked(GameObjectAnimator anim)

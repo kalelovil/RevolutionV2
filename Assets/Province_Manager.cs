@@ -77,7 +77,7 @@ public class Province_Manager : MonoBehaviour
         }
     }
 
-    private int[] GetProvinceFeatureRegionIndexes(Province province, string featureName)
+    internal int[] GetProvinceFeatureRegionIndexes(Province province, string featureName)
     {
         string featureRegionIndexesString = province.attrib[featureName];
         if (string.IsNullOrEmpty(featureRegionIndexesString))
