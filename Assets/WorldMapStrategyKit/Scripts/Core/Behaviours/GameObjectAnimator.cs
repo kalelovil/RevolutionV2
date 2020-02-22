@@ -614,7 +614,10 @@ namespace WorldMapStrategyKit {
 		Vector3 followStart2DLocation;
 		Vector3 destinationDirection;
 		WMSK map;
+
 		List<Vector2> route;
+		public List<Vector2> Route => route;
+
 		int routeNextDestinationIndex;
 		bool _isOnWater;
 		Vector2 onWaterPosition;

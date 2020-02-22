@@ -91,6 +91,8 @@ public class Brigade : MonoBehaviour
     {
         float modifier = GetRegionMovementSpeedModifier(region);
         WMSK.instance.VGOGlobalSpeed = (0.5f / modifier);
+
+        MoveWithPathFinding(GoAnimator.Route.Last());
     }
 
     private float GetRegionMovementSpeedModifier(Region region)
@@ -122,11 +124,20 @@ public class Brigade : MonoBehaviour
         if (Speed > float.Epsilon)
         {
             List<Vector2> route = GoAnimator.FindRoute(destination);
+            MoveWithPathFinding(route);
+        }
+        else
+        {
+            Debug.LogWarning($"Unit ({Name}) Has 0 Speed: Cannot Give It A Movement Order");
+        }
+    }
+    internal void MoveWithPathFinding(List<Vector2> route)
+    {
+        if (Speed > float.Epsilon)
+        {
             if (route.Count > 0)
             {
-                GoAnimator.MoveTo(destination, 1e4f / Speed, DURATION_TYPE.MapLap);
-                float elevation = 0f;
-                float width = 0.02f;
+                GoAnimator.MoveTo(route, 1e4f / Speed, DURATION_TYPE.MapLap);
 
                 // Remove existing line
                 if (LineAnimator)
@@ -145,10 +156,6 @@ public class Brigade : MonoBehaviour
                 LineAnimator.drawingDuration = _lineAnimatorPrefab.drawingDuration;
                 LineAnimator.fadeOutDuration = _lineAnimatorPrefab.fadeOutDuration;
             }
-        }
-        else
-        {
-            Debug.LogWarning($"Unit ({Name}) Has 0 Speed: Cannot Give It A Movement Order");
         }
     }
 
