@@ -783,6 +783,7 @@ namespace WorldMapStrategyKit {
 		/// <summary>
 		/// Initiates a movement for this Gameobject.
 		/// </summary>
+		internal float _speedMultiplier = 1f;
 		IEnumerator StartMove (Vector2 destination, float duration) {
 			// wait for any other additional setting on this GameObjectAnimator before movements starts
 			yield return new WaitForEndOfFrame (); 
@@ -791,7 +792,7 @@ namespace WorldMapStrategyKit {
 				Init ();
 			}
 
-			this.duration = duration * map.VGOGlobalSpeed;
+			this.duration = duration * map.VGOGlobalSpeed * _speedMultiplier;
 			this.destination = destination;
 			this.startingTime = map.time;
 			this.stepTime = this.startingTime;

@@ -90,7 +90,7 @@ public class Brigade : MonoBehaviour
     private void SetMovementSpeed(Region region)
     {
         float modifier = GetRegionMovementSpeedModifier(region);
-        WMSK.instance.VGOGlobalSpeed = (0.5f / modifier);
+        GoAnimator._speedMultiplier = 1f / modifier;
 
         MoveWithPathFinding(GoAnimator.Route.Last());
     }
