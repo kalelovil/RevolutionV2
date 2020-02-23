@@ -623,7 +623,10 @@ namespace WorldMapStrategyKit {
 		Vector2 onWaterPosition;
 		Quaternion lastComputedRotation;
 		bool isAffectedByBuoyancy;
+
 		float progress;
+		public float Progress => progress;
+
 		float currentAltitude;
 		int lastCountryIndex = -1, lastProvinceIndex = -1;
 		int lastCountryRegionIndex = -1, lastProvinceRegionIndex = -1;
@@ -951,6 +954,7 @@ namespace WorldMapStrategyKit {
 				map.BubbleEvent (map.OnVGOMoveEnd, this);
 			}
 
+			Debug.Log($"Unit Progress: {progress}");
 		}
 
 		Vector2 LerpMove (Vector2 from, Vector2 to, float t) {

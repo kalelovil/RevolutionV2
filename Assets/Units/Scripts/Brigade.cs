@@ -92,7 +92,17 @@ public class Brigade : MonoBehaviour
         float modifier = GetRegionMovementSpeedModifier(region);
         GoAnimator._speedMultiplier = 1f / modifier;
 
-        MoveWithPathFinding(GoAnimator.Route.Last());
+        List<Vector2> remainingRoute = GetRemainingRoute(GoAnimator);
+        remainingRoute.Insert(0, GoAnimator.currentMap2DLocation);
+        MoveWithPathFinding(remainingRoute, false);
+    }
+
+    private List<Vector2> GetRemainingRoute(GameObjectAnimator goAnimator)
+    {
+        int index = Mathf.CeilToInt((goAnimator.Route.Count - 1) * goAnimator.Progress);
+        List<Vector2> fullRoute = goAnimator.Route;
+        List<Vector2> remainingRoute = fullRoute.GetRange(index, fullRoute.Count - index);
+        return remainingRoute;
     }
 
     private float GetRegionMovementSpeedModifier(Region region)
@@ -119,19 +129,19 @@ public class Brigade : MonoBehaviour
     /// <summary>
     /// Moves the unit with path finding.
     /// </summary>
-    internal void MoveWithPathFinding(Vector2 destination)
+    internal void MoveWithPathFinding(Vector2 destination, bool resetLine = true)
     {
         if (Speed > float.Epsilon)
         {
             List<Vector2> route = GoAnimator.FindRoute(destination);
-            MoveWithPathFinding(route);
+            MoveWithPathFinding(route, resetLine);
         }
         else
         {
             Debug.LogWarning($"Unit ({Name}) Has 0 Speed: Cannot Give It A Movement Order");
         }
     }
-    internal void MoveWithPathFinding(List<Vector2> route)
+    internal void MoveWithPathFinding(List<Vector2> route, bool resetLine = true)
     {
         if (Speed > float.Epsilon)
         {
@@ -139,22 +149,25 @@ public class Brigade : MonoBehaviour
             {
                 GoAnimator.MoveTo(route, 1e4f / Speed, DURATION_TYPE.MapLap);
 
-                // Remove existing line
-                if (LineAnimator)
+                if (resetLine)
                 {
-                    DestroyImmediate(LineAnimator.gameObject);
-                    LineAnimator = null;
-                }
+                    // Remove existing line
+                    if (LineAnimator)
+                    {
+                        DestroyImmediate(LineAnimator.gameObject);
+                        LineAnimator = null;
+                    }
 
-                // Add Line
-                LineAnimator = WMSK.instance.AddLine(
-                    route.ToArray(), _lineAnimatorPrefab.color, _lineAnimatorPrefab.arcElevation, _lineAnimatorPrefab.lineWidth);
-                LineAnimator.reverseMode = _lineAnimatorPrefab.reverseMode;
-                LineAnimator.autoFadeAfter = _lineAnimatorPrefab.autoFadeAfter;
-                LineAnimator.dashAnimationDuration = _lineAnimatorPrefab.dashAnimationDuration;
-                LineAnimator.dashInterval = _lineAnimatorPrefab.dashInterval;
-                LineAnimator.drawingDuration = _lineAnimatorPrefab.drawingDuration;
-                LineAnimator.fadeOutDuration = _lineAnimatorPrefab.fadeOutDuration;
+                    // Add Line
+                    LineAnimator = WMSK.instance.AddLine(
+                        route.ToArray(), _lineAnimatorPrefab.color, _lineAnimatorPrefab.arcElevation, _lineAnimatorPrefab.lineWidth);
+                    LineAnimator.reverseMode = _lineAnimatorPrefab.reverseMode;
+                    LineAnimator.autoFadeAfter = _lineAnimatorPrefab.autoFadeAfter;
+                    LineAnimator.dashAnimationDuration = _lineAnimatorPrefab.dashAnimationDuration;
+                    LineAnimator.dashInterval = _lineAnimatorPrefab.dashInterval;
+                    LineAnimator.drawingDuration = _lineAnimatorPrefab.drawingDuration;
+                    LineAnimator.fadeOutDuration = _lineAnimatorPrefab.fadeOutDuration;
+                }
             }
         }
     }
