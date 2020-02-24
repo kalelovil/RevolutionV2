@@ -10,22 +10,7 @@ public class MapClickHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _map.OnClick += (float x, float y, int buttonIndex) => 
-        {
-            if (Unit_Manager.Instance.SelectedUnit) 
-            {
-                Debug.Log($"Move Unit: {Unit_Manager.Instance.SelectedUnit.gameObject.name} to {x}, {y}");
-                Unit_Manager.Instance.SelectedUnit.MoveWithPathFinding(new Vector2(x, y));
-            }
-            else if (true)
-            {
-
-            }
-        };
-
-
         // Listen to global Vieport GameObject (VGO) events (... better and simple approach)
-
         _map.OnVGOPointerDown = delegate (GameObjectAnimator obj) {
             Debug.Log("GLOBAL EVENT: Left button pressed on " + obj.name);
             ColorTankMouseDown(obj);
@@ -51,6 +36,20 @@ public class MapClickHandler : MonoBehaviour
         _map.OnVGOPointerExit = delegate (GameObjectAnimator obj) {
             Debug.Log("GLOBAL EVENT: Mouse exited " + obj.name);
             RestoreTankColor(obj);
+        };
+
+        // Move Selected Unit To Map Position Clicked
+        _map.OnClick += (float x, float y, int buttonIndex) =>
+        {
+            if (Unit_Manager.Instance.SelectedUnit)
+            {
+                Debug.Log($"Move Unit: {Unit_Manager.Instance.SelectedUnit.gameObject.name} to {x}, {y}");
+                Unit_Manager.Instance.SelectedUnit.MoveWithPathFinding(new Vector2(x, y));
+            }
+            else if (true)
+            {
+
+            }
         };
     }
 
