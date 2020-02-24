@@ -92,9 +92,12 @@ public class Brigade : MonoBehaviour
         float modifier = GetRegionMovementSpeedModifier(region);
         GoAnimator._speedMultiplier = 1f / modifier;
 
-        List<Vector2> remainingRoute = GetRemainingRoute(GoAnimator);
-        remainingRoute.Insert(0, GoAnimator.currentMap2DLocation);
-        MoveWithPathFinding(remainingRoute, false);
+        if (GoAnimator.Route != null && GoAnimator.Route.Count > 0)
+        {
+            List<Vector2> remainingRoute = GetRemainingRoute(GoAnimator);
+            remainingRoute.Insert(0, GoAnimator.currentMap2DLocation);
+            MoveWithPathFinding(remainingRoute, false);
+        }
     }
 
     private List<Vector2> GetRemainingRoute(GameObjectAnimator goAnimator)
