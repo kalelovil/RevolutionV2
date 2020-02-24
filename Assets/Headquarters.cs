@@ -9,7 +9,7 @@ public class Headquarters : MonoBehaviour
     internal MountPoint MountPoint => _mountPoint;
 
     WMSK Map => WMSK.instance;
-    ProvinceData Province => Province_Manager.Instance.ProvinceList[_mountPoint.provinceIndex];
+    Province_Data Province => Province_Manager.Instance.ProvinceList[_mountPoint.provinceIndex];
 
     public void Initialise(MountPoint mountPoint)
     {

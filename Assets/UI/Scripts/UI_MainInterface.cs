@@ -33,7 +33,7 @@ public class UI_MainInterface : MonoBehaviour
         
     }
 
-    public void OpenProvincePanel(ProvinceData province)
+    public void OpenProvincePanel(Province_Data province)
     {
         ClosePanels();
         UI_ProvincePanel panel = ProvincePanel;

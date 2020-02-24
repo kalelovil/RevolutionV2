@@ -5,7 +5,7 @@ using UnityEngine;
 using WorldMapStrategyKit;
 using Random = UnityEngine.Random;
 
-public class ProvinceData : MonoBehaviour
+public class Province_Data : MonoBehaviour
 {
     WMSK map => WMSK.instance;
 
@@ -22,7 +22,7 @@ public class ProvinceData : MonoBehaviour
         SetManpower();
     }
 
-    #region Local_Support
+    #region Local Support
     [Header("Local Support")]
     [Range(0f, 1f)]
     [SerializeField] float _localSupportFraction;
@@ -41,6 +41,13 @@ public class ProvinceData : MonoBehaviour
         SetManpower();
     }
     #endregion
+
+    #region Mission Default Types
+    [Header("Mission Default Types")]
+    [SerializeField] List<MissionType> _mission_default_types;
+    //internal List<MissionType> Mission_Default_Types { get => _mission_default_types; }
+    #endregion
+
 
     private void SetManpower()
     {

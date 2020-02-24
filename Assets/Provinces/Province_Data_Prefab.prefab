@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7089988895215047291}
-  - component: {fileID: 5515238986365934390}
+  - component: {fileID: 6977249370316519203}
   m_Layer: 0
   m_Name: ProvinceDataPrefab
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5515238986365934390
+--- !u!114 &6977249370316519203
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,10 +40,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8460067849054879587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297d5560b711b834b85e7a98978724dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b3efeefdb625114f8631e4670df82e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _population: 0
   _localSupportFraction: 0
   _resourceStockpileList:
   - _resource: {fileID: 11400000, guid: 31caf7554659f9648bfcd4c6bb941c1c, type: 2}
     _quantity: 0
+  _mission_default_types:
+  - {fileID: 11400000, guid: aed2acfc3cf8a364ea63736391242672, type: 2}

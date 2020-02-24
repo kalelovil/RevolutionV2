@@ -22,7 +22,7 @@ namespace WorldMapStrategyKit
 
         private void ProvinceClicked(int provinceIndex, int regionIndex)
         {
-            ProvinceData provinceData = Province_Manager.Instance.ProvinceList[provinceIndex];
+            Province_Data provinceData = Province_Manager.Instance.ProvinceList[provinceIndex];
 
             Debug.Log($"Province Clicked   {regionIndex} of {map.provinces[provinceIndex].name}");
             //if (regionIndex > 0)

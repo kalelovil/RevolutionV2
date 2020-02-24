@@ -18,4 +18,5 @@ MonoBehaviour:
   _movement_multiplier: 0.5
   _view_range_multiplier: 1
   _blocks_view_range: 0
-  _mission_types: []
+  _mission_types:
+  - {fileID: 11400000, guid: ee63731a962243d4aa0663da5be987ba, type: 2}

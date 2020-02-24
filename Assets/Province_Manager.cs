@@ -6,10 +6,10 @@ using WorldMapStrategyKit;
 
 public class Province_Manager : MonoBehaviour
 {
-    [SerializeField] ProvinceData _provinceDataPrefab;
+    [SerializeField] Province_Data _provinceDataPrefab;
 
-    public List<ProvinceData> ProvinceList { get => _provinceList; private set => _provinceList = value; }
-    [SerializeField] List<ProvinceData> _provinceList;
+    public List<Province_Data> ProvinceList { get => _provinceList; private set => _provinceList = value; }
+    [SerializeField] List<Province_Data> _provinceList;
 
     #region Province Feature Types
     [SerializeField] List<Province_Feature_Type> _province_feature_types;
@@ -34,7 +34,7 @@ public class Province_Manager : MonoBehaviour
         ProvinceList.Clear();
         foreach (var prov in WMSK.instance.provinces)
         {
-            ProvinceData provData = Instantiate(_provinceDataPrefab, transform);
+            Province_Data provData = Instantiate(_provinceDataPrefab, transform);
             provData.Initialise(prov);
             ProvinceList.Add(provData);
         }

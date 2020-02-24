@@ -8,9 +8,9 @@ using WorldMapStrategyKit;
 public class UI_ProvincePanel : UI_AbstractInterfacePanel
 {
     [Header("Data")]
-    [SerializeField] ProvinceData _provinceData;
-    public ProvinceData ProvinceData { get { return _provinceData; } internal set { ProvinceSelected(value); } }
-    private void ProvinceSelected(ProvinceData value)
+    [SerializeField] Province_Data _provinceData;
+    public Province_Data ProvinceData { get { return _provinceData; } internal set { ProvinceSelected(value); } }
+    private void ProvinceSelected(Province_Data value)
     {
         _provinceData = value;
         _nameText.text = ProvinceData.Province.name;

@@ -18,4 +18,6 @@ MonoBehaviour:
   _movement_multiplier: 1
   _view_range_multiplier: 0.75
   _blocks_view_range: 1
-  _mission_types: []
+  _mission_types:
+  - {fileID: 11400000, guid: aed2acfc3cf8a364ea63736391242672, type: 2}
+  - {fileID: 11400000, guid: ee63731a962243d4aa0663da5be987ba, type: 2}
