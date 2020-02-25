@@ -144,7 +144,7 @@ namespace WorldMapStrategyKit {
 
 
         // Use this for initialization
-        void Start() {
+        internal void Start() {
 
             startAutoFadeTime = float.MaxValue;
             colorTransparent = new Color(color.r, color.g, color.b, 0);

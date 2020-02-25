@@ -174,6 +174,23 @@ public class Brigade : MonoBehaviour
             }
         }
     }
+    private void LateUpdate()
+    {
+        RemoveLineBehindUnit();
+    }
+
+    private void RemoveLineBehindUnit()
+    {
+        if (GoAnimator.Route != null)
+        {
+            var routeIndex = Mathf.CeilToInt((GoAnimator.Route.Count - 1) * GoAnimator.Progress);
+            var remainingPoints = GoAnimator.Route.Count - routeIndex;
+            Debug.Log($"Remaining Points: {remainingPoints}");
+            var newLinePath = LineAnimator.path.ToList().GetRange(LineAnimator.path.Length - remainingPoints, remainingPoints).ToArray();
+            LineAnimator.path = newLinePath;
+            LineAnimator.Start();
+        }
+    }
 
     private void MoveEnded(GameObjectAnimator anim)
     {
