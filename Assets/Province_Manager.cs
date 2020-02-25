@@ -96,6 +96,21 @@ public class Province_Manager : MonoBehaviour
         }
     }
 
+    internal Province_Feature_Type GetFeatureForRegion(Region region)
+    {
+        foreach (var prov in ProvinceList)
+        {
+            foreach (var featureRegionListMap in prov.ProvinceFeatureTypeMap)
+            {
+                if (featureRegionListMap.Value.Contains(region))
+                {
+                    return featureRegionListMap.Key;
+                }
+            }
+        }
+        return null;
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -89,8 +89,8 @@ public class Brigade : MonoBehaviour
 
     private void SetMovementSpeed(Region region)
     {
-        float modifier = GetRegionMovementSpeedModifier(region);
-        GoAnimator._speedMultiplier = 1f / modifier;
+        var feature = Province_Manager.Instance.GetFeatureForRegion(region);
+        GoAnimator._speedMultiplier = (feature == null) ? 1f : 1f / feature.Movement_Multiplier;
 
         if (GoAnimator.Route != null && GoAnimator.Route.Count > 0)
         {
@@ -106,20 +106,6 @@ public class Brigade : MonoBehaviour
         List<Vector2> fullRoute = goAnimator.Route;
         List<Vector2> remainingRoute = fullRoute.GetRange(index, fullRoute.Count - index);
         return remainingRoute;
-    }
-
-    private float GetRegionMovementSpeedModifier(Region region)
-    {
-        var prov = (Province)region.entity;
-        foreach (var feature in Province_Manager.Instance.Province_Feature_Types)
-        {
-            int[] regionIndexes = Province_Manager.Instance.GetProvinceFeatureRegionIndexes(prov, feature.Name);
-            if (regionIndexes.Contains(region.regionIndex))
-            {
-                return feature.Movement_Multiplier;
-            }
-        }
-        return 1f;
     }
 
     private void UnitClicked(GameObjectAnimator anim)
