@@ -181,11 +181,12 @@ public class Brigade : MonoBehaviour
 
     private void RemoveLineBehindUnit()
     {
+        // TODO Examine performance impact
         if (GoAnimator.Route != null)
         {
             var routeIndex = Mathf.CeilToInt((GoAnimator.Route.Count - 1) * GoAnimator.Progress);
             var remainingPoints = GoAnimator.Route.Count - routeIndex;
-            Debug.Log($"Remaining Points: {remainingPoints}");
+            //Debug.Log($"Remaining Points: {remainingPoints}");
             var newLinePath = LineAnimator.path.ToList().GetRange(LineAnimator.path.Length - remainingPoints, remainingPoints);
             newLinePath.Insert(0, GoAnimator.currentMap2DLocation);
             LineAnimator.path = newLinePath.ToArray();
