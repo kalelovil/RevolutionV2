@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Province_Feature_Type", menuName = "ScriptableObjects/Province Feature Type", order = 3)]
-public class Province_Feature_Type : ScriptableObject, IEquatable<ResourceType>
+public class Province_Feature_Type : ScriptableObject, IEquatable<Province_Feature_Type>
 {
     #region Properties
     [SerializeField] string _name;
@@ -33,13 +33,13 @@ public class Province_Feature_Type : ScriptableObject, IEquatable<ResourceType>
 
 
     #region IEquatable
-    public bool Equals(ResourceType other)
+    public bool Equals(Province_Feature_Type other)
     {
         return null != other && Name.GetHashCode() == other.Name.GetHashCode();
     }
     public override bool Equals(object obj)
     {
-        return Equals(obj as ResourceType);
+        return Equals(obj as Province_Feature_Type);
     }
     public override int GetHashCode()
     {

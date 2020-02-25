@@ -47,24 +47,24 @@ public class Province_Manager : MonoBehaviour
         yield return null;
         Color color = new Color(1f, 0f, 0f, 0.5f);
 
-        /*
-        foreach (var prov in ProvinceList)
-        {
-            WMSK.instance.PathFindingCustomRouteMatrixSet(prov.Province, 100);
-        }
-        */
         foreach (var feature in _province_feature_types)
         {
+            foreach (Province_Data prov in ProvinceList)
+            {
+                prov.ProvinceFeatureTypeMap.Add(feature, new List<Region>());
+            }
             var texture = feature.Texture;
             float textureAspectRatio = (float)texture.width / (float)texture.height;
             for (int provIndex = 0; provIndex < ProvinceList.Count; provIndex++)
             {
                 var name = feature.Name;
-                Province province = WMSK.instance.provinces[provIndex];
-                int[] featureRegionIndexes = GetProvinceFeatureRegionIndexes(province, name);
+                var provData = ProvinceList[provIndex];
+                int[] featureRegionIndexes = GetProvinceFeatureRegionIndexes(provData.Province, name);
                 foreach (int index in featureRegionIndexes)
                 {
-                    var region = province.regions[index];
+                    var region = provData.Province.regions[index];
+                    provData.ProvinceFeatureTypeMap[feature].Add(region);
+
                     Vector2 textureScale = new Vector2(
                         ((1f / region.rect2D.width) / 10000f), 
                         (((1f / region.rect2D.height) / 10000f) / textureAspectRatio) / 0.5f);

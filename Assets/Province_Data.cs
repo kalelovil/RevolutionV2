@@ -42,10 +42,18 @@ public class Province_Data : MonoBehaviour
     }
     #endregion
 
+
+    #region Province Terrain Features
+    [Header("Province Terrain Features")]
+    [SerializeField] Dictionary<Province_Feature_Type, List<Region>> _provinceFeatureTypeMap = new Dictionary<Province_Feature_Type, List<Region>>(); 
+    public Dictionary<Province_Feature_Type, List<Region>> ProvinceFeatureTypeMap { get => _provinceFeatureTypeMap; private set => _provinceFeatureTypeMap = value; }
+    #endregion
+
+
     #region Mission Default Types
     [Header("Mission Default Types")]
     [SerializeField] List<MissionType> _mission_default_types;
-    //internal List<MissionType> Mission_Default_Types { get => _mission_default_types; }
+    public List<MissionType> Mission_Default_Types { get => _mission_default_types; }
     #endregion
 
 

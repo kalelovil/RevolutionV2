@@ -58,7 +58,7 @@ public class MapClickHandler : MonoBehaviour
 
     private void RegionClicked(Region region)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     // Update is called once per frame
