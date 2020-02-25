@@ -186,7 +186,7 @@ public class Brigade : MonoBehaviour
             var routeIndex = Mathf.CeilToInt((GoAnimator.Route.Count - 1) * GoAnimator.Progress);
             var remainingPoints = GoAnimator.Route.Count - routeIndex;
             Debug.Log($"Remaining Points: {remainingPoints}");
-            var newLinePath = LineAnimator.path.ToList().GetRange(LineAnimator.path.Length - remainingPoints, remainingPoints).ToArray();
+            var newLinePath = LineAnimator.path.ToList().GetRange(LineAnimator.path.Length-1 - remainingPoints, remainingPoints+1).ToArray();
             LineAnimator.path = newLinePath;
             LineAnimator.Start();
         }
