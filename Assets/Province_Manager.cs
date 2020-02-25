@@ -96,17 +96,26 @@ public class Province_Manager : MonoBehaviour
         }
     }
 
+    Dictionary<Region, Province_Feature_Type> _regionFeatureTypeMap;
     internal Province_Feature_Type GetFeatureForRegion(Region region)
     {
-        foreach (var prov in ProvinceList)
+        if (_regionFeatureTypeMap == null)
         {
-            foreach (var featureRegionListMap in prov.ProvinceFeatureTypeMap)
+            _regionFeatureTypeMap = new Dictionary<Region, Province_Feature_Type>();
+            foreach (var prov in ProvinceList)
             {
-                if (featureRegionListMap.Value.Contains(region))
+                foreach (var featureRegionListMap in prov.ProvinceFeatureTypeMap)
                 {
-                    return featureRegionListMap.Key;
+                    foreach (var currentRegion in featureRegionListMap.Value)
+                    {
+                        _regionFeatureTypeMap.Add(currentRegion, featureRegionListMap.Key);
+                    }
                 }
             }
+        }
+        if (!_regionFeatureTypeMap.TryGetValue(region, out var featureType)) 
+        {
+            return featureType;
         }
         return null;
     }
