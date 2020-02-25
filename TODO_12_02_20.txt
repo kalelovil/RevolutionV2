@@ -5,9 +5,6 @@ Partisans TODO
 
 - brigade leaders
 - multiple units combine into brigade
-
-- brigade missions
-
 - special forces
 
 
@@ -17,3 +14,15 @@ Partisans TODO
    
    
 - selectable custom shape? (for forest)
+  - DONE
+  
+  
+
+- brigade missions
+
+	- Click on object with missions
+		- If single mission do that mission
+		- If multiple mission bring up action selection list/wheel
+		
+	- Brigade does mission while at the location
+		- generating progress

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
@@ -51,6 +52,13 @@ public class MapClickHandler : MonoBehaviour
 
             }
         };
+
+        _map.OnRegionClick += (Region region, int buttonIndex) => RegionClicked(region);
+    }
+
+    private void RegionClicked(Region region)
+    {
+        throw new NotImplementedException();
     }
 
     // Update is called once per frame
