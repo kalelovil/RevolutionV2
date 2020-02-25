@@ -113,7 +113,7 @@ public class Province_Manager : MonoBehaviour
                 }
             }
         }
-        if (!_regionFeatureTypeMap.TryGetValue(region, out var featureType)) 
+        if (_regionFeatureTypeMap.TryGetValue(region, out var featureType)) 
         {
             return featureType;
         }

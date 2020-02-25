@@ -51,6 +51,12 @@ public class Brigade : MonoBehaviour
     [SerializeField] LineMarkerAnimator _lineAnimator;
     public LineMarkerAnimator LineAnimator { get => _lineAnimator; private set => _lineAnimator = value; }
 
+
+    [Header("Destination Mission Type")]
+    [SerializeField] MissionType _destinationMissionType;
+    public MissionType DestinationMissionType { get => _destinationMissionType; set => _destinationMissionType = value; }
+
+
     [Header("Visual")]
     [SerializeField] Renderer[] _renderers;
 

@@ -58,7 +58,23 @@ public class MapClickHandler : MonoBehaviour
 
     private void RegionClicked(Region region)
     {
-        //throw new NotImplementedException();
+        var feature = Province_Manager.Instance.GetFeatureForRegion(region);
+        if (feature && feature.Mission_Types.Count > 0)
+        {
+            switch (feature.Mission_Types.Count)
+            {
+                case 1:
+                    Unit_Manager.Instance.SelectedUnit.DestinationMissionType = feature.Mission_Types[0];
+                    break;
+                case int n when (n > 1):
+                    // TODO Replace with list or radial menu
+                    Unit_Manager.Instance.SelectedUnit.DestinationMissionType = feature.Mission_Types[0];
+                    //
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     // Update is called once per frame
