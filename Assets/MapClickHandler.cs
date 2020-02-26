@@ -1,115 +1,126 @@
-﻿using System;
+﻿using Kalelovil.Revolution.Provinces;
+using Kalelovil.Revolution.Units;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
 
-public class MapClickHandler : MonoBehaviour
+namespace Kalelovil.Revolution.UI
 {
-    WMSK _map => WMSK.instance;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MapClickHandler : MonoBehaviour
     {
-        // Listen to global Vieport GameObject (VGO) events (... better and simple approach)
-        _map.OnVGOPointerDown = delegate (GameObjectAnimator obj) {
-            Debug.Log("GLOBAL EVENT: Left button pressed on " + obj.name);
-            ColorTankMouseDown(obj);
-        };
-        _map.OnVGOPointerUp = delegate (GameObjectAnimator obj) {
-            Debug.Log("GLOBAL EVENT: Left button released on " + obj.name);
-            ColorTankMouseUp(obj);
-        };
+        WMSK _map => WMSK.instance;
 
-        _map.OnVGOPointerRightDown = delegate (GameObjectAnimator obj) {
-            Debug.Log("GLOBAL EVENT: Right button pressed on " + obj.name);
-            ColorTankMouseDown(obj);
-        };
-        _map.OnVGOPointerRightUp = delegate (GameObjectAnimator obj) {
-            Debug.Log("GLOBAL EVENT: Right button released on " + obj.name);
-            ColorTankMouseUp(obj);
-        };
-
-        _map.OnVGOPointerEnter = delegate (GameObjectAnimator obj) {
-            Debug.Log("GLOBAL EVENT: Mouse entered " + obj.name);
-            ColorTankHover(obj);
-        };
-        _map.OnVGOPointerExit = delegate (GameObjectAnimator obj) {
-            Debug.Log("GLOBAL EVENT: Mouse exited " + obj.name);
-            RestoreTankColor(obj);
-        };
-
-        // Move Selected Unit To Map Position Clicked
-        _map.OnClick += (float x, float y, int buttonIndex) =>
+        // Start is called before the first frame update
+        void Start()
         {
-            if (Unit_Manager.Instance.SelectedUnit)
+            // Listen to global Vieport GameObject (VGO) events (... better and simple approach)
+            _map.OnVGOPointerDown = delegate (GameObjectAnimator obj)
             {
-                Debug.Log($"Move Unit: {Unit_Manager.Instance.SelectedUnit.gameObject.name} to {x}, {y}");
-                Unit_Manager.Instance.SelectedUnit.MoveWithPathFinding(new Vector2(x, y));
-            }
-            else if (true)
+                Debug.Log("GLOBAL EVENT: Left button pressed on " + obj.name);
+                ColorTankMouseDown(obj);
+            };
+            _map.OnVGOPointerUp = delegate (GameObjectAnimator obj)
             {
+                Debug.Log("GLOBAL EVENT: Left button released on " + obj.name);
+                ColorTankMouseUp(obj);
+            };
 
-            }
-        };
+            _map.OnVGOPointerRightDown = delegate (GameObjectAnimator obj)
+            {
+                Debug.Log("GLOBAL EVENT: Right button pressed on " + obj.name);
+                ColorTankMouseDown(obj);
+            };
+            _map.OnVGOPointerRightUp = delegate (GameObjectAnimator obj)
+            {
+                Debug.Log("GLOBAL EVENT: Right button released on " + obj.name);
+                ColorTankMouseUp(obj);
+            };
 
-        _map.OnRegionClick += (Region region, int buttonIndex) => RegionClicked(region);
-    }
+            _map.OnVGOPointerEnter = delegate (GameObjectAnimator obj)
+            {
+                Debug.Log("GLOBAL EVENT: Mouse entered " + obj.name);
+                ColorTankHover(obj);
+            };
+            _map.OnVGOPointerExit = delegate (GameObjectAnimator obj)
+            {
+                Debug.Log("GLOBAL EVENT: Mouse exited " + obj.name);
+                RestoreTankColor(obj);
+            };
 
-    private void RegionClicked(Region region)
-    {
-        var feature = Province_Manager.Instance.GetFeatureForRegion(region);
-        if (feature && feature.Mission_Types.Count > 0)
+            // Move Selected Unit To Map Position Clicked
+            _map.OnClick += (float x, float y, int buttonIndex) =>
+            {
+                if (Unit_Manager.Instance.SelectedUnit)
+                {
+                    Debug.Log($"Move Unit: {Unit_Manager.Instance.SelectedUnit.gameObject.name} to {x}, {y}");
+                    Unit_Manager.Instance.SelectedUnit.MoveWithPathFinding(new Vector2(x, y));
+                }
+                else if (true)
+                {
+
+                }
+            };
+
+            _map.OnRegionClick += (Region region, int buttonIndex) => RegionClicked(region);
+        }
+
+        private void RegionClicked(Region region)
         {
-            switch (feature.Mission_Types.Count)
+            var feature = Province_Manager.Instance.GetFeatureForRegion(region);
+            if (feature && feature.Mission_Types.Count > 0)
             {
-                case 1:
-                    Unit_Manager.Instance.SelectedUnit.DestinationMissionType = feature.Mission_Types[0];
-                    break;
-                case int n when (n > 1):
-                    // TODO Replace with list or radial menu
-                    Unit_Manager.Instance.SelectedUnit.DestinationMissionType = feature.Mission_Types[0];
-                    //
-                    break;
-                default:
-                    break;
+                switch (feature.Mission_Types.Count)
+                {
+                    case 1:
+                        Unit_Manager.Instance.SelectedUnit.DestinationMissionType = feature.Mission_Types[0];
+                        break;
+                    case int n when (n > 1):
+                        // TODO Replace with list or radial menu
+                        Unit_Manager.Instance.SelectedUnit.DestinationMissionType = feature.Mission_Types[0];
+                        //
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        // Update is called once per frame
+        void Update()
+        {
 
-    void ColorTankHover(GameObjectAnimator obj)
-    {
-        // Changes tank color - but first we store original color inside its attribute bag
-        Renderer renderer = obj.GetComponentInChildren<Renderer>();
-        obj.attrib["color"] = renderer.sharedMaterial.color;
-        renderer.material.color = Color.yellow; // notice how I use material and not sharedmaterial - this is to prevent affecting all clone instances - we just want to color this one, so we need to make this material unique.
-    }
+        }
 
-    void ColorTankMouseDown(GameObjectAnimator obj)
-    {
-        // Changes tank color to white
-        Renderer renderer = obj.GetComponentInChildren<Renderer>();
-        renderer.sharedMaterial.color = Color.white;
-    }
+        void ColorTankHover(GameObjectAnimator obj)
+        {
+            // Changes tank color - but first we store original color inside its attribute bag
+            Renderer renderer = obj.GetComponentInChildren<Renderer>();
+            obj.attrib["color"] = renderer.sharedMaterial.color;
+            renderer.material.color = Color.yellow; // notice how I use material and not sharedmaterial - this is to prevent affecting all clone instances - we just want to color this one, so we need to make this material unique.
+        }
 
-    void ColorTankMouseUp(GameObjectAnimator obj)
-    {
-        // Changes tank color to white
-        Renderer renderer = obj.GetComponentInChildren<Renderer>();
-        renderer.sharedMaterial.color = Color.yellow;
-    }
+        void ColorTankMouseDown(GameObjectAnimator obj)
+        {
+            // Changes tank color to white
+            Renderer renderer = obj.GetComponentInChildren<Renderer>();
+            renderer.sharedMaterial.color = Color.white;
+        }
 
-    void RestoreTankColor(GameObjectAnimator obj)
-    {
-        // Restores original tank color
-        Renderer renderer = obj.GetComponentInChildren<Renderer>();
-        Color tankColor = obj.attrib["color"];  // get back the original color from attribute bag
-        renderer.sharedMaterial.color = tankColor;
+        void ColorTankMouseUp(GameObjectAnimator obj)
+        {
+            // Changes tank color to white
+            Renderer renderer = obj.GetComponentInChildren<Renderer>();
+            renderer.sharedMaterial.color = Color.yellow;
+        }
+
+        void RestoreTankColor(GameObjectAnimator obj)
+        {
+            // Restores original tank color
+            Renderer renderer = obj.GetComponentInChildren<Renderer>();
+            Color tankColor = obj.attrib["color"];  // get back the original color from attribute bag
+            renderer.sharedMaterial.color = tankColor;
+        }
     }
 }

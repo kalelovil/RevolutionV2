@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Kalelovil.Revolution.Provinces;
+using Kalelovil.Revolution.UI;
+using Kalelovil.Revolution.Units;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
 
-namespace WorldMapStrategyKit
+namespace Kalelovil.Revolution.UI
 {
     public class ProvinceClickCatcher : MonoBehaviour
     {

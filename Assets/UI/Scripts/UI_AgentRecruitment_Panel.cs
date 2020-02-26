@@ -1,68 +1,73 @@
-﻿using System;
+﻿using Kalelovil.Revolution.Structures;
+using Kalelovil.Revolution.Units;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WorldMapStrategyKit;
 
-public class UI_AgentRecruitment_Panel : MonoBehaviour
+namespace Kalelovil.Revolution.UI
 {
-    [Header("Instantiation")]
-    [SerializeField] Transform _leaderBarArea;
-    [SerializeField] UI_Recruitment_Leader_Bar _leaderBarPrefab;
-
-    [Header("Game Logic")]
-    [SerializeField] UI_Recruitment_Leader_Bar _selectedUnitBar;
-
-    #region Agent Type
-    [Header("Agent Type")]
-    Brigade.AgentType _agentType;
-    public Brigade.AgentType AgentType { get { return _agentType; } internal set { SetAgentType(value); } }
-    private void SetAgentType(Brigade.AgentType value)
+    public class UI_AgentRecruitment_Panel : MonoBehaviour
     {
-        _agentType = value;
-        Populate();
-    }
-    #endregion
+        [Header("Instantiation")]
+        [SerializeField] Transform _leaderBarArea;
+        [SerializeField] UI_Recruitment_Leader_Bar _leaderBarPrefab;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+        [Header("Game Logic")]
+        [SerializeField] UI_Recruitment_Leader_Bar _selectedUnitBar;
 
-    }
-
-    private void Populate()
-    {
-        foreach (var leaderInPool in Unit_Manager.Instance._leaderPool.LeaderPool)
+        #region Agent Type
+        [Header("Agent Type")]
+        Brigade.AgentType _agentType;
+        public Brigade.AgentType AgentType { get { return _agentType; } internal set { SetAgentType(value); } }
+        private void SetAgentType(Brigade.AgentType value)
         {
-            AddLeaderBar(leaderInPool);
+            _agentType = value;
+            Populate();
         }
-    }
+        #endregion
 
-    private void AddLeaderBar(BrigadeLeader leaderDefinition)
-    {
-        UI_Recruitment_Leader_Bar leaderBar = Instantiate(_leaderBarPrefab, _leaderBarArea);
-        leaderBar.Initialise(leaderDefinition);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    internal void RecruitBrigade(BrigadeLeader leader)
-    {
-        Brigade brigadePrefab = Unit_Manager.Instance._recruitmentManager.BrigadePrefab;
-        var cost = new List<ResourceQuantity>();//brigadePrefab.CostList;
-        //bool canAfford = ProvinceData.CanAfford(cost);
-        //if (canAfford)
+        // Start is called before the first frame update
+        void Start()
         {
-            //ProvinceData.SubtractResources(cost);
 
-            var parent = WMSK.instance.gameObject.transform;
+        }
 
-            Brigade spawnedUnit = Instantiate(brigadePrefab);
-            spawnedUnit.Initialise(leader, HeadquarterManager.Instance.HQList[0]);
+        private void Populate()
+        {
+            foreach (var leaderInPool in Unit_Manager.Instance._leaderPool.LeaderPool)
+            {
+                AddLeaderBar(leaderInPool);
+            }
+        }
+
+        private void AddLeaderBar(BrigadeLeader leaderDefinition)
+        {
+            UI_Recruitment_Leader_Bar leaderBar = Instantiate(_leaderBarPrefab, _leaderBarArea);
+            leaderBar.Initialise(leaderDefinition);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        internal void RecruitBrigade(BrigadeLeader leader)
+        {
+            Brigade brigadePrefab = Unit_Manager.Instance._recruitmentManager.BrigadePrefab;
+            var cost = new List<ResourceQuantity>();//brigadePrefab.CostList;
+            //bool canAfford = ProvinceData.CanAfford(cost);
+            //if (canAfford)
+            {
+                //ProvinceData.SubtractResources(cost);
+
+                var parent = WMSK.instance.gameObject.transform;
+
+                Brigade spawnedUnit = Instantiate(brigadePrefab);
+                spawnedUnit.Initialise(leader, HeadquarterManager.Instance.HQList[0]);
+            }
         }
     }
 }

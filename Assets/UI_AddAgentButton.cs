@@ -1,13 +1,17 @@
-﻿using System.Collections;
+﻿using Kalelovil.Revolution.Units;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_AddAgentButton : MonoBehaviour
+namespace Kalelovil.Revolution.UI
 {
-    [SerializeField] Brigade.AgentType _agentType;
-
-    public void Clicked()
+    public class UI_AddAgentButton : MonoBehaviour
     {
-        UI_MainInterface.Instance.OpenLeaderRecruitmentPanel(_agentType, transform);
+        [SerializeField] Brigade.AgentType _agentType;
+
+        public void Clicked()
+        {
+            UI_MainInterface.Instance.OpenLeaderRecruitmentPanel(_agentType, transform);
+        }
     }
 }

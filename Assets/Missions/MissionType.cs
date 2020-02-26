@@ -1,36 +1,40 @@
-﻿using System;
+﻿using Kalelovil.Revolution.Units;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MissionType", menuName = "ScriptableObjects/MissionType", order = 2)]
-public class MissionType : ScriptableObject, IEquatable<ResourceType>
+namespace Kalelovil.Revolution.Missions
 {
-    #region Properties
-    [SerializeField] string _name;
-    internal string Name { get => _name; }
-
-    [SerializeField] Brigade.AgentType _agentType;
-    internal Brigade.AgentType AgentType { get => _agentType; }
-
-    [Range(1, 5)]
-    [SerializeField] int _difficulty = 1;
-    internal int Difficulty { get => _difficulty; }
-    #endregion
-
-
-    #region IEquatable
-    public bool Equals(ResourceType other)
+    [CreateAssetMenu(fileName = "MissionType", menuName = "ScriptableObjects/MissionType", order = 2)]
+    public class MissionType : ScriptableObject, IEquatable<ResourceType>
     {
-        return null != other && Name.GetHashCode() == other.Name.GetHashCode();
+        #region Properties
+        [SerializeField] string _name;
+        internal string Name { get => _name; }
+
+        [SerializeField] Brigade.AgentType _agentType;
+        internal Brigade.AgentType AgentType { get => _agentType; }
+
+        [Range(1, 5)]
+        [SerializeField] int _difficulty = 1;
+        internal int Difficulty { get => _difficulty; }
+        #endregion
+
+
+        #region IEquatable
+        public bool Equals(ResourceType other)
+        {
+            return null != other && Name.GetHashCode() == other.Name.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ResourceType);
+        }
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+        #endregion
     }
-    public override bool Equals(object obj)
-    {
-        return Equals(obj as ResourceType);
-    }
-    public override int GetHashCode()
-    {
-        return Name.GetHashCode();
-    }
-    #endregion
 }
