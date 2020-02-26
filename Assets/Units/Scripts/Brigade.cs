@@ -61,6 +61,7 @@ namespace Kalelovil.Revolution.Units
         [SerializeField] MissionType _destinationMissionType;
         public MissionType DestinationMissionType { get => _destinationMissionType; set => _destinationMissionType = value; }
         [Header("Current Mission")]
+        [SerializeField] MissionProgress _missionPrefab;
         [SerializeField] MissionProgress _currentMission;
         public MissionProgress CurrentMission { get => _currentMission; set => _currentMission = value; }
 
@@ -197,6 +198,12 @@ namespace Kalelovil.Revolution.Units
         {
             Region region = WMSK.instance.GetProvinceRegion(anim.currentMap2DLocation);
             Debug.Log($"Unit Movement Ended: {anim.gameObject.name} In Region #{region.regionIndex} of Province {region.entity.name}");
+            
+            if (DestinationMissionType)
+            {
+                CurrentMission = Instantiate(_missionPrefab, transform);
+                CurrentMission.MissionType = DestinationMissionType;
+            }
         }
     }
 }

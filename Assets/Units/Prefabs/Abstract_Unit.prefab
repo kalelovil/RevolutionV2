@@ -95,6 +95,10 @@ MonoBehaviour:
   _lineAnimatorPrefab: {fileID: 6845783682261334742, guid: 5a9a0146da3121f47a891fbf6db5cbdc,
     type: 3}
   _lineAnimator: {fileID: 0}
+  _destinationMissionType: {fileID: 0}
+  _missionPrefab: {fileID: 7202334157108548803, guid: 6ba9cd327bccbf84d926bdd51c2c72ee,
+    type: 3}
+  _currentMission: {fileID: 0}
   _renderers:
   - {fileID: 3790149862952692102}
   - {fileID: 3791773291462453720}
